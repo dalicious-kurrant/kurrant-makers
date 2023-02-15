@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import styled, {createGlobalStyle, ThemeProvider} from 'styled-components';
+import reset from './Shared/reset.css';
+import Router from './Router';
+import NavBar from './component/Gnb/Navbar';
+import theme from './Shared/theme';
+import {getToken} from './Shared/localStorage';
+import {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 function App() {
+  const token = getToken();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload...
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        {token && <NavBar />}
+        <Wrap>
+          <Router />
+        </Wrap>
+      </ThemeProvider>
+    </Container>
   );
 }
 
 export default App;
+
+const Container = styled.div``;
+
+const GlobalStyle = createGlobalStyle`
+${reset}; // Reset CSS
+
+body{
+  font-family:${({theme}) => theme.fontFamily.default};
+  font-size:14px;
+}
+`;
+
+const Wrap = styled.div`
+  display: flex;
+`;
