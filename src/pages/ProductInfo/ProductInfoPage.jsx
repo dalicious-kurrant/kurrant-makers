@@ -92,7 +92,7 @@ const ProductInfoPage = () => {
           <TbodyCell>{menu.eventDiscount}%</TbodyCell>
           <TbodyCell>{withCommas(menu.resultPrice)}원</TbodyCell>
           <TbodyCell>{menu.description}</TbodyCell>
-          <TbodyCell>{menu.foodTags}</TbodyCell>
+          <TbodyCell>{menu.foodTags + (idx !== 0 ? ',  ' : '')}</TbodyCell>
         </>
       );
     },

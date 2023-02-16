@@ -29,6 +29,7 @@ const ProductPage = () => {
 
   const renderTableCells = useCallback(
     (menu, idx) => {
+      console.log(menu.foodTags);
       const checkHandler = (checked, id) => {
         if (checked) {
           setCheckItems(prev => [...prev, id]);
@@ -47,7 +48,7 @@ const ProductPage = () => {
               />
             </FlexBox>
           </TbodyCell>
-          <TbodyCell >
+          <TbodyCell>
             <FlexBox>{menu.foodId}</FlexBox>
           </TbodyCell>
           <TbodyCell>
@@ -55,18 +56,19 @@ const ProductPage = () => {
               <Image src={menu.foodImage} alt="" />
             </ImageBox>
           </TbodyCell>
-          <TbodyCell
-           >
-            <HoverBox  onClick={() => goToDetail(menu.foodId)}>{menu.foodName}</HoverBox>
+          <TbodyCell>
+            <HoverBox onClick={() => goToDetail(menu.foodId)}>
+              {menu.foodName}
+            </HoverBox>
           </TbodyCell>
-          <TbodyCell >{withCommas(menu.defaultPrice)}원</TbodyCell>
-          <TbodyCell >
+          <TbodyCell>{withCommas(menu.defaultPrice)}원</TbodyCell>
+          <TbodyCell>
             {withCommas(menu.makersDiscount === 0 ? '0' : menu.makersDiscount)}%
           </TbodyCell>
-          <TbodyCell >{menu.eventDiscount}%</TbodyCell>
-          <TbodyCell >{withCommas(menu.resultPrice)}원</TbodyCell>
-          <TbodyCell >{menu.description}</TbodyCell>
-          <TbodyCell >{menu.foodTags}</TbodyCell>
+          <TbodyCell>{menu.eventDiscount}%</TbodyCell>
+          <TbodyCell>{withCommas(menu.resultPrice)}원</TbodyCell>
+          <TbodyCell>{menu.description}</TbodyCell>
+          <TbodyCell>{menu.foodTags + (idx !== 0 ? ',  ' : '')}</TbodyCell>
         </>
       );
     },
@@ -169,13 +171,13 @@ const OnClickBox = styled.div`
 const HoverBox = styled.div`
   justify-content: center;
   align-items: center;
-  :hover{
+  :hover {
     cursor: pointer;
-    color:red;
+    color: red;
   }
 `;
 
-const Image = styled.img`  
+const Image = styled.img`
   object-fit: cover;
   width: 120px;
   height: 80px;
@@ -183,9 +185,8 @@ const Image = styled.img`
   text-align: center;
 `;
 const ImageBox = styled.div`
-  display:flex;
-  text-align:center;
+  display: flex;
+  text-align: center;
   justify-content: center;
   align-items: center;
-    
-`
+`;
