@@ -52,9 +52,7 @@ const ProductPage = () => {
           </TbodyCell>
           <TbodyCell>
             <ImageBox>
-              <Images>
-                <Image src={menu.foodImage} alt="" />
-              </Images>
+              <Image src={menu.foodImage} alt="" />
             </ImageBox>
           </TbodyCell>
           <TbodyCell
@@ -185,16 +183,9 @@ const Image = styled.img`
   text-align: center;
 `;
 const ImageBox = styled.div`
-  display:table;
+  display:flex;
   text-align:center;
   justify-content: center;
-    align-items: center;
-    
-`
-const Images = styled.div`
-  display:table-cell;
-    vertical-align:middle;
-    justify-content: center;
-    align-items: center;
+  align-items: center;
     
 `
