@@ -1,7 +1,7 @@
 import React, {useState, forwardRef} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
-import styled, {css, useTheme} from 'styled-components';
+import styled, {css} from 'styled-components';
 
 /**
  *

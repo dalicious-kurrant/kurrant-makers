@@ -91,15 +91,17 @@ const TheadCell = styled.th`
 export const TbodyCell = styled.td`
   justify-content: center;
   text-align: center;
-  align-items: center;
+  align-items: center;  
   color: ${({theme}) => theme.colors.grey[6]};
   border-right: 0.5px solid rgb(200, 200, 210, 0.5);
   border-bottom: 0.5px solid rgb(200, 200, 210, 0.5);
   padding: ${({padding}) => (padding ? padding : '20px 0px')};
   text-overflow: ellipsis;
-  overflow: hidden;
   white-space: nowrap;
   max-width: 392px;
+  :nth-child(3){
+    display: flex;
+  }
   /* ${({isMobileHeightWide}) =>
     isMobileHeightWide &&
     css`

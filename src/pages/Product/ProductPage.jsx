@@ -47,27 +47,28 @@ const ProductPage = () => {
               />
             </FlexBox>
           </TbodyCell>
-          <TbodyCell>
+          <TbodyCell >
             <FlexBox>{menu.foodId}</FlexBox>
           </TbodyCell>
-          <TbodyCell padding="0px">
-            <div>
-              <Image src={menu.foodImage} alt="" />
-            </div>
+          <TbodyCell>
+            <ImageBox>
+              <Images>
+                <Image src={menu.foodImage} alt="" />
+              </Images>
+            </ImageBox>
           </TbodyCell>
           <TbodyCell
-            style={{cursor: 'pointer'}}
-            onClick={() => goToDetail(menu.foodId)}>
-            {menu.foodName}
+           >
+            <HoverBox  onClick={() => goToDetail(menu.foodId)}>{menu.foodName}</HoverBox>
           </TbodyCell>
-          <TbodyCell>{withCommas(menu.defaultPrice)}원</TbodyCell>
-          <TbodyCell>
+          <TbodyCell >{withCommas(menu.defaultPrice)}원</TbodyCell>
+          <TbodyCell >
             {withCommas(menu.makersDiscount === 0 ? '0' : menu.makersDiscount)}%
           </TbodyCell>
-          <TbodyCell>{menu.eventDiscount}%</TbodyCell>
-          <TbodyCell>{withCommas(menu.resultPrice)}원</TbodyCell>
-          <TbodyCell>{menu.description}</TbodyCell>
-          <TbodyCell>{menu.foodTags}</TbodyCell>
+          <TbodyCell >{menu.eventDiscount}%</TbodyCell>
+          <TbodyCell >{withCommas(menu.resultPrice)}원</TbodyCell>
+          <TbodyCell >{menu.description}</TbodyCell>
+          <TbodyCell >{menu.foodTags}</TbodyCell>
         </>
       );
     },
@@ -154,10 +155,12 @@ const TableWrap = styled.div`
 `;
 const FlexBox = styled.div`
   width: 100%;
-  height: 100%;
+  height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
+  align-self: center;
+  justify-self: center;
 `;
 
 const OnClickBox = styled.div`
@@ -165,7 +168,33 @@ const OnClickBox = styled.div`
   align-items: center;
   height: 56px;
 `;
-
-const Image = styled.img`
-  max-width: 100%;
+const HoverBox = styled.div`
+  justify-content: center;
+  align-items: center;
+  :hover{
+    cursor: pointer;
+    color:red;
+  }
 `;
+
+const Image = styled.img`  
+  object-fit: cover;
+  width: 120px;
+  height: 80px;
+  align-self: center;
+  text-align: center;
+`;
+const ImageBox = styled.div`
+  display:table;
+  text-align:center;
+  justify-content: center;
+    align-items: center;
+    
+`
+const Images = styled.div`
+  display:table-cell;
+    vertical-align:middle;
+    justify-content: center;
+    align-items: center;
+    
+`
