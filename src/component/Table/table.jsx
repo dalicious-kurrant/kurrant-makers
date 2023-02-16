@@ -97,11 +97,8 @@ export const TbodyCell = styled.td`
   border-bottom: 0.5px solid rgb(200, 200, 210, 0.5);
   padding: ${({padding}) => (padding ? padding : '20px 0px')};
   text-overflow: ellipsis;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   max-width: 392px;
-  :nth-child(3){
-    display: flex;
-  }
   /* ${({isMobileHeightWide}) =>
     isMobileHeightWide &&
     css`
