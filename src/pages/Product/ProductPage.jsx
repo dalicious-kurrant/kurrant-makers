@@ -57,9 +57,7 @@ const ProductPage = () => {
             </ImageBox>
           </TbodyCell>
           <TbodyCell>
-            <HoverBox onClick={() => goToDetail(menu.foodId)}>
-              {menu.foodName}
-            </HoverBox>
+            <HoverBox>{menu.foodName}</HoverBox>
           </TbodyCell>
           <TbodyCell>{withCommas(menu.defaultPrice)}원</TbodyCell>
           <TbodyCell>
@@ -125,9 +123,12 @@ const ProductPage = () => {
           ]}>
           {makersProcuctList?.data?.data?.map((menu, idx) => {
             return (
-              <tr key={idx} id={menu.ProductId}>
+              <TableLine
+                key={idx}
+                id={menu.ProductId}
+                onClick={() => goToDetail(menu.foodId)}>
                 {renderTableCells(menu, idx)}
-              </tr>
+              </TableLine>
             );
           })}
 
@@ -171,12 +172,13 @@ const OnClickBox = styled.div`
 const HoverBox = styled.div`
   justify-content: center;
   align-items: center;
+`;
+const TableLine = styled.tr`
   :hover {
     cursor: pointer;
-    color: red;
+    background-color: whitesmoke;
   }
 `;
-
 const Image = styled.img`
   object-fit: cover;
   width: 120px;

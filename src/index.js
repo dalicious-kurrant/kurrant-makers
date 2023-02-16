@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {QueryClient, QueryClientProvider} from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import 'semantic-ui-css/semantic.min.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,9 +17,7 @@ const queryClient = new QueryClient({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <QueryClientProvider client={queryClient}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <App />
   </QueryClientProvider>,
 );
 
