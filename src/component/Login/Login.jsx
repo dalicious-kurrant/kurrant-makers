@@ -1,10 +1,8 @@
-import {useAtom} from 'jotai';
 import {useEffect} from 'react';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import instance from '../../Shared/axios';
-import {makerNameAtom} from '../../utils/store/store';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +10,7 @@ const Login = () => {
   const [loginCheck, setLoginCheck] = useState(false);
   const initialInput = {code: '', password: ''};
   const [input, setInput] = useState(initialInput);
-  const [clickReady, setClickReady] = useState(false);
+  // const [clickReady, setClickReady] = useState(false);
 
   const validation = input.code !== '' && input.password !== '';
 
@@ -22,13 +20,13 @@ const Login = () => {
     setInput({...input, [id]: value});
   };
 
-  useEffect(() => {
-    if (input.code && input.password) {
-      setClickReady(true);
-    } else {
-      setClickReady(false);
-    }
-  }, [input]);
+  // useEffect(() => {
+  //   if (input.code && input.password) {
+  //     setClickReady(true);
+  //   } else {
+  //     setClickReady(false);
+  //   }
+  // }, [input]);
 
   const handleSubmit = async () => {
     try {
