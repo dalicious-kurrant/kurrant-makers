@@ -164,11 +164,7 @@ const FlexBox = styled.div`
   justify-self: center;
 `;
 
-const OnClickBox = styled.div`
-  display: flex;
-  align-items: center;
-  height: 56px;
-`;
+
 const HoverBox = styled.div`
   justify-content: center;
   align-items: center;
