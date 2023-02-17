@@ -20,18 +20,9 @@ const Login = () => {
     setInput({...input, [id]: value});
   };
 
-  // useEffect(() => {
-  //   if (input.code && input.password) {
-  //     setClickReady(true);
-  //   } else {
-  //     setClickReady(false);
-  //   }
-  // }, [input]);
-
   const handleSubmit = async () => {
     try {
       const res = await instance.post('/makers/login', input);
-      console.log(res.status, 'status');
       if (res.status === 200) {
         const accessToken = res.data.data.accessToken;
         localStorage.setItem('token', accessToken);
@@ -39,15 +30,12 @@ const Login = () => {
         navigate('/product');
         window.location.reload();
       }
-    } catch (err) {
-      if (err.response.status === 401) {
+    } catch (error) {
+      console.log(error, 'err');
+      if (error.response.status === 401) {
         setLoginCheck(true);
       }
     }
-    // axios.post('http://3.39.196.44:8884/v1/makers/login', input).then(res => {
-    //   console.log(res.data);
-    // });
-    // console.log(input);
   };
 
   return (
