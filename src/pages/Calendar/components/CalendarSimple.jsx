@@ -17,12 +17,10 @@ const CalendarSimple = ({testData, setTestData}) => {
   const DiningButton = (date, diningType) => {
     const result = testData.map(data => {
       if (data.serviceDate === date && data.diningType === diningType) {
-        console.log(data.schaduleStatus);
         return (
-          <DiningContainer>
+          <DiningContainer key={data.presetMakersId + data.serviceDate}>
             {data.makersCapa}
             <Button
-              key={data.presetMakersId + data.serviceDate}
               size="mini"
               onClick={() => {
                 setTestData(
@@ -100,7 +98,6 @@ const CalendarSimple = ({testData, setTestData}) => {
     return acc;
   }, []);
 
-  console.log(dates);
   return (
     <Container>
       {dates.map((week, i) => {

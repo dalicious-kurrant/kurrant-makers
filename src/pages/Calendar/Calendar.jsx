@@ -24,12 +24,14 @@ const makersCalendar = [
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
+            schaduleStatus: 1,
           },
           {
             presetFoodId: 10,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
+            schaduleStatus: 1,
           },
         ],
       },
@@ -118,44 +120,6 @@ const makersCalendar = [
         clientCapa: 20,
         foodSchadule: [
           {
-            presetFoodId: 2,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            schaduleStatus: 0,
-          },
-          {
-            presetFoodId: 3,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            schaduleStatus: 0,
-          },
-          {
-            presetFoodId: 4,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            schaduleStatus: 0,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    presetMakersId: 4,
-    schaduleStatus: 2,
-    serviceDate: '2023-02-24',
-    diningType: '아침',
-    makersCapa: 100,
-    deadline: '2023/02/30 18:00:00',
-    clientSchadule: [
-      {
-        pickupTime: '07:50',
-        clientName: '달리셔스',
-        clientCapa: 20,
-        foodSchadule: [
-          {
             presetFoodId: 5,
             food: '음식',
             foodStatus: '판매중',
@@ -180,15 +144,52 @@ const makersCalendar = [
       },
     ],
   },
+  {
+    presetMakersId: 4,
+    schaduleStatus: 2,
+    serviceDate: '2023-02-24',
+    diningType: '아침',
+    makersCapa: 100,
+    deadline: '2023/02/30 18:00:00',
+    clientSchadule: [
+      {
+        pickupTime: '07:50',
+        clientName: '달리셔스',
+        clientCapa: 20,
+        foodSchadule: [
+          {
+            presetFoodId: 11,
+            food: '음식sdfsdfdsfsdfsdfsdasdasda sdsadsadasdadadasda sdadadasdasdasdadsdsdf',
+            foodStatus: '판매중',
+            foodCapa: 100,
+            schaduleStatus: 0,
+          },
+          {
+            presetFoodId: 12,
+            food: '음식',
+            foodStatus: '판매중',
+            foodCapa: 100,
+            schaduleStatus: 0,
+          },
+          {
+            presetFoodId: 13,
+            food: '음식',
+            foodStatus: '판매중',
+            foodCapa: 100,
+            schaduleStatus: 0,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 const Calendar = () => {
   // const {data: makersCalendar} = useGetCalendarList();
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(false);
-  const [actives, setActives] = useState([]);
-  const [active, setActive] = useState([]);
-
+  const [group, setGroupAccess] = useState([{}]);
+  const [foodAct, setFoodAct] = useState([{}]);
   const [testData, setTestData] = useState(makersCalendar);
 
   useEffect(() => {
@@ -204,18 +205,63 @@ const Calendar = () => {
       }),
     );
   }, []);
-
+  useEffect(() => {
+    const groupAccess = [];
+    const foodAccess = [];
+    testData.map(data => {
+      groupAccess.push({
+        presetMakersId: data.presetMakersId,
+        schaduleStatus: data.schaduleStatus,
+      });
+      return data.clientSchadule.map(client => {
+        return client.foodSchadule.map(food => {
+          return foodAccess.push({
+            presetFoodId: food.presetFoodId,
+            schaduleStatus: food.schaduleStatus,
+          });
+        });
+      });
+    });
+    setGroupAccess(groupAccess);
+    setFoodAct(foodAccess);
+  }, [testData]);
   return (
     <PageWrapper>
       <Wrapper>
         <TitleBox>일정관리</TitleBox>
-        <HeaderBox>
+        <SaveContainer page={page}>
+          <ExampleBox>
+            <Button color="grey">대기</Button>
+            <Arrow>{`->`}</Arrow>
+            <Button color="green">승인</Button>
+            <Arrow>{`->`}</Arrow>
+            <Button color="red">거절</Button>
+          </ExampleBox>
+          <SaveBox>
+            <Button
+              toggle
+              color={'twitter'}
+              active={false}
+              size={'large'}
+              onClick={() => {
+                const req = {
+                  group: group,
+                  food: foodAct,
+                };
+                alert('저장되었습니다.');
+                console.log(req);
+              }}>
+              저장
+            </Button>
+          </SaveBox>
+        </SaveContainer>
+        <HeaderBox page={page}>
           <ViewTypeBox>
             <Button
               toggle
               color={page ? 'grey' : 'facebook'}
               active={false}
-              size={'huge'}
+              size={'large'}
               onClick={() => {
                 setPage(false);
               }}>
@@ -225,7 +271,7 @@ const Calendar = () => {
               toggle
               color={page ? 'facebook' : 'grey'}
               active={false}
-              size={'huge'}
+              size={'large'}
               onClick={() => {
                 setPage(true);
               }}>
@@ -237,7 +283,7 @@ const Calendar = () => {
               toggle
               color={'green'}
               active={false}
-              size={'huge'}
+              size={'large'}
               onClick={() => {
                 setTestData(
                   testData.map(makers => {
@@ -262,7 +308,7 @@ const Calendar = () => {
               toggle
               color={'red'}
               active={false}
-              size={'huge'}
+              size={'large'}
               onClick={() => {
                 setTestData(
                   testData.map(makers => {
@@ -322,5 +368,24 @@ const HeaderBox = styled.div`
   display: flex;
   justify-content: space-between;
   padding-top: 20px;
+  max-width: ${({page}) => (!page ? '1200px' : '1500px')};
+  margin: 0px auto;
+`;
+const ExampleBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const SaveBox = styled.div``;
+const SaveContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
   padding-bottom: 20px;
+  max-width: ${({page}) => (!page ? '1200px' : '1500px')};
+  margin: 0px auto;
+`;
+const Arrow = styled.div`
+  padding-left: 10px;
+  padding-right: 10px;
 `;

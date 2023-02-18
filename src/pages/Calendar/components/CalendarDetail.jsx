@@ -1,11 +1,12 @@
 import {Button, Table} from 'semantic-ui-react';
 import {PageWrapper, TableWrapper} from '../../../layout/common.style';
-import ThirdSwitch from '../../../component/ThirdSwitch'
+import ThirdSwitch from '../../../component/ThirdSwitch';
 import styled from 'styled-components';
 
-const CalendarDetail = ({count,testData,setTestData}) => {
-    return(
-        <TableWrapper>
+const CalendarDetail = ({count, testData, setTestData}) => {
+  return (
+    <Container>
+      <TableWrapper>
         <Table celled>
           <Table.Header>
             <Table.Row>
@@ -17,9 +18,7 @@ const CalendarDetail = ({count,testData,setTestData}) => {
               <Table.HeaderCell>픽업시간</Table.HeaderCell>
               <Table.HeaderCell>고객사</Table.HeaderCell>
               <Table.HeaderCell>고객사 케파</Table.HeaderCell>
-              <Table.HeaderCell textAlign="center">
-                음식 승인
-              </Table.HeaderCell>
+              <Table.HeaderCell textAlign="center">음식 승인</Table.HeaderCell>
               <Table.HeaderCell>상품</Table.HeaderCell>
               <Table.HeaderCell>음식 상태</Table.HeaderCell>
               <Table.HeaderCell>Food 케파</Table.HeaderCell>
@@ -32,13 +31,16 @@ const CalendarDetail = ({count,testData,setTestData}) => {
                 return s.foodSchadule.map((d, di) => {
                   return (
                     <Table.Row key={`${d.food + di}`}>
-                      <Table.Cell
-                        padding="0px"
-                        textAlign="center"></Table.Cell>
+                      <Table.Cell padding="0px" textAlign="center"></Table.Cell>
                       {di === 0 && si === 0 && (
                         <Table.Cell padding="0px" rowSpan={count[i]}>
                           <FlexBox>
-                           <ThirdSwitch id={v.presetMakersId} data={testData} setData={setTestData} status={v.schaduleStatus}/>
+                            <ThirdSwitch
+                              id={v.presetMakersId}
+                              data={testData}
+                              setData={setTestData}
+                              status={v.schaduleStatus}
+                            />
                           </FlexBox>
                         </Table.Cell>
                       )}
@@ -75,18 +77,53 @@ const CalendarDetail = ({count,testData,setTestData}) => {
                       <Table.Cell textAlign="center">
                         <Button
                           toggle
-                          color={ d.schaduleStatus === 0? "grey":d.schaduleStatus===1 ? "green":"red" }
-                          onClick={()=>{setTestData(testData.map((makers)=>{
-                            return {...makers ,clientSchadule:makers.clientSchadule.map((client)=>{
-                              return {...client,foodSchadule:client.foodSchadule.map((food)=>{
-                                if(food.presetFoodId === d.presetFoodId){
-                                    return {...food,schaduleStatus:d.schaduleStatus === 0? 1:d.schaduleStatus===1 ? 2:0}
-                                }
-                                return food;
-                              })}
-                            })}
-                        }))}}>
-                          {d.schaduleStatus === 0? '대기':d.schaduleStatus===1 ? "승인":"거절"}
+                          color={
+                            d.schaduleStatus === 0
+                              ? 'grey'
+                              : d.schaduleStatus === 1
+                              ? 'green'
+                              : 'red'
+                          }
+                          onClick={() => {
+                            setTestData(
+                              testData.map(makers => {
+                                return {
+                                  ...makers,
+                                  clientSchadule: makers.clientSchadule.map(
+                                    client => {
+                                      return {
+                                        ...client,
+                                        foodSchadule: client.foodSchadule.map(
+                                          food => {
+                                            if (
+                                              food.presetFoodId ===
+                                              d.presetFoodId
+                                            ) {
+                                              return {
+                                                ...food,
+                                                schaduleStatus:
+                                                  d.schaduleStatus === 0
+                                                    ? 1
+                                                    : d.schaduleStatus === 1
+                                                    ? 2
+                                                    : 0,
+                                              };
+                                            }
+                                            return food;
+                                          },
+                                        ),
+                                      };
+                                    },
+                                  ),
+                                };
+                              }),
+                            );
+                          }}>
+                          {d.schaduleStatus === 0
+                            ? '대기'
+                            : d.schaduleStatus === 1
+                            ? '승인'
+                            : '거절'}
                         </Button>
                       </Table.Cell>
                       <Table.Cell>{d.food}</Table.Cell>
@@ -100,12 +137,17 @@ const CalendarDetail = ({count,testData,setTestData}) => {
           </Table.Body>
         </Table>
       </TableWrapper>
-    )
-
-}
+    </Container>
+  );
+};
 
 export default CalendarDetail;
 
+const Container = styled.div`
+  max-width: 1500px;
+  margin: auto;
+  padding-top: 20px;
+`;
 const FlexBox = styled.div`
   display: flex;
   justify-content: center;
