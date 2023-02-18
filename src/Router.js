@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import styled from 'styled-components';
 
 import LoginPage from './pages/Login/LoginPage';
@@ -43,4 +43,5 @@ export default Router;
 
 const Container = styled.div`
   flex: 4;
+  margin-left: 280px;
 `;

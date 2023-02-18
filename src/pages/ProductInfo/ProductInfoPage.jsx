@@ -202,11 +202,6 @@ const FlexBox = styled.div`
   align-items: center;
 `;
 
-const OnClickBox = styled.div`
-  display: flex;
-  align-items: center;
-  height: 56px;
-`;
 
 const ButtonWrap = styled.div`
   display: flex;
