@@ -4,34 +4,37 @@ import {Button} from 'semantic-ui-react';
 import {PageWrapper} from '../../layout/common.style';
 import CalendarDetail from './components/CalendarDetail';
 import CalendarSimple from './components/CalendarSimple';
+import { useQuery } from 'react-query';
+import { calendarApis } from '../../api/calendar';
+import { async } from 'q';
 const makersCalendar = [
   {
     presetMakersId: 1,
-    schaduleStatus: 0,
+    scheduleStatus: 0,
     serviceDate: '2023-02-21',
     diningType: '아침',
     makersCapa: 100,
     leftMakersCapa: 80,
     deadline: '2023/02/30 18:00:00',
-    clientSchadule: [
+    clientSchedule: [
       {
         pickupTime: '07:50',
         clientName: '달리셔스',
         clientCapa: 20,
-        foodSchadule: [
+        foodSchedule: [
           {
             presetFoodId: 9,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 1,
+            scheduleStatus: 1,
           },
           {
             presetFoodId: 10,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 1,
+            scheduleStatus: 1,
           },
         ],
       },
@@ -39,30 +42,30 @@ const makersCalendar = [
   },
   {
     presetMakersId: 2,
-    schaduleStatus: 1,
+    scheduleStatus: 1,
     serviceDate: '2023-02-22',
     diningType: '아침',
     makersCapa: 100,
     deadline: '2023/02/30 18:00:00',
-    clientSchadule: [
+    clientSchedule: [
       {
         pickupTime: '07:50',
         clientName: '달리셔스',
         clientCapa: 20,
-        foodSchadule: [
+        foodSchedule: [
           {
             presetFoodId: 1,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 0,
+            scheduleStatus: 0,
           },
           {
             presetFoodId: 8,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 0,
+            scheduleStatus: 0,
           },
         ],
       },
@@ -70,37 +73,37 @@ const makersCalendar = [
   },
   {
     presetMakersId: 3,
-    schaduleStatus: 0,
+    scheduleStatus: 0,
     serviceDate: '2023-02-23',
     diningType: '아침',
     makersCapa: 100,
     deadline: '2023/02/30 18:00:00',
-    clientSchadule: [
+    clientSchedule: [
       {
         pickupTime: '07:50',
         clientName: '달리셔스',
         clientCapa: 20,
-        foodSchadule: [
+        foodSchedule: [
           {
             presetFoodId: 2,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 0,
+            scheduleStatus: 0,
           },
           {
             presetFoodId: 3,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 0,
+            scheduleStatus: 0,
           },
           {
             presetFoodId: 4,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 0,
+            scheduleStatus: 0,
           },
         ],
       },
@@ -108,37 +111,37 @@ const makersCalendar = [
   },
   {
     presetMakersId: 5,
-    schaduleStatus: 0,
+    scheduleStatus: 0,
     serviceDate: '2023-02-23',
     diningType: '점심',
     makersCapa: 100,
     deadline: '2023/02/30 18:00:00',
-    clientSchadule: [
+    clientSchedule: [
       {
         pickupTime: '07:50',
         clientName: '달리셔스',
         clientCapa: 20,
-        foodSchadule: [
+        foodSchedule: [
           {
             presetFoodId: 5,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 0,
+            scheduleStatus: 0,
           },
           {
             presetFoodId: 6,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 0,
+            scheduleStatus: 0,
           },
           {
             presetFoodId: 7,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 0,
+            scheduleStatus: 0,
           },
         ],
       },
@@ -146,37 +149,37 @@ const makersCalendar = [
   },
   {
     presetMakersId: 4,
-    schaduleStatus: 2,
+    scheduleStatus: 2,
     serviceDate: '2023-02-24',
     diningType: '아침',
     makersCapa: 100,
     deadline: '2023/02/30 18:00:00',
-    clientSchadule: [
+    clientSchedule: [
       {
         pickupTime: '07:50',
         clientName: '달리셔스',
         clientCapa: 20,
-        foodSchadule: [
+        foodSchedule: [
           {
             presetFoodId: 11,
             food: '음식sdfsdfdsfsdfsdfsdasdasda sdsadsadasdadadasda sdadadasdasdasdadsdsdf',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 0,
+            scheduleStatus: 0,
           },
           {
             presetFoodId: 12,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 0,
+            scheduleStatus: 0,
           },
           {
             presetFoodId: 13,
             food: '음식',
             foodStatus: '판매중',
             foodCapa: 100,
-            schaduleStatus: 0,
+            scheduleStatus: 0,
           },
         ],
       },
@@ -190,34 +193,40 @@ const Calendar = () => {
   const [page, setPage] = useState(false);
   const [group, setGroupAccess] = useState([{}]);
   const [foodAct, setFoodAct] = useState([{}]);
-  const [testData, setTestData] = useState(makersCalendar);
+  const [testData, setTestData] = useState([]);
+
+  const {data,isLoading} = useQuery('calendar',()=>calendarApis.getCalendarList(1),{
+    onSuccess:(v)=>{
+      if(v.data.data) setTestData(v.data.data)
+    }
+  })
 
   useEffect(() => {
-    setCount(
-      makersCalendar.map((v, i) => {
-        let num = 0;
-        v.clientSchadule.map((s, si) => {
-          return s.foodSchadule.map((d, di) => {
-            return num++;
-          });
-        });
-        return num;
-      }),
-    );
-  }, []);
+    setCount(testData.map((v, i) => {
+      const test = v.clientSchedule.map((s, si) => {
+        return s.foodSchedule.length;
+      });
+      const result = test.reduce((a,b) => (Number(a)+Number(b)))
+      return result
+    }));
+    if(!isLoading){
+      
+    }
+  }, [isLoading, testData]);
   useEffect(() => {
+
     const groupAccess = [];
     const foodAccess = [];
-    testData.map(data => {
+    testData.map(groupData => {
       groupAccess.push({
-        presetMakersId: data.presetMakersId,
-        schaduleStatus: data.schaduleStatus,
+        presetMakersId: groupData.presetMakersId,
+        scheduleStatus: groupData.scheduleStatus,
       });
-      return data.clientSchadule.map(client => {
-        return client.foodSchadule.map(food => {
+      return groupData.clientSchedule.map(client => {
+        return client.foodSchedule.map(food => {
           return foodAccess.push({
             presetFoodId: food.presetFoodId,
-            schaduleStatus: food.schaduleStatus,
+            scheduleStatus: food.scheduleStatus,
           });
         });
       });
@@ -225,6 +234,9 @@ const Calendar = () => {
     setGroupAccess(groupAccess);
     setFoodAct(foodAccess);
   }, [testData]);
+  if(isLoading){
+    return <><div>로딩중</div></>
+  }
   return (
     <PageWrapper>
       <Wrapper>
@@ -243,11 +255,12 @@ const Calendar = () => {
               color={'twitter'}
               active={false}
               size={'large'}
-              onClick={() => {
+              onClick={async() => {
                 const req = {
-                  group: group,
-                  food: foodAct,
+                  makersScheduleDtos: group,
+                  foodScheduleDtos: foodAct,
                 };
+                await calendarApis.accessHandler(req);
                 alert('저장되었습니다.');
                 console.log(req);
               }}>
@@ -286,15 +299,15 @@ const Calendar = () => {
               size={'large'}
               onClick={() => {
                 setTestData(
-                  testData.map(makers => {
+                  data?.data?.map(makers => {
                     return {
                       ...makers,
-                      schaduleStatus: 1,
-                      clientSchadule: makers.clientSchadule.map(client => {
+                      scheduleStatus: 1,
+                      clientSchedule: makers.clientSchedule.map(client => {
                         return {
                           ...client,
-                          foodSchadule: client.foodSchadule.map(food => {
-                            return {...food, schaduleStatus: 1};
+                          foodSchedule: client.foodSchedule.map(food => {
+                            return {...food, scheduleStatus: 1};
                           }),
                         };
                       }),
@@ -311,15 +324,15 @@ const Calendar = () => {
               size={'large'}
               onClick={() => {
                 setTestData(
-                  testData.map(makers => {
+                  data?.data?.map(makers => {
                     return {
                       ...makers,
-                      schaduleStatus: 2,
-                      clientSchadule: makers.clientSchadule.map(client => {
+                      scheduleStatus: 2,
+                      clientSchedule: makers.clientSchedule.map(client => {
                         return {
                           ...client,
-                          foodSchadule: client.foodSchadule.map(food => {
-                            return {...food, schaduleStatus: 2};
+                          foodSchedule: client.foodSchedule.map(food => {
+                            return {...food, scheduleStatus: 2};
                           }),
                         };
                       }),
@@ -331,7 +344,7 @@ const Calendar = () => {
             </Button>
           </AccessBox>
         </HeaderBox>
-        {page ? (
+        {testData && page ? (
           <CalendarDetail
             count={count}
             testData={testData}

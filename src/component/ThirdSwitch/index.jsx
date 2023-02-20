@@ -5,9 +5,9 @@ const Component = ({id,status,data,setData})=>{
     const setStatus = (sta)=>{
         setData(data.map((makers)=>{
             if(makers.presetMakersId === id){
-                return {...makers,schaduleStatus:sta,clientSchadule:makers.clientSchadule.map((client)=>{
-                    return {...client,foodSchadule:client.foodSchadule.map((food)=>{
-                        return {...food,schaduleStatus:sta}
+                return {...makers,scheduleStatus:sta,clientSchedule:makers.clientSchedule.map((client)=>{
+                    return {...client,foodSchedule:client.foodSchedule.map((food)=>{
+                        return {...food,scheduleStatus:sta}
                     })}
                 })}
             }else{

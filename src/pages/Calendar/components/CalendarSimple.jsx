@@ -16,6 +16,7 @@ import {
 const CalendarSimple = ({testData, setTestData}) => {
   const DiningButton = (date, diningType) => {
     const result = testData.map(data => {
+      console.log(data,"tests")
       if (data.serviceDate === date && data.diningType === diningType) {
         return (
           <DiningContainer key={data.presetMakersId + data.serviceDate}>
@@ -28,22 +29,22 @@ const CalendarSimple = ({testData, setTestData}) => {
                     if (makers.presetMakersId === data.presetMakersId) {
                       return {
                         ...makers,
-                        schaduleStatus:
-                          data.schaduleStatus === 0
+                        scheduleStatus:
+                          data.scheduleStatus === 0
                             ? 1
-                            : data.schaduleStatus === 1
+                            : data.scheduleStatus === 1
                             ? 2
                             : 0,
-                        clientSchadule: makers.clientSchadule.map(client => {
+                        clientSchedule: makers.clientSchedule.map(client => {
                           return {
                             ...client,
-                            foodSchadule: client.foodSchadule.map(food => {
+                            foodSchedule: client.foodSchedule.map(food => {
                               return {
                                 ...food,
-                                schaduleStatus:
-                                  data.schaduleStatus === 0
+                                scheduleStatus:
+                                  data.scheduleStatus === 0
                                     ? 1
-                                    : data.schaduleStatus === 1
+                                    : data.scheduleStatus === 1
                                     ? 2
                                     : 0,
                               };
@@ -57,15 +58,15 @@ const CalendarSimple = ({testData, setTestData}) => {
                 );
               }}
               color={
-                data.schaduleStatus === 0
+                data.scheduleStatus === 0
                   ? 'grey'
-                  : data.schaduleStatus === 1
+                  : data.scheduleStatus === 1
                   ? 'green'
                   : 'red'
               }>
-              {data.schaduleStatus === 0
+              {data.scheduleStatus === 0
                 ? '대기'
-                : data.schaduleStatus === 1
+                : data.scheduleStatus === 1
                 ? '승인'
                 : '거절'}
             </Button>
