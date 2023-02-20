@@ -41,4 +41,5 @@ export default Router;
 
 const Container = styled.div`
   flex: 4;
+  margin-left: 280px;
 `;

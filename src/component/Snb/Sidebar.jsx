@@ -57,6 +57,7 @@ const Wrapper = styled.div`
   border-right: 1px solid ${({theme}) => theme.colors.grey[2]};
   min-width: 256px;
   box-sizing: border-box;
+  position: fixed;
 `;
 
 const MakersAdmin = styled.div`
