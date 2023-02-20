@@ -27,10 +27,10 @@ const CalendarDetail = ({count, testData, setTestData}) => {
 
           <Table.Body>
             {testData.map((v, i) => {
-              return v.clientSchadule.map((s, si) => {
-                return s.foodSchadule.map((d, di) => {
+              return v.clientSchedule.map((s, si) => {
+                return s.foodSchedule.map((d, di) => {
                   return (
-                    <Table.Row key={`${d.food + di}`}>
+                    <Table.Row key={`${d.foodName + di}`}>
                       <Table.Cell padding="0px" textAlign="center"></Table.Cell>
                       {di === 0 && si === 0 && (
                         <Table.Cell padding="0px" rowSpan={count[i]}>
@@ -39,7 +39,7 @@ const CalendarDetail = ({count, testData, setTestData}) => {
                               id={v.presetMakersId}
                               data={testData}
                               setData={setTestData}
-                              status={v.schaduleStatus}
+                              status={v.scheduleStatus}
                             />
                           </FlexBox>
                         </Table.Cell>
@@ -60,17 +60,17 @@ const CalendarDetail = ({count, testData, setTestData}) => {
                         </Table.Cell>
                       )}
                       {di === 0 && (
-                        <Table.Cell rowSpan={s.foodSchadule.length}>
+                        <Table.Cell rowSpan={s.foodSchedule.length}>
                           {s.pickupTime}
                         </Table.Cell>
                       )}
                       {di === 0 && (
-                        <Table.Cell rowSpan={s.foodSchadule.length}>
+                        <Table.Cell rowSpan={s.foodSchedule.length}>
                           {s.clientName}
                         </Table.Cell>
                       )}
                       {di === 0 && (
-                        <Table.Cell rowSpan={s.foodSchadule.length}>
+                        <Table.Cell rowSpan={s.foodSchedule.length}>
                           {s.clientCapa}
                         </Table.Cell>
                       )}
@@ -78,9 +78,9 @@ const CalendarDetail = ({count, testData, setTestData}) => {
                         <Button
                           toggle
                           color={
-                            d.schaduleStatus === 0
+                            d.scheduleStatus === 0
                               ? 'grey'
-                              : d.schaduleStatus === 1
+                              : d.scheduleStatus === 1
                               ? 'green'
                               : 'red'
                           }
@@ -89,11 +89,11 @@ const CalendarDetail = ({count, testData, setTestData}) => {
                               testData.map(makers => {
                                 return {
                                   ...makers,
-                                  clientSchadule: makers.clientSchadule.map(
+                                  clientSchedule: makers.clientSchedule.map(
                                     client => {
                                       return {
                                         ...client,
-                                        foodSchadule: client.foodSchadule.map(
+                                        foodSchedule: client.foodSchedule.map(
                                           food => {
                                             if (
                                               food.presetFoodId ===
@@ -101,10 +101,10 @@ const CalendarDetail = ({count, testData, setTestData}) => {
                                             ) {
                                               return {
                                                 ...food,
-                                                schaduleStatus:
-                                                  d.schaduleStatus === 0
+                                                scheduleStatus:
+                                                  d.scheduleStatus === 0
                                                     ? 1
-                                                    : d.schaduleStatus === 1
+                                                    : d.scheduleStatus === 1
                                                     ? 2
                                                     : 0,
                                               };
@@ -119,9 +119,9 @@ const CalendarDetail = ({count, testData, setTestData}) => {
                               }),
                             );
                           }}>
-                          {d.schaduleStatus === 0
+                          {d.scheduleStatus === 0
                             ? '대기'
-                            : d.schaduleStatus === 1
+                            : d.scheduleStatus === 1
                             ? '승인'
                             : '거절'}
                         </Button>
