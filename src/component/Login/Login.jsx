@@ -20,6 +20,12 @@ const Login = () => {
     setInput({...input, [id]: value});
   };
 
+  const handleOnKeyPress = e => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
   const handleSubmit = async () => {
     try {
       const res = await instance.post('/makers/login', input);
@@ -59,6 +65,7 @@ const Login = () => {
         placeholder="비밀번호를 입력하세요"
         value={input['password']}
         status={loginCheck}
+        onKeyPress={handleOnKeyPress}
       />
       {loginCheck && <Error>인증코드, 비밀번호가 올바르지 않습니다.</Error>}
       <LoginButton disabled={!validation} onClick={handleSubmit}>

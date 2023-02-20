@@ -29,7 +29,7 @@ instance.interceptors.response.use(
       localStorage.removeItem('token');
       localStorage.removeItem('makersName');
       alert('로그인이 만료되어 로그아웃 됩니다.');
-      window.location.replace('/login');
+      window.location.replace('/');
     }
 
     return Promise.reject(error);

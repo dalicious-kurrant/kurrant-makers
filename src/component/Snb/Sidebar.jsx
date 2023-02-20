@@ -10,49 +10,51 @@ import SidebarItem from './SideBarItem';
 function Sidebar() {
   const pathName = useLocation().pathname;
   const makersName = localStorage.getItem('makersName');
-
+  const token = localStorage.getItem('token');
   const logoutButton = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('makersName');
-    window.location.replace('/login');
+    window.location.replace('/');
   };
 
   return (
-    <Wrapper>
-      <UserInfo>
-        <ProfileWrap>
-          <Profile>
-            <Building />
-            <MakersName>{makersName}</MakersName>
-          </Profile>
-          <LogoutWrap onClick={logoutButton}>
-            <p>로그아웃</p>
-          </LogoutWrap>
-        </ProfileWrap>
-      </UserInfo>
-      <ul>
-        {menuData.map((menu, index) => {
-          return (
-            <StyleNavLink
-              to={menu.path}
-              key={index}
-              className={({isActive}) => (isActive ? 'active' : undefined)}>
-              <SidebarItem
-                menu={menu}
-                isActive={pathName === menu.path ? true : false}
-              />
-            </StyleNavLink>
-          );
-        })}
-      </ul>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <UserInfo>
+          <ProfileWrap>
+            <Profile>
+              <Building />
+              <MakersName>{makersName}</MakersName>
+            </Profile>
+            <LogoutWrap onClick={logoutButton}>
+              <p>로그아웃</p>
+            </LogoutWrap>
+          </ProfileWrap>
+        </UserInfo>
+        <ul>
+          {menuData.map((menu, index) => {
+            return (
+              <StyleNavLink
+                to={menu.path}
+                key={index}
+                className={({isActive}) => (isActive ? 'active' : undefined)}>
+                <SidebarItem
+                  menu={menu}
+                  isActive={pathName === menu.path ? true : false}
+                />
+              </StyleNavLink>
+            );
+          })}
+        </ul>
+      </Wrapper>
+    </>
   );
 }
 
 export default Sidebar;
 
 const Wrapper = styled.div`
-  /* flex: 1; */
+  flex: 1;
   height: 100vh;
   border-right: 1px solid ${({theme}) => theme.colors.grey[2]};
   min-width: 256px;
@@ -101,4 +103,5 @@ const ProfileWrap = styled.div`
 
 const LogoutWrap = styled.div`
   margin-bottom: 20px;
+  cursor: pointer;
 `;

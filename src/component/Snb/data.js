@@ -7,7 +7,7 @@ import {ReactComponent as Stock} from '../../assets/snb/stock.svg';
 import {ReactComponent as Diagram} from '../../assets/snb/diagram.svg';
 import {ReactComponent as Money} from '../../assets/snb/money.svg';
 export const menuData = [
-  {name: '대시보드', path: '/', icon: <Dashboard />},
+  {name: '대시보드', path: '/main', icon: <Dashboard />},
   {name: '공지사항', path: '/notice', icon: <Speaker />},
   {name: '메이커스 정보', path: '/makersInfo', icon: <MakersInfo />},
   {name: '상품관리', path: '/product', icon: <Product />},
