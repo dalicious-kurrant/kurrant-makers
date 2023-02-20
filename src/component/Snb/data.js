@@ -15,5 +15,4 @@ export const menuData = [
   {name: '재고 관리', path: '/stock', icon: <Stock />},
   {name: '상세현황', path: '/detail', icon: <Diagram />},
   {name: '정산 관리', path: '/calculate', icon: <Money />},
-  {name: '상품정보', path: '/productInfo', icon: <Product />},
 ];

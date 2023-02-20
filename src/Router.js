@@ -11,7 +11,6 @@ import Detail from './pages/Detail/Detail';
 import Calculate from './pages/Calculate/Calculate';
 import Calendar from './pages/Calendar/Calendar';
 import Stock from './pages/Stock/Stock';
-import ProductInfoPage from './pages/ProductInfo/ProductInfoPage';
 import Sidebar from './component/Snb/Sidebar';
 
 function Router() {
@@ -31,7 +30,6 @@ function Router() {
           <Route path="/calculate" element={<Calculate />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/stock" element={<Stock />} />
-          <Route path="/productInfo" element={<ProductInfoPage />} />
           <Route path="/" element={<MainPage />} />
         </Routes>
       </Container>
