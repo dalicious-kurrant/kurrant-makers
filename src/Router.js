@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 import LoginPage from './pages/Login/LoginPage';
 import ProductPage from './pages/Product/ProductPage';
@@ -12,6 +12,8 @@ import Calendar from './pages/Calendar/Calendar';
 import Stock from './pages/Stock/Stock';
 import Sidebar from './component/Snb/Sidebar';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Schedule from './pages/SalesCalendar/Schedule';
+import {el} from 'date-fns/locale';
 
 function Router() {
   const token = localStorage.getItem('token');
@@ -31,6 +33,7 @@ function Router() {
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/stock" element={<Stock />} />
           <Route path="/main" element={<Dashboard />} />
+          <Route path="/sales/schedule" element={<Schedule />} />
         </Routes>
       </Container>
     </BrowserRouter>
@@ -40,6 +43,16 @@ function Router() {
 export default Router;
 
 const Container = styled.div`
-  flex: 4;
+  ${({token}) => {
+    if (token !== null) {
+      return css`
+        min-width: 1000px;
+      `;
+    } else {
+      return css`
+        flex: 4;
+      `;
+    }
+  }}
   margin-left: ${({token}) => (token === null ? '0px' : '280px')};
 `;

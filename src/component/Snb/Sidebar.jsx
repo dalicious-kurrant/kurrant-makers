@@ -55,11 +55,12 @@ export default Sidebar;
 
 const Wrapper = styled.div`
   flex: 1;
-  height: 100vh;
+  height: 100%;
   border-right: 1px solid ${({theme}) => theme.colors.grey[2]};
   min-width: 256px;
   box-sizing: border-box;
   position: fixed;
+  overflow-y: auto;
 `;
 
 const MakersAdmin = styled.div`

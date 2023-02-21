@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const PageWrapper = styled.section`
   width: 100%;
   padding: 40px;
-  min-width: 1440px;
+  min-width: 1000px;
 `;
 
 export const BtnWrapper = styled.div`
