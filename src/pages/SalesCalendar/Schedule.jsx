@@ -2,7 +2,6 @@ import {useEffect, useRef, useState} from 'react';
 import {Button, Header, Label, Table} from 'semantic-ui-react';
 import styled from 'styled-components';
 import {formattedWeekDate} from '../../utils/dateFormatter';
-import Select from 'react-select';
 import DiningButton from './components/DiningButton';
 import {PageWrapper, TableWrapper} from '../../layout/common.style';
 import {useGetSalesList} from '../../hook/useSalesList';
@@ -101,43 +100,60 @@ const Schedule = () => {
             </Table>
           </TotalTable>
           <DetailTable>
-            <div style={{display: 'flex'}}>
-              {salesList?.data?.data?.foodByDateDiningTypes.map((el, i) => {
-                return (
-                  <Table key={el.serviceDate + i}>
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.HeaderCell style={{whiteSpace: 'nowrap'}}>
-                          {el.serviceDate + el.diningType}
-                        </Table.HeaderCell>
-                      </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                      {el.foods.map(f => {
+            {/* <Table>
+                <Table.Header>
+                  <Table.Row>
+                    {salesList?.data?.data?.foodByDateDiningTypes.map(
+                      (el, i) => {
+                        return (
+                          <Table.HeaderCell
+                            key={el.serviceDate + el.diningType}
+                            style={{whiteSpace: 'nowrap'}}>
+                            {el.serviceDate + el.diningType}
+                          </Table.HeaderCell>
+                        );
+                      },
+                    )}
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body></Table.Body>
+              </Table> */}
+
+            {salesList?.data?.data?.foodByDateDiningTypes.map((el, i) => {
+              const test = totalFood.map(s => {
+                return el.foods.filter(v => v.foodId === s.foodId)[0];
+                // console.log(data);
+              });
+              return (
+                <Table style={{height: 100}}>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell
+                        key={el.serviceDate + el.diningType}
+                        style={{whiteSpace: 'nowrap'}}>
+                        {el.serviceDate + el.diningType}
+                      </Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {test.map(v => {
+                      if (v) {
                         return (
                           <Table.Row>
-                            <Table.Cell>{f.foodCount}</Table.Cell>
+                            <Table.Cell>{v.foodCount}</Table.Cell>
                           </Table.Row>
                         );
-                      })}
-
-                      {/* {aa.map((c, index) => {
-                        return el.foods.map((v, idx) => {
-                          console.log(c, v);
-                          if (c.foodId === v.foodId) {
-                            return (
-                              <Table.Row>
-                                <Table.Cell>{v.foodCount}</Table.Cell>
-                              </Table.Row>
-                            );
-                          }
-                        });
-                      })} */}
-                    </Table.Body>
-                  </Table>
-                );
-              })}
-            </div>
+                      }
+                      return (
+                        <Table.Row>
+                          <Table.Cell>-</Table.Cell>
+                        </Table.Row>
+                      );
+                    })}
+                  </Table.Body>
+                </Table>
+              );
+            })}
             {/* <Table celled style={{width: '100%'}}></Table> */}
           </DetailTable>
         </TopTable>
@@ -218,9 +234,6 @@ const TopTable = styled.div`
   margin-top: 50px;
   display: flex;
 `;
-const SelectBox = styled(Select)`
-  width: 250px;
-`;
 
 const MakersTable = styled.div`
   margin-top: 50px;
@@ -233,6 +246,8 @@ const TotalTable = styled.div`
 
 const DetailTable = styled.div`
   overflow-x: auto;
+
+  display: flex;
 `;
 
 const MealDetailWrap = styled.div`
