@@ -4,9 +4,9 @@ import {Button} from 'semantic-ui-react';
 import {PageWrapper} from '../../layout/common.style';
 import CalendarDetail from './components/CalendarDetail';
 import CalendarSimple from './components/CalendarSimple';
-import { useQuery } from 'react-query';
-import { calendarApis } from '../../api/calendar';
-import { async } from 'q';
+import {useQuery} from 'react-query';
+import {calendarApis} from '../../api/calendar';
+import {async} from 'q';
 const makersCalendar = [
   {
     presetMakersId: 1,
@@ -195,26 +195,31 @@ const Calendar = () => {
   const [foodAct, setFoodAct] = useState([{}]);
   const [testData, setTestData] = useState([]);
 
-  const {data,isLoading} = useQuery('calendar',()=>calendarApis.getCalendarList(1),{
-    onSuccess:(v)=>{
-      if(v.data.data) setTestData(v.data.data)
-    }
-  })
+  const {data, isLoading} = useQuery(
+    'calendar',
+    () => calendarApis.getCalendarList(1),
+    {
+      onSuccess: v => {
+        console.log(v.data.data, 'test');
+        if (v.data.data) setTestData(v.data.data);
+      },
+    },
+  );
 
   useEffect(() => {
-    setCount(testData.map((v, i) => {
-      const test = v.clientSchedule.map((s, si) => {
-        return s.foodSchedule.length;
-      });
-      const result = test.reduce((a,b) => (Number(a)+Number(b)))
-      return result
-    }));
-    if(!isLoading){
-      
+    setCount(
+      testData.map((v, i) => {
+        const test = v.clientSchedule.map((s, si) => {
+          return s.foodSchedule.length;
+        });
+        const result = test.reduce((a, b) => Number(a) + Number(b));
+        return result;
+      }),
+    );
+    if (!isLoading) {
     }
   }, [isLoading, testData]);
   useEffect(() => {
-
     const groupAccess = [];
     const foodAccess = [];
     testData.map(groupData => {
@@ -234,8 +239,12 @@ const Calendar = () => {
     setGroupAccess(groupAccess);
     setFoodAct(foodAccess);
   }, [testData]);
-  if(isLoading){
-    return <><div>로딩중</div></>
+  if (isLoading) {
+    return (
+      <>
+        <div>로딩중</div>
+      </>
+    );
   }
   return (
     <PageWrapper>
@@ -243,7 +252,7 @@ const Calendar = () => {
         <TitleBox>일정관리</TitleBox>
         <SaveContainer page={page}>
           <ExampleBox>
-            <Button color="grey">대기</Button>
+            <Button color="grey">요청</Button>
             <Arrow>{`->`}</Arrow>
             <Button color="green">승인</Button>
             <Arrow>{`->`}</Arrow>
@@ -255,7 +264,7 @@ const Calendar = () => {
               color={'twitter'}
               active={false}
               size={'large'}
-              onClick={async() => {
+              onClick={async () => {
                 const req = {
                   makersScheduleDtos: group,
                   foodScheduleDtos: foodAct,
@@ -298,8 +307,10 @@ const Calendar = () => {
               active={false}
               size={'large'}
               onClick={() => {
+                console.log(data);
                 setTestData(
-                  data?.data?.map(makers => {
+                  data?.data?.data?.map(makers => {
+                    console.log(makers);
                     return {
                       ...makers,
                       scheduleStatus: 1,
@@ -324,7 +335,7 @@ const Calendar = () => {
               size={'large'}
               onClick={() => {
                 setTestData(
-                  data?.data?.map(makers => {
+                  data?.data?.data?.map(makers => {
                     return {
                       ...makers,
                       scheduleStatus: 2,

@@ -16,7 +16,6 @@ import {
 const CalendarSimple = ({testData, setTestData}) => {
   const DiningButton = (date, diningType) => {
     const result = testData.map(data => {
-      console.log(data,"tests")
       if (data.serviceDate === date && data.diningType === diningType) {
         return (
           <DiningContainer key={data.presetMakersId + data.serviceDate}>
