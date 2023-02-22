@@ -6,12 +6,19 @@ import {ReactComponent as Calendar} from '../../assets/snb/calendar.svg';
 import {ReactComponent as Stock} from '../../assets/snb/stock.svg';
 import {ReactComponent as Diagram} from '../../assets/snb/diagram.svg';
 import {ReactComponent as Money} from '../../assets/snb/money.svg';
+import {ReactComponent as Schedule} from '../../assets/snb/schedule.svg';
+
 export const menuData = [
   {name: '대시보드', path: '/main', icon: <Dashboard />},
   {name: '공지사항', path: '/notice', icon: <Speaker />},
   {name: '메이커스 정보', path: '/makersInfo', icon: <MakersInfo />},
   {name: '상품관리', path: '/product', icon: <Product />},
-  {name: '일정 관리', path: '/calendar', icon: <Calendar className="active" />},
+  {
+    name: '휴무 일정 관리',
+    path: '/calendar',
+    icon: <Schedule className="active" />,
+  },
+  {name: '판매 일정 관리', path: '/sales/schedule', icon: <Calendar />},
   {name: '재고 관리', path: '/stock', icon: <Stock />},
   {name: '상세현황', path: '/detail', icon: <Diagram />},
   {name: '정산 관리', path: '/calculate', icon: <Money />},
