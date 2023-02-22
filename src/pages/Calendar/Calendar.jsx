@@ -4,7 +4,7 @@ import {Button} from 'semantic-ui-react';
 import {PageWrapper} from '../../layout/common.style';
 import CalendarDetail from './components/CalendarDetail';
 import CalendarSimple from './components/CalendarSimple';
-import {useQuery} from 'react-query';
+import {QueryClient, useQuery} from 'react-query';
 import {calendarApis} from '../../api/calendar';
 import {async} from 'q';
 const makersCalendar = [
@@ -194,50 +194,43 @@ const Calendar = () => {
   const [group, setGroupAccess] = useState([{}]);
   const [foodAct, setFoodAct] = useState([{}]);
   const [testData, setTestData] = useState([]);
-
-  const {data, isLoading} = useQuery(
-    'calendar',
-    () => calendarApis.getCalendarList(1),
-    {
-      onSuccess: v => {
-        console.log(v.data.data, 'test');
-        if (v.data.data) setTestData(v.data.data);
-      },
-    },
+  const queryClient = new QueryClient();
+  const {data, isLoading} = useQuery('calendar', () =>
+    calendarApis.getCalendarList(1),
   );
-
   useEffect(() => {
-    setCount(
-      testData.map((v, i) => {
-        const test = v.clientSchedule.map((s, si) => {
-          return s.foodSchedule.length;
-        });
-        const result = test.reduce((a, b) => Number(a) + Number(b));
-        return result;
-      }),
-    );
-    if (!isLoading) {
-    }
-  }, [isLoading, testData]);
+    if (data) setTestData(data?.data?.data);
+  }, [data]);
   useEffect(() => {
     const groupAccess = [];
     const foodAccess = [];
-    testData.map(groupData => {
-      groupAccess.push({
-        presetMakersId: groupData.presetMakersId,
-        scheduleStatus: groupData.scheduleStatus,
-      });
-      return groupData.clientSchedule.map(client => {
-        return client.foodSchedule.map(food => {
-          return foodAccess.push({
-            presetFoodId: food.presetFoodId,
-            scheduleStatus: food.scheduleStatus,
+    if (testData) {
+      setCount(
+        testData.map((v, i) => {
+          const test = v.clientSchedule.map((s, si) => {
+            return s.foodSchedule.length;
+          });
+          const result = test.reduce((a, b) => Number(a) + Number(b));
+          return result;
+        }),
+      );
+      testData.map(groupData => {
+        groupAccess.push({
+          presetMakersId: groupData.presetMakersId,
+          scheduleStatus: groupData.scheduleStatus,
+        });
+        return groupData.clientSchedule.map(client => {
+          return client.foodSchedule.map(food => {
+            return foodAccess.push({
+              presetFoodId: food.presetFoodId,
+              scheduleStatus: food.scheduleStatus,
+            });
           });
         });
       });
-    });
-    setGroupAccess(groupAccess);
-    setFoodAct(foodAccess);
+      setGroupAccess(groupAccess);
+      setFoodAct(foodAccess);
+    }
   }, [testData]);
   if (isLoading) {
     return (
@@ -271,7 +264,6 @@ const Calendar = () => {
                 };
                 await calendarApis.accessHandler(req);
                 alert('저장되었습니다.');
-                console.log(req);
               }}>
               저장
             </Button>
@@ -307,7 +299,6 @@ const Calendar = () => {
               active={false}
               size={'large'}
               onClick={() => {
-                console.log(data);
                 setTestData(
                   data?.data?.data?.map(makers => {
                     console.log(makers);
@@ -355,14 +346,16 @@ const Calendar = () => {
             </Button>
           </AccessBox>
         </HeaderBox>
-        {testData && page ? (
+        {testData.length > 0 && page ? (
           <CalendarDetail
             count={count}
             testData={testData}
             setTestData={setTestData}
           />
         ) : (
-          <CalendarSimple testData={testData} setTestData={setTestData} />
+          testData.length > 0 && (
+            <CalendarSimple testData={testData} setTestData={setTestData} />
+          )
         )}
       </Wrapper>
     </PageWrapper>

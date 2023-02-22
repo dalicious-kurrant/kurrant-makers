@@ -14,6 +14,7 @@ import {
 } from 'date-fns';
 
 const CalendarSimple = ({testData, setTestData}) => {
+  console.log(testData);
   const DiningButton = (date, diningType) => {
     const result = testData.map(data => {
       if (data.serviceDate === date && data.diningType === diningType) {
@@ -76,27 +77,29 @@ const CalendarSimple = ({testData, setTestData}) => {
 
     return result;
   };
-  const dates = eachWeekOfInterval(
-    {
-      start: subDays(
-        new Date(
-          moment(testData[0].serviceDate).startOf('IOSWeek').toLocaleString(),
-        ),
-        0,
-      ), // 지난주
-      end: addDays(new Date(), 21), // 다음주
-    },
-    {
-      weekStartsOn: 0, // 일요일부터 시작
-    },
-  ).reduce((acc, cur) => {
-    const allDays = eachDayOfInterval({
-      start: cur,
-      end: addDays(cur, 6),
-    });
-    acc.push(allDays);
-    return acc;
-  }, []);
+  const dates =
+    testData.length > 0 &&
+    eachWeekOfInterval(
+      {
+        start: subDays(
+          new Date(
+            moment(testData[0].serviceDate).startOf('IOSWeek').toLocaleString(),
+          ),
+          0,
+        ), // 지난주
+        end: addDays(new Date(), 21), // 다음주
+      },
+      {
+        weekStartsOn: 0, // 일요일부터 시작
+      },
+    ).reduce((acc, cur) => {
+      const allDays = eachDayOfInterval({
+        start: cur,
+        end: addDays(cur, 6),
+      });
+      acc.push(allDays);
+      return acc;
+    }, []);
 
   return (
     <Container>
