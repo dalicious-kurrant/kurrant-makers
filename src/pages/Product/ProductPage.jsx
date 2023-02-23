@@ -39,7 +39,7 @@ const ProductPage = () => {
       };
       return (
         <>
-          <TbodyCell>
+          {/* <TbodyCell>
             <FlexBox>
               <input
                 type="checkbox"
@@ -47,7 +47,7 @@ const ProductPage = () => {
                 onChange={e => checkHandler(e.target.checked, menu.id)}
               />
             </FlexBox>
-          </TbodyCell>
+          </TbodyCell> */}
           <TbodyCell>
             <FlexBox>{menu.foodId}</FlexBox>
           </TbodyCell>
@@ -76,14 +76,14 @@ const ProductPage = () => {
   return (
     <Wrap>
       <h1>상품 리스트</h1>
-      <button onClick={onSubmit}>엑셀</button>
+      {/* <button onClick={onSubmit}>엑셀</button> */}
       <TableWrap>
         <Table
           headerList={[
-            {
-              width: '56px',
-              label: <input type="checkbox" />,
-            },
+            // {
+            //   width: '56px',
+            //   label: <input type="checkbox" />,
+            // },
             {
               width: '80px',
               label: 'ID',
@@ -148,6 +148,7 @@ const ProductPage = () => {
 export default ProductPage;
 const Wrap = styled.div`
   margin-top: 100px;
+  margin-bottom: 50px;
 `;
 const TableWrap = styled.div`
   display: flex;
@@ -163,7 +164,6 @@ const FlexBox = styled.div`
   align-self: center;
   justify-self: center;
 `;
-
 
 const HoverBox = styled.div`
   justify-content: center;
