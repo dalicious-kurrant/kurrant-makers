@@ -1,4 +1,4 @@
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {FormProvider, useForm} from 'react-hook-form';
 import Input from '../../component/Input/input';
 import styled from 'styled-components';
@@ -13,7 +13,7 @@ import {useQueryClient} from 'react-query';
 
 const ProductDetailPage = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
   const id = location.state.id;
   const queryClient = useQueryClient();
   const {data: detailList} = useGetProductDetail(id);
@@ -118,7 +118,7 @@ const ProductDetailPage = () => {
           </HashTagWrap>
         </div>
         <ModifyButtonWrap>
-          <ModifyButton onClick={modifyButton}>수정하기</ModifyButton>
+          <ModifyButton onClick={() => navigate(-1)}>확인</ModifyButton>
         </ModifyButtonWrap>
       </Container>
     </Wrap>
