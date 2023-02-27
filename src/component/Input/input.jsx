@@ -137,6 +137,7 @@ const InputContainer = styled.div``;
 
 const StyledTextInput = styled.input`
   /* width: 100%; */
+  outline: none;
   margin-right: 10px;
   height: 30px;
   border: 0.5px solid #c8c8d2;
