@@ -56,7 +56,7 @@ const CalendarDetail = ({count, testData, setTestData}) => {
                       )}
                       {di === 0 && si === 0 && (
                         <Table.Cell rowSpan={count[i]}>
-                          {v.makersCapa}
+                          {v.makersCapacity}
                         </Table.Cell>
                       )}
                       {di === 0 && (
@@ -71,7 +71,7 @@ const CalendarDetail = ({count, testData, setTestData}) => {
                       )}
                       {di === 0 && (
                         <Table.Cell rowSpan={s.foodSchedule.length}>
-                          {s.clientCapa}
+                          {s.clientCapacity}
                         </Table.Cell>
                       )}
                       <Table.Cell textAlign="center">
@@ -126,9 +126,9 @@ const CalendarDetail = ({count, testData, setTestData}) => {
                             : '거절'}
                         </Button>
                       </Table.Cell>
-                      <Table.Cell>{d.food}</Table.Cell>
+                      <Table.Cell>{d.foodName}</Table.Cell>
                       <Table.Cell>{d.foodStatus}</Table.Cell>
-                      <Table.Cell>{d.foodCapa}</Table.Cell>
+                      <Table.Cell>{d.foodCapacity}</Table.Cell>
                     </Table.Row>
                   );
                 });
