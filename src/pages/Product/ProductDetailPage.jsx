@@ -19,7 +19,7 @@ const ProductDetailPage = () => {
   const {data: detailList} = useGetProductDetail(id);
   const {mutateAsync: editData} = useEditProductDetail();
   const listData = detailList?.data?.data;
-
+  console.log(listData);
   const [clicked, setClicked] = useState([]);
 
   const form = useForm({
@@ -39,18 +39,10 @@ const ProductDetailPage = () => {
   const periodDiscountRate = watch('periodDiscountRate');
   const periodDiscountPrice = watch('periodDiscountPrice');
   const customPrice = watch('customPrice');
+  const morningCapacity = watch('morning');
+  const lunchCapacity = watch('lunch');
+  const dinnerCapacity = watch('dinner');
 
-  const modifyButton = async () => {
-    const data = {
-      foodId: listData?.foodId,
-      makersDiscountRate: Number(discountRate),
-      periodDiscountRate: Number(periodDiscountRate),
-      foodTags: clicked,
-    };
-
-    await editData(data);
-    queryClient.invalidateQueries('productDetail');
-  };
   useEffect(() => {
     setValue('foodName', listData?.foodName);
     setValue('foodPrice', withCommas(listData?.foodPrice));
@@ -80,9 +72,12 @@ const ProductDetailPage = () => {
     );
     setValue(
       'customPrice',
-      listData?.customPrice === 0 ? '0' : listData?.customPrice,
+      withCommas(listData?.customPrice === 0 ? '0' : listData?.customPrice),
     );
     setClicked(listData?.foodTags);
+    setValue('morning', withCommas(listData?.morningCapacity));
+    setValue('lunch', withCommas(listData?.lunchCapacity));
+    setValue('dinner', withCommas(listData?.dinnerCapacity));
   }, [
     listData?.customPrice,
     listData?.foodName,
@@ -93,6 +88,9 @@ const ProductDetailPage = () => {
     listData?.periodDiscountRate,
     listData?.foodTags,
     setValue,
+    listData?.morningCapacity,
+    listData?.lunchCapacity,
+    listData?.dinnerCapacity,
   ]);
   return (
     <Wrap>
@@ -102,13 +100,22 @@ const ProductDetailPage = () => {
         </div>
         <InputWrap>
           <FormProvider {...form}>
-            <Input name="foodName" label="메뉴명" width="200px" />
-            <Input name="foodPrice" label="매장가" />
-            <Input name="discountRate" label="할인율" />
-            <Input name="discountPrice" label="할인가" />
-            <Input name="periodDiscountRate" label="기간할인율" />
-            <Input name="periodDiscountPrice" label="기간할인가" />
-            <Input name="customPrice" label="커스텀가" />
+            <div>
+              <PriceWrap>
+                <Input name="foodName" label="메뉴명" width="200px" readOnly />
+                <Input name="foodPrice" label="매장가" readOnly />
+                <Input name="discountRate" label="할인율" readOnly />
+                <Input name="discountPrice" label="할인가" readOnly />
+                <Input name="periodDiscountRate" label="기간할인율" readOnly />
+                <Input name="periodDiscountPrice" label="기간할인가" readOnly />
+                <Input name="customPrice" label="커스텀가" readOnly />
+              </PriceWrap>
+              <CapaWrap>
+                <Input name="morning" label="아침식사 케파" readOnly />
+                <Input name="lunch" label="점심식사 케파" readOnly />
+                <Input name="dinner" label="저녁식사 케파" readOnly />
+              </CapaWrap>
+            </div>
           </FormProvider>
         </InputWrap>
         <div>
@@ -117,6 +124,27 @@ const ProductDetailPage = () => {
             <HashTag clicked={clicked} setClicked={setClicked} />
           </HashTagWrap>
         </div>
+        <div>
+          <TagTitle>상품 이미지</TagTitle>
+          <ImageWrap>
+            {listData &&
+              listData?.foodImages.map((el, i) => {
+                return (
+                  <div key={el + i}>
+                    <img src={el} alt="기존이미지" />
+                  </div>
+                );
+              })}
+          </ImageWrap>
+        </div>
+        <div>
+          <TagTitle>메뉴 설명</TagTitle>
+        </div>
+        <Description
+          readOnly
+          defaultValue={listData?.description}
+          key={listData?.description}
+        />
         <ModifyButtonWrap>
           <ModifyButton onClick={() => navigate(-1)}>확인</ModifyButton>
         </ModifyButtonWrap>
@@ -166,4 +194,36 @@ const ModifyButton = styled.div`
   font-weight: 600;
   color: white;
   cursor: pointer;
+`;
+
+const PriceWrap = styled.div`
+  display: flex;
+`;
+
+const CapaWrap = styled.div`
+  display: flex;
+  margin-top: 24px;
+`;
+const ImageWrap = styled.div`
+  display: flex;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+`;
+
+const Description = styled.textarea`
+  width: 500px;
+  height: 80px;
+  outline: none;
+  resize: none;
+  padding: 4px 8px;
+  border-color: #d5d4d9;
+  border-radius: 4px;
 `;

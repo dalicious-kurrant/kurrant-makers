@@ -29,7 +29,7 @@ const ProductPage = () => {
 
   const renderTableCells = useCallback(
     (menu, idx) => {
-      console.log(menu.foodTags);
+      // console.log(menu.foodTags);
       const checkHandler = (checked, id) => {
         if (checked) {
           setCheckItems(prev => [...prev, id]);
@@ -66,7 +66,7 @@ const ProductPage = () => {
           <TbodyCell>{menu.eventDiscount}%</TbodyCell>
           <TbodyCell>{withCommas(menu.resultPrice)}원</TbodyCell>
           <TbodyCell>{menu.description}</TbodyCell>
-          <TbodyCell>{menu.foodTags + (idx !== 0 ? ',  ' : '')}</TbodyCell>
+          <TbodyCell>{menu.foodTags + (idx !== 0 ? `\u00A0` : '')}</TbodyCell>
         </>
       );
     },

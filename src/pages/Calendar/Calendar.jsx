@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {Button} from 'semantic-ui-react';
+import {Button, Pagination} from 'semantic-ui-react';
 import {PageWrapper} from '../../layout/common.style';
 import CalendarDetail from './components/CalendarDetail';
 import CalendarSimple from './components/CalendarSimple';
@@ -194,13 +194,23 @@ const Calendar = () => {
   const [group, setGroupAccess] = useState([{}]);
   const [foodAct, setFoodAct] = useState([{}]);
   const [testData, setTestData] = useState([]);
-  const queryClient = new QueryClient();
-  const {data, isLoading} = useQuery('calendar', () =>
-    calendarApis.getCalendarList(1),
-  );
+  const [totalPage, setTotalPage] = useState(0);
+  const [pageNumbeer, setPageNumber] = useState(1);
+  const {
+    data,
+    isLoading,
+    refetch: calendarFetch,
+  } = useQuery('calendar', () => calendarApis.getCalendarList(20, pageNumbeer));
   useEffect(() => {
-    if (data) setTestData(data?.data?.data);
+    if (data) {
+      console.log(data);
+      setTestData(data?.data?.data?.items);
+      setTotalPage(data.data.data.total);
+    }
   }, [data]);
+  useEffect(() => {
+    calendarFetch();
+  }, [pageNumbeer]);
   useEffect(() => {
     const groupAccess = [];
     const foodAccess = [];
@@ -292,6 +302,18 @@ const Calendar = () => {
               상세보기
             </Button>
           </ViewTypeBox>
+          {totalPage > 0 && (
+            <PagenationBox>
+              <Pagination
+                defaultActivePage={pageNumbeer}
+                totalPages={totalPage}
+                boundaryRange={1}
+                onPageChange={(e, data) => {
+                  setPageNumber(data.activePage);
+                }}
+              />
+            </PagenationBox>
+          )}
           <AccessBox>
             <Button
               toggle
@@ -405,4 +427,9 @@ const SaveContainer = styled.div`
 const Arrow = styled.div`
   padding-left: 10px;
   padding-right: 10px;
+`;
+const PagenationBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
