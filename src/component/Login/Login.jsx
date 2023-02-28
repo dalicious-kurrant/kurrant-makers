@@ -33,7 +33,7 @@ const Login = () => {
         const accessToken = res.data.data.accessToken;
         localStorage.setItem('token', accessToken);
         localStorage.setItem('makersName', res.data.data.name);
-        localStorage.setItem('makersId', res.data.data.makersId);
+        // localStorage.setItem('makersId', res.data.data.makersId);
         navigate('/product');
         window.location.reload();
       }
