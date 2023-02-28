@@ -77,6 +77,7 @@ const CalendarSimple = ({testData, setTestData}) => {
 
     return result;
   };
+
   const dates =
     testData.length > 0 &&
     eachWeekOfInterval(
@@ -87,12 +88,18 @@ const CalendarSimple = ({testData, setTestData}) => {
           ),
           0,
         ), // 지난주
-        end: addDays(new Date(), 21), // 다음주
+        end: addDays(
+          new Date(
+            moment(testData[0].serviceDate).startOf('IOSWeek').toLocaleString(),
+          ),
+          14,
+        ), // 다음주
       },
       {
         weekStartsOn: 0, // 일요일부터 시작
       },
     ).reduce((acc, cur) => {
+      console.log(acc, cur);
       const allDays = eachDayOfInterval({
         start: cur,
         end: addDays(cur, 6),
