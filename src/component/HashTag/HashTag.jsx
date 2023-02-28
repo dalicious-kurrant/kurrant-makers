@@ -26,8 +26,9 @@ const HashTag = ({clicked, setClicked}) => {
       <BoxWrap>
         {styleTag.map((el, idx) => (
           <Box
+            disabled={true}
             key={el.id}
-            onClick={() => onSelect(el.id)}
+            // onClick={() => onSelect(el.id)}
             touch={clicked?.includes(el.id)}>
             <Text touch={clicked?.includes(el.id)}>{el.style}</Text>
           </Box>
@@ -38,7 +39,7 @@ const HashTag = ({clicked, setClicked}) => {
         {countryTag.map((el, idx) => (
           <Box
             key={el.id}
-            onClick={() => onSelect(el.id)}
+            // onClick={() => onSelect(el.id)}
             touch={clicked?.includes(el.id)}>
             <Text touch={clicked?.includes(el.id)}>{el.country}</Text>
           </Box>
@@ -49,7 +50,7 @@ const HashTag = ({clicked, setClicked}) => {
         {typeTag.map((el, idx) => (
           <Box
             key={el.id}
-            onClick={() => onSelect(el.id)}
+            // onClick={() => onSelect(el.id)}
             touch={clicked?.includes(el.id)}>
             <Text touch={clicked?.includes(el.id)}>{el.type}</Text>
           </Box>
@@ -60,7 +61,7 @@ const HashTag = ({clicked, setClicked}) => {
         {ingredientTag.map((el, idx) => (
           <Box
             key={el.id}
-            onClick={() => onSelect(el.id)}
+            // onClick={() => onSelect(el.id)}
             touch={clicked?.includes(el.id)}>
             <Text touch={clicked?.includes(el.id)}>{el.ingredient}</Text>
           </Box>
@@ -71,7 +72,7 @@ const HashTag = ({clicked, setClicked}) => {
         {wayTag.map((el, idx) => (
           <Box
             key={el.id}
-            onClick={() => onSelect(el.id)}
+            // onClick={() => onSelect(el.id)}
             touch={clicked?.includes(el.id)}>
             <Text touch={clicked?.includes(el.id)}>{el.way}</Text>
           </Box>
@@ -82,7 +83,7 @@ const HashTag = ({clicked, setClicked}) => {
         {temperatureTag.map((el, idx) => (
           <Box
             key={el.id}
-            onClick={() => onSelect(el.id)}
+            // onClick={() => onSelect(el.id)}
             touch={clicked?.includes(el.id)}>
             <Text touch={clicked?.includes(el.id)}>{el.temperature}</Text>
           </Box>
@@ -93,7 +94,7 @@ const HashTag = ({clicked, setClicked}) => {
         {featureTag.map((el, idx) => (
           <Box
             key={el.id}
-            onClick={() => onSelect(el.id)}
+            // onClick={() => onSelect(el.id)}
             touch={clicked?.includes(el.id)}>
             <Text touch={clicked?.includes(el.id)}>{el.featrue}</Text>
           </Box>
@@ -104,7 +105,7 @@ const HashTag = ({clicked, setClicked}) => {
         {allergyTag.map((el, idx) => (
           <Box
             key={el.id}
-            onClick={() => onSelect(el.id)}
+            // onClick={() => onSelect(el.id)}
             touch={clicked?.includes(el.id)}>
             <Text touch={clicked?.includes(el.id)}>{el.allergy}</Text>
           </Box>
@@ -115,7 +116,7 @@ const HashTag = ({clicked, setClicked}) => {
         {appetiteTag.map((el, idx) => (
           <Box
             key={el.id}
-            onClick={() => onSelect(el.id)}
+            // onClick={() => onSelect(el.id)}
             touch={clicked?.includes(el.id)}>
             <Text touch={clicked?.includes(el.id)}>{el.appetite}</Text>
           </Box>
@@ -126,7 +127,7 @@ const HashTag = ({clicked, setClicked}) => {
         {spicyTag.map((el, idx) => (
           <Box
             key={el.id}
-            onClick={() => onSelect(el.id)}
+            // onClick={() => onSelect(el.id)}
             touch={clicked?.includes(el.id)}>
             <Text touch={clicked?.includes(el.id)}>{el.spicy}</Text>
           </Box>
