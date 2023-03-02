@@ -1,191 +1,11 @@
 import {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {Button, Pagination} from 'semantic-ui-react';
+import {Button, Label, Pagination} from 'semantic-ui-react';
 import {PageWrapper} from '../../layout/common.style';
 import CalendarDetail from './components/CalendarDetail';
 import CalendarSimple from './components/CalendarSimple';
 import {QueryClient, useQuery} from 'react-query';
 import {calendarApis} from '../../api/calendar';
-import {async} from 'q';
-const makersCalendar = [
-  {
-    presetMakersId: 1,
-    scheduleStatus: 0,
-    serviceDate: '2023-02-21',
-    diningType: '아침',
-    makersCapa: 100,
-    leftMakersCapa: 80,
-    deadline: '2023/02/30 18:00:00',
-    clientSchedule: [
-      {
-        pickupTime: '07:50',
-        clientName: '달리셔스',
-        clientCapa: 20,
-        foodSchedule: [
-          {
-            presetFoodId: 9,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 1,
-          },
-          {
-            presetFoodId: 10,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 1,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    presetMakersId: 2,
-    scheduleStatus: 1,
-    serviceDate: '2023-02-22',
-    diningType: '아침',
-    makersCapa: 100,
-    deadline: '2023/02/30 18:00:00',
-    clientSchedule: [
-      {
-        pickupTime: '07:50',
-        clientName: '달리셔스',
-        clientCapa: 20,
-        foodSchedule: [
-          {
-            presetFoodId: 1,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 0,
-          },
-          {
-            presetFoodId: 8,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 0,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    presetMakersId: 3,
-    scheduleStatus: 0,
-    serviceDate: '2023-02-23',
-    diningType: '아침',
-    makersCapa: 100,
-    deadline: '2023/02/30 18:00:00',
-    clientSchedule: [
-      {
-        pickupTime: '07:50',
-        clientName: '달리셔스',
-        clientCapa: 20,
-        foodSchedule: [
-          {
-            presetFoodId: 2,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 0,
-          },
-          {
-            presetFoodId: 3,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 0,
-          },
-          {
-            presetFoodId: 4,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 0,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    presetMakersId: 5,
-    scheduleStatus: 0,
-    serviceDate: '2023-02-23',
-    diningType: '점심',
-    makersCapa: 100,
-    deadline: '2023/02/30 18:00:00',
-    clientSchedule: [
-      {
-        pickupTime: '07:50',
-        clientName: '달리셔스',
-        clientCapa: 20,
-        foodSchedule: [
-          {
-            presetFoodId: 5,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 0,
-          },
-          {
-            presetFoodId: 6,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 0,
-          },
-          {
-            presetFoodId: 7,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 0,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    presetMakersId: 4,
-    scheduleStatus: 2,
-    serviceDate: '2023-02-24',
-    diningType: '아침',
-    makersCapa: 100,
-    deadline: '2023/02/30 18:00:00',
-    clientSchedule: [
-      {
-        pickupTime: '07:50',
-        clientName: '달리셔스',
-        clientCapa: 20,
-        foodSchedule: [
-          {
-            presetFoodId: 11,
-            food: '음식sdfsdfdsfsdfsdfsdasdasda sdsadsadasdadadasda sdadadasdasdasdadsdsdf',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 0,
-          },
-          {
-            presetFoodId: 12,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 0,
-          },
-          {
-            presetFoodId: 13,
-            food: '음식',
-            foodStatus: '판매중',
-            foodCapa: 100,
-            scheduleStatus: 0,
-          },
-        ],
-      },
-    ],
-  },
-];
 
 const Calendar = () => {
   // const {data: makersCalendar} = useGetCalendarList();
@@ -200,7 +20,9 @@ const Calendar = () => {
     data,
     isLoading,
     refetch: calendarFetch,
-  } = useQuery('calendar', () => calendarApis.getCalendarList(20, pageNumbeer));
+  } = useQuery('calendar', () =>
+    calendarApis.getCalendarList(2000, pageNumbeer),
+  );
   useEffect(() => {
     if (data) {
       console.log(data);
@@ -249,6 +71,7 @@ const Calendar = () => {
       </>
     );
   }
+  console.log(testData);
   return (
     <PageWrapper>
       <Wrapper>
@@ -262,6 +85,11 @@ const Calendar = () => {
             <Button color="red">거절</Button>
           </ExampleBox>
           <SaveBox>
+            {testData[0]?.deadline && (
+              <DeadLineBox size="big" style={{marginRight: 10}}>
+                마감날짜 : {testData[0]?.deadline}
+              </DeadLineBox>
+            )}
             <Button
               toggle
               color={'twitter'}
@@ -321,8 +149,9 @@ const Calendar = () => {
               active={false}
               size={'large'}
               onClick={() => {
+                console.log();
                 setTestData(
-                  data?.data?.data?.map(makers => {
+                  data?.data?.data?.items?.map(makers => {
                     console.log(makers);
                     return {
                       ...makers,
@@ -348,7 +177,7 @@ const Calendar = () => {
               size={'large'}
               onClick={() => {
                 setTestData(
-                  data?.data?.data?.map(makers => {
+                  data?.data?.data?.items?.map(makers => {
                     return {
                       ...makers,
                       scheduleStatus: 2,
@@ -415,7 +244,19 @@ const ExampleBox = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const SaveBox = styled.div``;
+const DeadLineBox = styled.div`
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: 5px;
+  border: 1px solid #ededed;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+`;
+const SaveBox = styled.div`
+  display: flex;
+`;
 const SaveContainer = styled.div`
   display: flex;
   justify-content: space-between;
