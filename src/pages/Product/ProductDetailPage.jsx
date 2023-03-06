@@ -89,9 +89,22 @@ const ProductDetailPage = () => {
       withCommas(listData?.customPrice === 0 ? '0' : listData?.customPrice),
     );
     setClicked(listData?.foodTags);
-    setValue('morning', withCommas(listData?.morningCapacity));
-    setValue('lunch', withCommas(listData?.lunchCapacity));
-    setValue('dinner', withCommas(listData?.dinnerCapacity));
+    setValue(
+      'morning',
+      withCommas(
+        listData?.morningCapacity === 0 ? '0' : listData?.morningCapacity,
+      ),
+    );
+    setValue(
+      'lunch',
+      withCommas(listData?.lunchCapacity === 0 ? '0' : listData?.lunchCapacity),
+    );
+    setValue(
+      'dinner',
+      withCommas(
+        listData?.dinnerCapacity === 0 ? '0' : listData?.dinnerCapacity,
+      ),
+    );
   }, [
     listData?.customPrice,
     listData?.foodName,

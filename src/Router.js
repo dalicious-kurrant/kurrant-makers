@@ -13,7 +13,7 @@ import Stock from './pages/Stock/Stock';
 import Sidebar from './component/Snb/Sidebar';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Schedule from './pages/SalesCalendar/Schedule';
-import {el} from 'date-fns/locale';
+import ScrollToTop from './Shared/ScrollToTop';
 
 function Router() {
   const token = localStorage.getItem('token');
@@ -21,6 +21,7 @@ function Router() {
   return (
     <BrowserRouter>
       {token !== null && <Sidebar />}
+      <ScrollToTop />
       <Container token={token}>
         <Routes>
           {token === null && <Route path="/" element={<LoginPage />} />}
