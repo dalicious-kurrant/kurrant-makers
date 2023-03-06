@@ -103,6 +103,11 @@ const ProfileWrap = styled.div`
 `;
 
 const LogoutWrap = styled.div`
+  display: flex;
   margin-bottom: 20px;
   cursor: pointer;
+
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;

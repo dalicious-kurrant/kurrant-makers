@@ -42,6 +42,9 @@ const Login = () => {
       if (error.response.status === 401) {
         setLoginCheck(true);
       }
+      if (error.response.status === 404) {
+        alert(error.response.data.message);
+      }
     }
   };
 

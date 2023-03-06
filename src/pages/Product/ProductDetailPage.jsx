@@ -47,6 +47,20 @@ const ProductDetailPage = () => {
     setValue('foodName', listData?.foodName);
     setValue('foodPrice', withCommas(listData?.foodPrice));
     setValue(
+      'membershipRate',
+      listData?.membershipDiscountRate === 0
+        ? '0'
+        : listData?.membershipDiscountRate,
+    );
+    setValue(
+      'membershipPrice',
+      withCommas(
+        listData?.membershipDiscountPrice === 0
+          ? '0'
+          : listData?.membershipDiscountPrice,
+      ),
+    );
+    setValue(
       'discountRate',
       listData?.makersDiscountRate === 0 ? '0' : listData?.makersDiscountRate,
     );
@@ -91,6 +105,8 @@ const ProductDetailPage = () => {
     listData?.morningCapacity,
     listData?.lunchCapacity,
     listData?.dinnerCapacity,
+    listData?.membershipDiscountRate,
+    listData?.membershipDiscountPrice,
   ]);
   return (
     <Wrap>
@@ -104,6 +120,8 @@ const ProductDetailPage = () => {
               <PriceWrap>
                 <Input name="foodName" label="메뉴명" width="200px" readOnly />
                 <Input name="foodPrice" label="매장가" readOnly />
+                <Input name="membershipRate" label="멤버십 할인율" readOnly />
+                <Input name="membershipPrice" label="멤버십 할인가" readOnly />
                 <Input name="discountRate" label="매장 할인율" readOnly />
                 <Input name="discountPrice" label="매장 할인가" readOnly />
                 <Input
@@ -126,12 +144,12 @@ const ProductDetailPage = () => {
             </div>
           </FormProvider>
         </InputWrap>
-        <div>
+        {/* <div>
           <TagTitle>해시태그 등록</TagTitle>
           <HashTagWrap>
             <HashTag clicked={clicked} setClicked={setClicked} />
           </HashTagWrap>
-        </div>
+        </div> */}
         <div>
           <TagTitle>상품 이미지</TagTitle>
           <ImageWrap>

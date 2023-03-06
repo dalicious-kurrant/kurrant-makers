@@ -2,6 +2,7 @@ import {Table} from 'semantic-ui-react';
 import styled from 'styled-components';
 import {useGetMakersInfo} from '../../hook/useMakersInfo';
 import {TableWrapper} from '../../layout/common.style';
+import {bizNoFormatter} from '../../utils/bizNumberFormatter';
 
 const MakersInfoPage = () => {
   const {data: makersInfo} = useGetMakersInfo();
@@ -124,7 +125,7 @@ const MakersInfoPage = () => {
               <Cell width={4}>사업자등록번호</Cell>
               <Table.Cell>
                 <div style={{padding: 4}}>
-                  {infoData?.companyRegistrationNumber}
+                  {bizNoFormatter(infoData?.companyRegistrationNumber)}
                 </div>
               </Table.Cell>
             </Table.Row>
