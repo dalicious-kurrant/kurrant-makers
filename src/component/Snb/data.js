@@ -17,35 +17,23 @@ import {ReactComponent as ActiveMakersInfo} from '../../assets/snb/active/makers
 import {ReactComponent as ActiveDiagram} from '../../assets/snb/active/diagram.svg';
 import {ReactComponent as ActiveMoney} from '../../assets/snb/active/money.svg';
 export const menuData = [
-  {
-    name: '대시보드',
-    path: '/main',
-    icon: <Dashboard />,
-    activeIcon: <ActiveDash />,
-  },
-  {
-    name: '공지사항',
-    path: '/notice',
-    icon: <Speaker />,
-    activeIcon: <ActiveSpeaker />,
-  },
-  {
-    name: '메이커스 정보',
-    path: '/makersInfo',
-    icon: <MakersInfo />,
-    activeIcon: <ActiveMakersInfo />,
-  },
+  // {
+  //   name: '대시보드',
+  //   path: '/main',
+  //   icon: <Dashboard />,
+  //   activeIcon: <ActiveDash />,
+  // },
+  // {
+  //   name: '공지사항',
+  //   path: '/notice',
+  //   icon: <Speaker />,
+  //   activeIcon: <ActiveSpeaker />,
+  // },
   {
     name: '상품관리',
     path: '/product',
     icon: <Product />,
     activeIcon: <ActiveProduct />,
-  },
-  {
-    name: '휴무 일정 관리',
-    path: '/calendar',
-    icon: <Schedule />,
-    activeIcon: <ActiveSchedule />,
   },
   {
     name: '판매 일정 관리',
@@ -54,17 +42,30 @@ export const menuData = [
     activeIcon: <ActiveCalendar />,
   },
   {
-    name: '재고 관리',
-    path: '/stock',
-    icon: <Stock />,
-    activeIcon: <ActiveStock />,
+    name: '휴무 일정 관리',
+    path: '/calendar',
+    icon: <Schedule />,
+    activeIcon: <ActiveSchedule />,
   },
   {
-    name: '상세현황',
-    path: '/detail',
-    icon: <Diagram />,
-    activeIcon: <ActiveDiagram />,
+    name: '메이커스 정보',
+    path: '/makersInfo',
+    icon: <MakersInfo />,
+    activeIcon: <ActiveMakersInfo />,
   },
+
+  // {
+  //   name: '재고 관리',
+  //   path: '/stock',
+  //   icon: <Stock />,
+  //   activeIcon: <ActiveStock />,
+  // },
+  // {
+  //   name: '상세현황',
+  //   path: '/detail',
+  //   icon: <Diagram />,
+  //   activeIcon: <ActiveDiagram />,
+  // },
   {
     name: '정산 관리',
     path: '/calculate',

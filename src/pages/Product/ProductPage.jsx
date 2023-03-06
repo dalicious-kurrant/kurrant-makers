@@ -10,7 +10,7 @@ const ProductPage = () => {
   const {data: makersProcuctList} = useGetMakerProductsList();
   const navigate = useNavigate();
   const [checkItems, setCheckItems] = useState([]);
-
+  console.log(makersProcuctList);
   const goToDetail = id => {
     navigate('/productDetail/' + id, {
       state: {
@@ -60,6 +60,7 @@ const ProductPage = () => {
             <HoverBox>{menu.foodName}</HoverBox>
           </TbodyCell>
           <TbodyCell>{withCommas(menu.defaultPrice)}원</TbodyCell>
+          <TbodyCell>{menu.membershipDiscount}%</TbodyCell>
           <TbodyCell>
             {withCommas(menu.makersDiscount === 0 ? '0' : menu.makersDiscount)}%
           </TbodyCell>
@@ -99,6 +100,10 @@ const ProductPage = () => {
             {
               width: '181px',
               label: '매장가격',
+            },
+            {
+              width: '181px',
+              label: '멤버십할인률',
             },
             {
               width: '181px',
