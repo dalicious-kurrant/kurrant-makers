@@ -21,7 +21,7 @@ const List = styled.li`
   list-style: none;
   padding: 15px 0px;
   padding-left: 26px;
-  background-color: ${({isActive}) => isActive && '#f3f3f3'};
+  background-color: ${({isActive}) => isActive && '#ffffff'};
   p {
     padding-left: 10px;
     padding-bottom: 4px;

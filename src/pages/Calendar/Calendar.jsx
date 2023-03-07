@@ -66,9 +66,9 @@ const Calendar = () => {
   }, [testData]);
   if (isLoading) {
     return (
-      <>
+      <PageWrapper>
         <div>로딩중</div>
-      </>
+      </PageWrapper>
     );
   }
   console.log(testData);

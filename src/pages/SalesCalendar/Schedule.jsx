@@ -29,7 +29,6 @@ const Schedule = () => {
     });
 
   const {data: salesList, refetch} = useGetSalesList(startDate, endDate, types);
-  console.log(salesList);
 
   const getStartDate = e => {
     setStartDate(e.target.value);
@@ -38,9 +37,9 @@ const Schedule = () => {
     setEndDate(e.target.value);
   };
 
-  const loadButton = () => {
-    refetch();
-  };
+  // const loadButton = () => {
+  //   refetch();
+  // };
   const totalFood = salesList?.data?.data?.totalFoods;
 
   const totalCount = totalFood
@@ -48,7 +47,9 @@ const Schedule = () => {
     .reduce((acc, cur) => {
       return acc + cur;
     }, 0);
-
+  useEffect(() => {
+    refetch();
+  }, [startDate, endDate, refetch]);
   return (
     <Wrap>
       <Header as="h2">기간별 판매 내역</Header>
@@ -66,9 +67,9 @@ const Schedule = () => {
             onChange={e => getEndDate(e)}
           />
         </div>
-        <ButtonWrap>
+        {/* <ButtonWrap>
           <Button content="조회하기" basic size="tiny" onClick={loadButton} />
-        </ButtonWrap>
+        </ButtonWrap> */}
       </CalendarWrap>
       <DiningButton touch={diningSelect} setTouch={setDiningSelect} />
 
@@ -87,7 +88,7 @@ const Schedule = () => {
               <Table.Body>
                 {salesList?.data?.data?.totalFoods?.map((el, i) => {
                   return (
-                    <Table.Row key={el.foodName + i}>
+                    <Table.Row key={el.foodName + i + el.foodId}>
                       <Table.Cell>{el.foodName}</Table.Cell>
                       <Table.Cell textAlign="center">
                         {el.totalFoodCount}
@@ -115,7 +116,7 @@ const Schedule = () => {
                 return el.foods.filter(v => v.foodId === s.foodId)[0];
               });
               return (
-                <div>
+                <div key={el.serviceDate + i + el.diningType}>
                   <Table style={{height: 100}}>
                     <Table.Header>
                       <Table.Row>
@@ -127,10 +128,10 @@ const Schedule = () => {
                       </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                      {test.map(v => {
+                      {test.map((v, i) => {
                         if (v) {
                           return (
-                            <Table.Row>
+                            <Table.Row key={v.foodId + i + v.foodName}>
                               <Table.Cell textAlign="center">
                                 {v.foodCount}
                               </Table.Cell>
@@ -138,7 +139,7 @@ const Schedule = () => {
                           );
                         }
                         return (
-                          <Table.Row>
+                          <Table.Row key={v.foodId + i + v.foodName}>
                             <Table.Cell textAlign="center">{`\u00A0`}</Table.Cell>
                           </Table.Row>
                         );
@@ -160,17 +161,20 @@ const Schedule = () => {
       </TableWrapper>
       <TableWrapper>
         {salesList?.data?.data?.groupFoodByDateDiningTypes.map((el, idx) => (
-          <MakersTable key={idx}>
+          <MakersTable
+            key={'groupFoodByDateDiningTypes' + idx + el.serviceDate}>
             <BoldText>{el.serviceDate + `\u00A0` + el.diningType}</BoldText>
             <DateLine />
             <DiningTypeWrap>
               <MealDetailWrap>
-                {el.foodByGroups.map(v => {
+                {el.foodByGroups.map((v, l) => {
                   return (
-                    <TableWrap>
+                    <TableWrap key={v.groupId + v.groupName + l + idx}>
                       {v.spotByDateDiningTypes.map((spot, i) => {
                         return (
-                          <div key={i} style={{marginRight: 10}}>
+                          <div
+                            key={spot.spotId + spot.spotName + i + l + idx}
+                            style={{marginRight: 10}}>
                             <Label
                               content={v.groupName + `\u00A0` + spot.spotName}
                               color="green"
@@ -189,7 +193,16 @@ const Schedule = () => {
                               </Table.Header>
                               {spot.foods.map((food, index) => {
                                 return (
-                                  <Table.Body key={index}>
+                                  <Table.Body
+                                    key={
+                                      spot.spotId +
+                                      spot.spotName +
+                                      food.foodName +
+                                      index +
+                                      i +
+                                      l +
+                                      idx
+                                    }>
                                     <Table.Row>
                                       <Table.Cell>{food.foodName}</Table.Cell>
                                       <Table.Cell textAlign="center">
