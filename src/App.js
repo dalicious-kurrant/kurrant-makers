@@ -1,9 +1,8 @@
-import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
+import styled, {createGlobalStyle, ThemeProvider} from 'styled-components';
 import reset from './Shared/reset.css';
 import Router from './Router';
-import NavBar from './component/Gnb/Navbar';
 import theme from './Shared/theme';
-import { getToken } from './Shared/localStorage';
+import {getToken} from './Shared/localStorage';
 
 function App() {
   const token = getToken();
@@ -12,7 +11,7 @@ function App() {
     <Container>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        {token && <NavBar />}
+
         <Wrap>
           <Router />
         </Wrap>
@@ -29,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
 ${reset}; // Reset CSS
 
 body{
-  font-family:${({ theme }) => theme.fontFamily.default};
+  font-family:${({theme}) => theme.fontFamily.default};
   font-size:14px;
 }
 `;
