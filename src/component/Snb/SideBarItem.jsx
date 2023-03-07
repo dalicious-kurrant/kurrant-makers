@@ -26,6 +26,9 @@ const List = styled.li`
     padding-left: 10px;
     padding-bottom: 4px;
   }
+
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 `;
 
 const Menu = styled.div`

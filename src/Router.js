@@ -56,4 +56,6 @@ const Container = styled.div`
     }
   }}
   margin-left: ${({token}) => (token === null ? '0px' : '280px')};
+
+  overflow-x: auto;
 `;
