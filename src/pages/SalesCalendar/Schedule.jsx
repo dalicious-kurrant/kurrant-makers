@@ -139,7 +139,7 @@ const Schedule = () => {
                           );
                         }
                         return (
-                          <Table.Row key={v.foodId + i + v.foodName}>
+                          <Table.Row key={i}>
                             <Table.Cell textAlign="center">{`\u00A0`}</Table.Cell>
                           </Table.Row>
                         );

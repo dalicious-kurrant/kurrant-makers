@@ -10,6 +10,7 @@ const MakersInfoPage = () => {
 
   return (
     <Wrap>
+      <h1 style={{marginLeft: 24}}>메이커스 정보</h1>
       <TableWrapper style={{marginLeft: 20}}>
         <Table celled>
           <Table.Body>
@@ -85,7 +86,7 @@ const MakersInfoPage = () => {
               <Cell width={4}>모회사 여부</Cell>
               <Table.Cell>
                 <div style={{padding: 4}}>
-                  {infoData?.isParentCompany ?? '없음'}
+                  {infoData?.isParentCompany ? '있음' : '없음'}
                 </div>
               </Table.Cell>
             </Table.Row>

@@ -69,7 +69,9 @@ const ProductPage = () => {
           <Table.Body>
             {makersProcuctList?.data?.data?.map((el, idx) => {
               return (
-                <TableRow onClick={() => goToDetail(el.foodId)}>
+                <TableRow
+                  onClick={() => goToDetail(el.foodId)}
+                  key={el.foodId + idx}>
                   <Table.Cell textAlign="center">{el.foodId}</Table.Cell>
                   <Table.Cell>
                     <Image src={el.foodImage} alt="" />

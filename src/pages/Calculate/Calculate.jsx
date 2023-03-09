@@ -1,10 +1,8 @@
 import styled from 'styled-components';
+import {PageWrapper} from '../../layout/common.style';
 
 const Calculate = () => {
-  return <Wrap>정산</Wrap>;
+  return <PageWrapper>정산관리</PageWrapper>;
 };
 
 export default Calculate;
-const Wrap = styled.div`
-  margin-top: 100px;
-`;
