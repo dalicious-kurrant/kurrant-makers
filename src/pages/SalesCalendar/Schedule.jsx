@@ -5,6 +5,7 @@ import {formattedWeekDate} from '../../utils/dateFormatter';
 import DiningButton from './components/DiningButton';
 import {PageWrapper, TableWrapper} from '../../layout/common.style';
 import {useGetSalesList} from '../../hook/useSalesList';
+import {maskingName} from '../../utils/maskingName';
 
 const Schedule = () => {
   const day = new Date();
@@ -176,7 +177,7 @@ const Schedule = () => {
                             key={spot.spotId + spot.spotName + i + l + idx}
                             style={{marginRight: 10}}>
                             <Label
-                              content={v.groupName + `\u00A0` + spot.spotName}
+                              content={maskingName(v.groupName)}
                               color="green"
                             />
                             <Label content={spot.deliveryTime} color="black" />
