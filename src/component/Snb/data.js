@@ -36,13 +36,13 @@ export const menuData = [
     activeIcon: <ActiveProduct />,
   },
   {
-    name: '판매 일정 관리',
+    name: '판매 관리',
     path: '/sales/schedule',
     icon: <Calendar />,
     activeIcon: <ActiveCalendar />,
   },
   {
-    name: '휴무 일정 관리',
+    name: '일정 관리',
     path: '/calendar',
     icon: <Schedule />,
     activeIcon: <ActiveSchedule />,
