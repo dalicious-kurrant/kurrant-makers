@@ -175,7 +175,10 @@ const Schedule = () => {
                         return (
                           <div
                             key={spot.spotId + spot.spotName + i + l + idx}
-                            style={{marginRight: 10}}>
+                            style={{
+                              marginRight: 10,
+                              // marginTop: 10, flex-wrap 적용할때 활성화
+                            }}>
                             <Label
                               content={maskingName(v.groupName)}
                               color="green"
@@ -188,7 +191,7 @@ const Schedule = () => {
                                     <div style={{width: 150}}>상품명</div>
                                   </Table.HeaderCell>
                                   <Table.HeaderCell textAlign="center">
-                                    수량
+                                    <div style={{width: 50}}>수량</div>
                                   </Table.HeaderCell>
                                 </Table.Row>
                               </Table.Header>
@@ -260,7 +263,6 @@ const MakersTable = styled.div`
 `;
 
 const TotalTable = styled.div`
-  /* margin-right: 10px; */
   width: 30%;
 `;
 
@@ -272,10 +274,9 @@ const DetailTable = styled.div`
 const MealDetailWrap = styled.div`
   display: flex;
   margin-right: 24px;
-  /* overflow-x: auto;
-  padding-bottom: 10px; */
-
-  /* width: 100%; */
+  padding-bottom: 10px;
+  /* flex-wrap: wrap; */
+  overflow-x: auto;
 `;
 
 const DiningTypeWrap = styled.div`
