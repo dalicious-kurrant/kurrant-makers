@@ -185,7 +185,7 @@ const Schedule = () => {
                               <Table.Header>
                                 <Table.Row>
                                   <Table.HeaderCell textAlign="center">
-                                    상품명
+                                    <div style={{width: 150}}>상품명</div>
                                   </Table.HeaderCell>
                                   <Table.HeaderCell textAlign="center">
                                     수량
@@ -272,6 +272,10 @@ const DetailTable = styled.div`
 const MealDetailWrap = styled.div`
   display: flex;
   margin-right: 24px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+
+  /* width: 100%; */
 `;
 
 const DiningTypeWrap = styled.div`
@@ -290,6 +294,7 @@ const ButtonWrap = styled.div`
 const TableWrap = styled.div`
   display: flex;
   margin-right: 5px;
+  width: 250px;
 `;
 const BoldText = styled.span`
   font-weight: 700;
