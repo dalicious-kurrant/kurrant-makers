@@ -272,8 +272,8 @@ const DetailTable = styled.div`
 const MealDetailWrap = styled.div`
   display: flex;
   margin-right: 24px;
-  overflow-x: auto;
-  padding-bottom: 10px;
+  /* overflow-x: auto;
+  padding-bottom: 10px; */
 
   /* width: 100%; */
 `;
