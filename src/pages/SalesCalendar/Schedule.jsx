@@ -294,7 +294,6 @@ const ButtonWrap = styled.div`
 const TableWrap = styled.div`
   display: flex;
   margin-right: 5px;
-  width: 250px;
 `;
 const BoldText = styled.span`
   font-weight: 700;
