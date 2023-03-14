@@ -195,15 +195,13 @@ const ProductDetailPage = () => {
 export default ProductDetailPage;
 
 const Wrap = styled.div`
-  flex-wrap: wrap;
+  //flex-wrap: wrap;
   padding-top: 100px;
   margin-bottom: 100px;
+  width: 80vw;
 `;
 
-const Container = styled.div`
-  width: 80%;
-  margin: auto;
-`;
+const Container = styled.div``;
 const InputWrap = styled.div`
   display: flex;
 `;
