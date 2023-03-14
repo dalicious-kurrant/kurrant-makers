@@ -199,6 +199,7 @@ const Wrap = styled.div`
   padding-top: 100px;
   margin-bottom: 100px;
   width: 80vw;
+  margin-left: 24px;
 `;
 
 const Container = styled.div``;
