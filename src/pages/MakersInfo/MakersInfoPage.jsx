@@ -11,7 +11,7 @@ const MakersInfoPage = () => {
   return (
     <Wrap>
       <h1 style={{marginLeft: 24}}>메이커스 정보</h1>
-      <TableWrapper style={{marginLeft: 20}}>
+      <div style={{marginLeft: 20}}>
         <Table celled>
           <Table.Body>
             <Table.Row>
@@ -194,7 +194,7 @@ const MakersInfoPage = () => {
             </Table.Row>
           </Table.Body>
         </Table>
-      </TableWrapper>
+      </div>
     </Wrap>
   );
 };
