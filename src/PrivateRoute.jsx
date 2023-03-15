@@ -1,13 +1,16 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable no-alert */
 import {Navigate, Outlet} from 'react-router-dom';
 
-const PrivateRoute = () => {
-  // 토큰값이 만료에 따라 로그인 로그아웃
+function ProtectedRoute({redirectPath = '/'}) {
   const token = localStorage.getItem('token');
 
   if (!token) {
-    return <Navigate to="/" replace={true} />;
+    alert('로그인 후 사용해 주세요');
+    return <Navigate to={redirectPath} replace={true} />;
   }
 
   return <Outlet />;
-};
-export default PrivateRoute;
+}
+
+export default ProtectedRoute;

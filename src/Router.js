@@ -14,6 +14,7 @@ import Sidebar from './component/Snb/Sidebar';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Schedule from './pages/SalesCalendar/Schedule';
 import ScrollToTop from './Shared/ScrollToTop';
+import PrivateRoute from './PrivateRoute';
 
 function Router() {
   const token = localStorage.getItem('token');
@@ -24,17 +25,19 @@ function Router() {
       <ScrollToTop />
       <Container token={token}>
         <Routes>
-          {token === null && <Route path="/" element={<LoginPage />} />}
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/productDetail/:id" element={<ProductDetailPage />} />
-          <Route path="/makersInfo" element={<MakersInfoPage />} />
-          <Route path="/notice" element={<Notice />} />
-          <Route path="/detail" element={<Detail />} />
-          <Route path="/calculate" element={<Calculate />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/stock" element={<Stock />} />
-          <Route path="/main" element={<Dashboard />} />
-          <Route path="/sales/schedule" element={<Schedule />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route element={<PrivateRoute redirectPath="/" />}>
+            <Route path="/product" element={<ProductPage />} />
+            <Route path="/productDetail/:id" element={<ProductDetailPage />} />
+            <Route path="/makersInfo" element={<MakersInfoPage />} />
+            <Route path="/notice" element={<Notice />} />
+            <Route path="/detail" element={<Detail />} />
+            <Route path="/calculate" element={<Calculate />} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/stock" element={<Stock />} />
+            <Route path="/main" element={<Dashboard />} />
+            <Route path="/sales/schedule" element={<Schedule />} />
+          </Route>
         </Routes>
       </Container>
     </BrowserRouter>
