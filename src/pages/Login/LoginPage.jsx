@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Login from '../../component/Login/Login';
 import LoginHeader from '../../component/Login/LoginHeader';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    if (token) navigate('/product');
+  }, [navigate, token]);
   return (
     <Container>
       <Wrap>
