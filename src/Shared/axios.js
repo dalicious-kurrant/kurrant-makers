@@ -26,8 +26,6 @@ instance.interceptors.response.use(
   error => {
     const {response} = error;
     if (response.status === 403) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('makersName');
       alert('로그인이 만료되어 로그아웃 됩니다.');
       window.location.replace('/');
     }
