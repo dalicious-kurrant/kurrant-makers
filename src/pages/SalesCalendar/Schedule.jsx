@@ -82,6 +82,9 @@ const Schedule = () => {
                 <Table.Row>
                   <Table.HeaderCell textAlign="center">상품명</Table.HeaderCell>
                   <Table.HeaderCell textAlign="center">
+                    상품상세정보
+                  </Table.HeaderCell>
+                  <Table.HeaderCell textAlign="center">
                     합계(개)
                   </Table.HeaderCell>
                 </Table.Row>
@@ -90,9 +93,14 @@ const Schedule = () => {
                 {salesList?.data?.data?.totalFoods?.map((el, i) => {
                   return (
                     <Table.Row key={el.foodName + i + el.foodId}>
-                      <Table.Cell>{el.foodName}</Table.Cell>
+                      <Table.Cell>
+                        <FoodName>{el.foodName}</FoodName>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Description>{el.description}</Description>
+                      </Table.Cell>
                       <Table.Cell textAlign="center">
-                        {el.totalFoodCount}
+                        <div style={{width: 50}}> {el.totalFoodCount}</div>
                       </Table.Cell>
                     </Table.Row>
                   );
@@ -102,6 +110,7 @@ const Schedule = () => {
                   <Table.Cell style={{borderTop: 'double black'}}>
                     <BoldText>Total</BoldText>
                   </Table.Cell>
+                  <Table.Cell style={{borderTop: 'double black'}}></Table.Cell>
                   <Table.Cell
                     textAlign="center"
                     style={{borderTop: 'double black'}}>
@@ -161,73 +170,74 @@ const Schedule = () => {
         </TopTable>
       </TableWrapper>
       <TableWrapper>
-        {salesList?.data?.data?.groupFoodByDateDiningTypes.map((el, idx) => (
-          <MakersTable
-            key={'groupFoodByDateDiningTypes' + idx + el.serviceDate}>
-            <BoldText>{el.serviceDate + `\u00A0` + el.diningType}</BoldText>
-            <DateLine />
-            <DiningTypeWrap>
-              <MealDetailWrap>
-                {el.foodByGroups.map((v, l) => {
-                  return (
-                    <TableWrap key={v.groupId + v.groupName + l + idx}>
-                      {v.spotByDateDiningTypes.map((spot, i) => {
-                        console.log(spot);
-                        return (
-                          <div
-                            key={spot.spotId + spot.spotName + i + l + idx}
-                            style={{
-                              marginRight: 10,
-                              // marginTop: 10, flex-wrap 적용할때 활성화
-                            }}>
-                            <Label
-                              content={`스팟: ${spot.spotId}`}
-                              color="green"
-                            />
-                            <Label content={spot.pickupTime} color="black" />
-                            <Table celled>
-                              <Table.Header>
-                                <Table.Row>
-                                  <Table.HeaderCell textAlign="center">
-                                    <div style={{width: 150}}>상품명</div>
-                                  </Table.HeaderCell>
-                                  <Table.HeaderCell textAlign="center">
-                                    <div style={{width: 50}}>수량</div>
-                                  </Table.HeaderCell>
-                                </Table.Row>
-                              </Table.Header>
-                              {spot.foods.map((food, index) => {
-                                return (
-                                  <Table.Body
-                                    key={
-                                      spot.spotId +
-                                      spot.spotName +
-                                      food.foodName +
-                                      index +
-                                      i +
-                                      l +
-                                      idx
-                                    }>
-                                    <Table.Row>
-                                      <Table.Cell>{food.foodName}</Table.Cell>
-                                      <Table.Cell textAlign="center">
-                                        {food.foodCount}
-                                      </Table.Cell>
-                                    </Table.Row>
-                                  </Table.Body>
-                                );
-                              })}
-                            </Table>
-                          </div>
-                        );
-                      })}
-                    </TableWrap>
-                  );
-                })}
-              </MealDetailWrap>
-            </DiningTypeWrap>
-          </MakersTable>
-        ))}
+        {salesList?.data?.data?.groupFoodByDateDiningTypes.map((el, idx) => {
+          return (
+            <MakersTable
+              key={'groupFoodByDateDiningTypes' + idx + el.serviceDate}>
+              <BoldText>{el.serviceDate + `\u00A0` + el.diningType}</BoldText>
+              <DateLine />
+              <DiningTypeWrap>
+                <MealDetailWrap>
+                  {el.foodByGroups.map((v, l) => {
+                    return (
+                      <TableWrap key={v.groupId + v.groupName + l + idx}>
+                        {v.spotByDateDiningTypes.map((spot, i) => {
+                          return (
+                            <div
+                              key={spot.spotId + spot.spotName + i + l + idx}
+                              style={{
+                                marginRight: 10,
+                                // marginTop: 10, flex-wrap 적용할때 활성화
+                              }}>
+                              <Label
+                                content={`스팟: ${spot.spotId}`}
+                                color="green"
+                              />
+                              <Label content={spot.pickupTime} color="black" />
+                              <Table celled>
+                                <Table.Header>
+                                  <Table.Row>
+                                    <Table.HeaderCell textAlign="center">
+                                      <div style={{width: 150}}>상품명</div>
+                                    </Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="center">
+                                      <div style={{width: 50}}>수량</div>
+                                    </Table.HeaderCell>
+                                  </Table.Row>
+                                </Table.Header>
+                                {spot.foods.map((food, index) => {
+                                  return (
+                                    <Table.Body
+                                      key={
+                                        spot.spotId +
+                                        spot.spotName +
+                                        food.foodName +
+                                        index +
+                                        i +
+                                        l +
+                                        idx
+                                      }>
+                                      <Table.Row>
+                                        <Table.Cell>{food.foodName}</Table.Cell>
+                                        <Table.Cell textAlign="center">
+                                          {food.foodCount}
+                                        </Table.Cell>
+                                      </Table.Row>
+                                    </Table.Body>
+                                  );
+                                })}
+                              </Table>
+                            </div>
+                          );
+                        })}
+                      </TableWrap>
+                    );
+                  })}
+                </MealDetailWrap>
+              </DiningTypeWrap>
+            </MakersTable>
+          );
+        })}
       </TableWrapper>
     </Wrap>
   );
@@ -264,7 +274,7 @@ const MakersTable = styled.div`
 `;
 
 const TotalTable = styled.div`
-  width: 30%;
+  //width: 30%;
 `;
 
 const DetailTable = styled.div`
@@ -276,7 +286,6 @@ const MealDetailWrap = styled.div`
   display: flex;
   margin-right: 24px;
   padding-bottom: 10px;
-  /* flex-wrap: wrap; */
   overflow-x: auto;
 `;
 
@@ -304,4 +313,18 @@ const BoldText = styled.span`
 const DateLine = styled.div`
   padding-top: 10px;
   border-bottom: 1px solid ${({theme}) => theme.colors.grey[5]};
+`;
+
+const Description = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 280px;
+`;
+
+const FoodName = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 180px;
 `;
