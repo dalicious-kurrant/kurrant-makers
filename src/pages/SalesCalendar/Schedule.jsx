@@ -184,7 +184,7 @@ const Schedule = () => {
                               content={`스팟${spot.spotId}`}
                               color="green"
                             />
-                            <Label content={spot.deliveryTime} color="black" />
+                            <Label content={spot.pickupTime} color="black" />
                             <Table celled>
                               <Table.Header>
                                 <Table.Row>
