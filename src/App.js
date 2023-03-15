@@ -11,7 +11,6 @@ function App() {
     <Container>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-
         <Wrap>
           <Router />
         </Wrap>

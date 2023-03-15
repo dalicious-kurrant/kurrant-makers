@@ -34,7 +34,7 @@ const Login = () => {
         localStorage.setItem('token', accessToken);
         localStorage.setItem('makersName', res.data.data.name);
         // localStorage.setItem('makersId', res.data.data.makersId);
-        navigate('/product');
+        // navigate('/product');
         window.location.reload();
       }
     } catch (error) {
