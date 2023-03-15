@@ -185,6 +185,7 @@ const Schedule = () => {
                     return (
                       <TableWrap key={v.groupId + v.groupName + l + idx}>
                         {v.spotByDateDiningTypes.map((spot, i) => {
+                          let foodTotalCount = 0;
                           return (
                             <div
                               key={spot.spotId + spot.spotName + i + l + idx}
@@ -208,27 +209,39 @@ const Schedule = () => {
                                     </Table.HeaderCell>
                                   </Table.Row>
                                 </Table.Header>
-                                {spot.foods.map((food, index) => {
-                                  return (
-                                    <Table.Body
-                                      key={
-                                        spot.spotId +
-                                        spot.spotName +
-                                        food.foodName +
-                                        index +
-                                        i +
-                                        l +
-                                        idx
-                                      }>
-                                      <Table.Row>
+                                <Table.Body>
+                                  {spot.foods.map((food, index) => {
+                                    foodTotalCount =
+                                      foodTotalCount + food.foodCount;
+                                    return (
+                                      <Table.Row
+                                        key={
+                                          spot.spotId +
+                                          spot.spotName +
+                                          food.foodName +
+                                          index +
+                                          i +
+                                          l +
+                                          idx
+                                        }>
                                         <Table.Cell>{food.foodName}</Table.Cell>
                                         <Table.Cell textAlign="center">
                                           {food.foodCount}
                                         </Table.Cell>
                                       </Table.Row>
-                                    </Table.Body>
-                                  );
-                                })}
+                                    );
+                                  })}
+                                  <Table.Row
+                                    style={{
+                                      backgroundColor: '#efefef',
+                                      fontWeight: 600,
+                                    }}>
+                                    <Table.Cell>합계</Table.Cell>
+                                    <Table.Cell textAlign="center">
+                                      {foodTotalCount}
+                                    </Table.Cell>
+                                  </Table.Row>
+                                </Table.Body>
                               </Table>
                             </div>
                           );
