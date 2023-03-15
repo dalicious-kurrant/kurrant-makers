@@ -181,7 +181,7 @@ const Schedule = () => {
                               // marginTop: 10, flex-wrap 적용할때 활성화
                             }}>
                             <Label
-                              content={`스팟${spot.spotId}`}
+                              content={`스팟: ${spot.spotId}`}
                               color="green"
                             />
                             <Label content={spot.pickupTime} color="black" />
