@@ -193,8 +193,8 @@ const Schedule = () => {
                                 marginTop: 24,
                               }}>
                               <Label
-                                content={`스팟: ${spot.spotId}`}
-                                color="green"
+                                content={`상세 스팟 ID: ${spot.spotId}`}
+                                color="blue"
                               />
                               <Label content={spot.pickupTime} color="black" />
                               <Table celled>
@@ -239,73 +239,6 @@ const Schedule = () => {
                 </MealDetailWrap>
               </DiningTypeWrap>
             </MakersTable>
-            // <MakersTable
-            //   key={'groupFoodByDateDiningTypes' + idx + el.serviceDate}>
-            //   <BoldText>
-            //     {el.serviceDate + `\u00A0` + el.diningType} ({' '}
-            //     {el.foodByGroups.length}개 상세 스팟)
-            //   </BoldText>
-            //   <DateLine />
-            //   <DiningTypeWrap>
-            //     <MealDetailWrap>
-            //       {el.foodByGroups.map((v, l) => {
-            //         return (
-            //           <TableWrap key={v.groupId + v.groupName + l + idx}>
-            //             {v.spotByDateDiningTypes.map((spot, i) => {
-            //               return (
-            //                 <div
-            //                   key={spot.spotId + spot.spotName + i + l + idx}
-            //                   style={{
-            //                     marginRight: 10,
-            //                     marginTop: 24,
-            //                   }}>
-            //                   <Label
-            //                     content={`스팟: ${spot.spotId}`}
-            //                     color="green"
-            //                   />
-            //                   <Label content={spot.pickupTime} color="black" />
-            //                   <Table celled>
-            //                     <Table.Header>
-            //                       <Table.Row>
-            //                         <Table.HeaderCell textAlign="center">
-            //                           <div style={{width: 150}}>상품명</div>
-            //                         </Table.HeaderCell>
-            //                         <Table.HeaderCell textAlign="center">
-            //                           <div style={{width: 50}}>수량</div>
-            //                         </Table.HeaderCell>
-            //                       </Table.Row>
-            //                     </Table.Header>
-            //                     {spot.foods.map((food, index) => {
-            //                       return (
-            //                         <Table.Body
-            //                           key={
-            //                             spot.spotId +
-            //                             spot.spotName +
-            //                             food.foodName +
-            //                             index +
-            //                             i +
-            //                             l +
-            //                             idx
-            //                           }>
-            //                           <Table.Row>
-            //                             <Table.Cell>{food.foodName}</Table.Cell>
-            //                             <Table.Cell textAlign="center">
-            //                               {food.foodCount}
-            //                             </Table.Cell>
-            //                           </Table.Row>
-            //                         </Table.Body>
-            //                       );
-            //                     })}
-            //                   </Table>
-            //                 </div>
-            //               );
-            //             })}
-            //           </TableWrap>
-            //         );
-            //       })}
-            //     </MealDetailWrap>
-            //   </DiningTypeWrap>
-            // </MakersTable>
           );
         })}
       </TableWrapper>
