@@ -172,6 +172,7 @@ const Schedule = () => {
                   return (
                     <TableWrap key={v.groupId + v.groupName + l + idx}>
                       {v.spotByDateDiningTypes.map((spot, i) => {
+                        console.log(spot);
                         return (
                           <div
                             key={spot.spotId + spot.spotName + i + l + idx}
@@ -180,7 +181,7 @@ const Schedule = () => {
                               // marginTop: 10, flex-wrap 적용할때 활성화
                             }}>
                             <Label
-                              content={maskingName(v.groupName)}
+                              content={`스팟${spot.spotId}`}
                               color="green"
                             />
                             <Label content={spot.deliveryTime} color="black" />
