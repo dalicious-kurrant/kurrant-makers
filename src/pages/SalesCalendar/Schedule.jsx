@@ -187,7 +187,7 @@ const Schedule = () => {
                               key={spot.spotId + spot.spotName + i + l + idx}
                               style={{
                                 marginRight: 10,
-                                // marginTop: 10, flex-wrap 적용할때 활성화
+                                marginTop: 10,
                               }}>
                               <Label
                                 content={`스팟: ${spot.spotId}`}
@@ -305,6 +305,7 @@ const ButtonWrap = styled.div`
 const TableWrap = styled.div`
   display: flex;
   margin-right: 5px;
+  flex-wrap: wrap;
 `;
 const BoldText = styled.span`
   font-weight: 700;
