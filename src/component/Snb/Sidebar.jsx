@@ -14,8 +14,7 @@ function Sidebar() {
   const makersName = localStorage.getItem('makersName');
   const token = localStorage.getItem('token');
   const logoutButton = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('makersName');
+    localStorage.clear();
     window.location.replace('/');
   };
 
