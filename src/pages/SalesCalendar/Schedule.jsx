@@ -77,7 +77,7 @@ const Schedule = () => {
       <TableWrapper>
         <TopTable>
           <TotalTable>
-            <Table celled>
+            <Table singleLine styld={{overflow: 'hidden'}}>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell textAlign="center">상품명</Table.HeaderCell>
@@ -126,44 +126,44 @@ const Schedule = () => {
                 return el.foods.filter(v => v.foodId === s.foodId)[0];
               });
               return (
-                <div key={el.serviceDate + i + el.diningType}>
-                  <Table style={{height: 100}}>
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.HeaderCell
-                          key={el.serviceDate + el.diningType}
-                          style={{whiteSpace: 'nowrap'}}>
-                          {el.serviceDate + `\u00A0` + el.diningType}
-                        </Table.HeaderCell>
-                      </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                      {test.map((v, i) => {
-                        if (v) {
-                          return (
-                            <Table.Row key={v.foodId + i + v.foodName}>
-                              <Table.Cell textAlign="center">
-                                {v.foodCount}
-                              </Table.Cell>
-                            </Table.Row>
-                          );
-                        }
+                <Table
+                  style={{height: 100, minWidth: 768}}
+                  key={el.serviceDate + i + el.diningType}>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell
+                        key={el.serviceDate + el.diningType}
+                        style={{whiteSpace: 'nowrap'}}>
+                        {el.serviceDate + `\u00A0` + el.diningType}
+                      </Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {test.map((v, i) => {
+                      if (v) {
                         return (
-                          <Table.Row key={i}>
-                            <Table.Cell textAlign="center">{`\u00A0`}</Table.Cell>
+                          <Table.Row key={v.foodId + i + v.foodName}>
+                            <Table.Cell textAlign="center">
+                              {v.foodCount}
+                            </Table.Cell>
                           </Table.Row>
                         );
-                      })}
-                      <Table.Row>
-                        <Table.Cell
-                          textAlign="center"
-                          style={{borderTop: 'double black'}}>
-                          <BoldText>{el.totalCount}</BoldText>
-                        </Table.Cell>
-                      </Table.Row>
-                    </Table.Body>
-                  </Table>
-                </div>
+                      }
+                      return (
+                        <Table.Row key={i}>
+                          <Table.Cell textAlign="center">{`\u00A0`}</Table.Cell>
+                        </Table.Row>
+                      );
+                    })}
+                    <Table.Row>
+                      <Table.Cell
+                        textAlign="center"
+                        style={{borderTop: 'double black'}}>
+                        <BoldText>{el.totalCount}</BoldText>
+                      </Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+                </Table>
               );
             })}
           </DetailTable>
@@ -190,6 +190,7 @@ const Schedule = () => {
                 <MealDetailWrap>
                   {el.foodByGroups.map((v, l) => {
                     return v.spotByDateDiningTypes.map((spot, i) => {
+                      console.log(spot);
                       let foodTotalCount = 0;
                       return (
                         <TableWrap
@@ -211,6 +212,9 @@ const Schedule = () => {
                               color="blue"
                             />
                             <Label content={spot.pickupTime} color="black" />
+                            {/* 배송시간
+                              <Label content={spot.deliveryTime} color="black" /> 
+                            */}
                             <Table celled>
                               <Table.Header>
                                 <Table.Row>
@@ -293,6 +297,8 @@ const CalendarWrap = styled.div`
 `;
 
 const TopTable = styled.div`
+  min-width: 800px;
+  background-color: blue;
   margin-top: 50px;
   display: flex;
 `;

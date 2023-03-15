@@ -51,6 +51,9 @@ const Container = styled.div`
     if (token !== null) {
       return css`
         min-width: 1000px;
+        @media (max-width: 768px) {
+          min-width: 768px;
+        }
       `;
     } else {
       return css`
@@ -59,6 +62,9 @@ const Container = styled.div`
     }
   }}
   margin-left: ${({token}) => (token === null ? '0px' : '280px')};
+  @media (max-width: 768px) {
+    margin-left: 10px;
+  }
 
   overflow-x: auto;
 `;
