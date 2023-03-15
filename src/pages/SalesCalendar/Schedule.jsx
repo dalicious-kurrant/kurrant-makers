@@ -171,83 +171,95 @@ const Schedule = () => {
       </TableWrapper>
       <TableWrapper>
         {salesList?.data?.data?.groupFoodByDateDiningTypes.map((el, idx) => {
+          const spotCount = el.foodByGroups.map(v => {
+            return v.spotByDateDiningTypes.length;
+          });
+          const spotTotal = spotCount.reduce((arr, cur) => {
+            return arr + cur;
+          });
+          console.log(spotTotal);
           return (
             <MakersTable
               key={'groupFoodByDateDiningTypes' + idx + el.serviceDate}>
               <BoldText>
-                {el.serviceDate + `\u00A0` + el.diningType} ({' '}
-                {el.foodByGroups.length}개 상세 스팟)
+                {el.serviceDate + `\u00A0` + el.diningType} ( {spotTotal}개 상세
+                스팟)
               </BoldText>
               <DateLine />
               <DiningTypeWrap>
                 <MealDetailWrap>
                   {el.foodByGroups.map((v, l) => {
-                    return (
-                      <TableWrap key={v.groupId + v.groupName + l + idx}>
-                        {v.spotByDateDiningTypes.map((spot, i) => {
-                          let foodTotalCount = 0;
-                          return (
-                            <div
-                              key={spot.spotId + spot.spotName + i + l + idx}
-                              style={{
-                                marginRight: 10,
-                                marginTop: 24,
-                              }}>
-                              <Label
-                                content={`상세 스팟 ID: ${spot.spotId}`}
-                                color="blue"
-                              />
-                              <Label content={spot.pickupTime} color="black" />
-                              <Table celled>
-                                <Table.Header>
-                                  <Table.Row>
-                                    <Table.HeaderCell textAlign="center">
-                                      <div style={{width: 150}}>상품명</div>
-                                    </Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="center">
-                                      <div style={{width: 50}}>수량</div>
-                                    </Table.HeaderCell>
-                                  </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                  {spot.foods.map((food, index) => {
-                                    foodTotalCount =
-                                      foodTotalCount + food.foodCount;
-                                    return (
-                                      <Table.Row
-                                        key={
-                                          spot.spotId +
-                                          spot.spotName +
-                                          food.foodName +
-                                          index +
-                                          i +
-                                          l +
-                                          idx
-                                        }>
-                                        <Table.Cell>{food.foodName}</Table.Cell>
-                                        <Table.Cell textAlign="center">
-                                          {food.foodCount}
-                                        </Table.Cell>
-                                      </Table.Row>
-                                    );
-                                  })}
-                                  <Table.Row
-                                    style={{
-                                      backgroundColor: '#efefef',
-                                      fontWeight: 600,
-                                    }}>
-                                    <Table.Cell>합계</Table.Cell>
-                                    <Table.Cell textAlign="center">
-                                      {foodTotalCount}
-                                    </Table.Cell>
-                                  </Table.Row>
-                                </Table.Body>
-                              </Table>
-                            </div>
-                          );
-                        })}
-                      </TableWrap>
-                    );
+                    return v.spotByDateDiningTypes.map((spot, i) => {
+                      let foodTotalCount = 0;
+                      return (
+                        <TableWrap
+                          key={
+                            v.groupId +
+                            v.groupName +
+                            spot.spotId +
+                            spot.spotName +
+                            l +
+                            idx
+                          }>
+                          <div
+                            style={{
+                              marginRight: 10,
+                              marginTop: 24,
+                            }}>
+                            <Label
+                              content={`상세 스팟 ID: ${spot.spotId}`}
+                              color="blue"
+                            />
+                            <Label content={spot.pickupTime} color="black" />
+                            <Table celled>
+                              <Table.Header>
+                                <Table.Row>
+                                  <Table.HeaderCell textAlign="center">
+                                    <div style={{width: 150}}>상품명</div>
+                                  </Table.HeaderCell>
+                                  <Table.HeaderCell textAlign="center">
+                                    <div style={{width: 50}}>수량</div>
+                                  </Table.HeaderCell>
+                                </Table.Row>
+                              </Table.Header>
+                              <Table.Body>
+                                {spot.foods.map((food, index) => {
+                                  foodTotalCount =
+                                    foodTotalCount + food.foodCount;
+                                  return (
+                                    <Table.Row
+                                      key={
+                                        spot.spotId +
+                                        spot.spotName +
+                                        food.foodName +
+                                        index +
+                                        i +
+                                        l +
+                                        idx
+                                      }>
+                                      <Table.Cell>{food.foodName}</Table.Cell>
+                                      <Table.Cell textAlign="center">
+                                        {food.foodCount}
+                                      </Table.Cell>
+                                    </Table.Row>
+                                  );
+                                })}
+                                <Table.Row
+                                  style={{
+                                    backgroundColor: '#efefef',
+                                    fontWeight: 600,
+                                  }}>
+                                  <Table.Cell>합계</Table.Cell>
+                                  <Table.Cell textAlign="center">
+                                    {foodTotalCount}
+                                  </Table.Cell>
+                                </Table.Row>
+                              </Table.Body>
+                            </Table>
+                          </div>
+                        </TableWrap>
+                      );
+                    });
                   })}
                 </MealDetailWrap>
               </DiningTypeWrap>
