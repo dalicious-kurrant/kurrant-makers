@@ -6,14 +6,14 @@ import DiningButton from './components/DiningButton';
 import {PageWrapper, TableWrapper} from '../../layout/common.style';
 import {useGetSalesList} from '../../hook/useSalesList';
 import {maskingName} from '../../utils/maskingName';
-
+import TestData from './test';
 const Schedule = () => {
   const day = new Date();
   const days = formattedWeekDate(day);
   const [startDate, setStartDate] = useState(days);
   const [endDate, setEndDate] = useState(days);
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
-
+  console.log(TestData, '---');
   const types =
     diningSelect &&
     diningSelect.map(el => {
@@ -174,7 +174,10 @@ const Schedule = () => {
           return (
             <MakersTable
               key={'groupFoodByDateDiningTypes' + idx + el.serviceDate}>
-              <BoldText>{el.serviceDate + `\u00A0` + el.diningType}</BoldText>
+              <BoldText>
+                {el.serviceDate + `\u00A0` + el.diningType} ({' '}
+                {el.foodByGroups.length}개 상세 스팟)
+              </BoldText>
               <DateLine />
               <DiningTypeWrap>
                 <MealDetailWrap>
@@ -187,7 +190,7 @@ const Schedule = () => {
                               key={spot.spotId + spot.spotName + i + l + idx}
                               style={{
                                 marginRight: 10,
-                                // marginTop: 10, flex-wrap 적용할때 활성화
+                                marginTop: 24,
                               }}>
                               <Label
                                 content={`스팟: ${spot.spotId}`}
@@ -236,6 +239,73 @@ const Schedule = () => {
                 </MealDetailWrap>
               </DiningTypeWrap>
             </MakersTable>
+            // <MakersTable
+            //   key={'groupFoodByDateDiningTypes' + idx + el.serviceDate}>
+            //   <BoldText>
+            //     {el.serviceDate + `\u00A0` + el.diningType} ({' '}
+            //     {el.foodByGroups.length}개 상세 스팟)
+            //   </BoldText>
+            //   <DateLine />
+            //   <DiningTypeWrap>
+            //     <MealDetailWrap>
+            //       {el.foodByGroups.map((v, l) => {
+            //         return (
+            //           <TableWrap key={v.groupId + v.groupName + l + idx}>
+            //             {v.spotByDateDiningTypes.map((spot, i) => {
+            //               return (
+            //                 <div
+            //                   key={spot.spotId + spot.spotName + i + l + idx}
+            //                   style={{
+            //                     marginRight: 10,
+            //                     marginTop: 24,
+            //                   }}>
+            //                   <Label
+            //                     content={`스팟: ${spot.spotId}`}
+            //                     color="green"
+            //                   />
+            //                   <Label content={spot.pickupTime} color="black" />
+            //                   <Table celled>
+            //                     <Table.Header>
+            //                       <Table.Row>
+            //                         <Table.HeaderCell textAlign="center">
+            //                           <div style={{width: 150}}>상품명</div>
+            //                         </Table.HeaderCell>
+            //                         <Table.HeaderCell textAlign="center">
+            //                           <div style={{width: 50}}>수량</div>
+            //                         </Table.HeaderCell>
+            //                       </Table.Row>
+            //                     </Table.Header>
+            //                     {spot.foods.map((food, index) => {
+            //                       return (
+            //                         <Table.Body
+            //                           key={
+            //                             spot.spotId +
+            //                             spot.spotName +
+            //                             food.foodName +
+            //                             index +
+            //                             i +
+            //                             l +
+            //                             idx
+            //                           }>
+            //                           <Table.Row>
+            //                             <Table.Cell>{food.foodName}</Table.Cell>
+            //                             <Table.Cell textAlign="center">
+            //                               {food.foodCount}
+            //                             </Table.Cell>
+            //                           </Table.Row>
+            //                         </Table.Body>
+            //                       );
+            //                     })}
+            //                   </Table>
+            //                 </div>
+            //               );
+            //             })}
+            //           </TableWrap>
+            //         );
+            //       })}
+            //     </MealDetailWrap>
+            //   </DiningTypeWrap>
+            // </MakersTable>
           );
         })}
       </TableWrapper>
@@ -286,7 +356,8 @@ const MealDetailWrap = styled.div`
   display: flex;
   margin-right: 24px;
   padding-bottom: 10px;
-  overflow-x: auto;
+  //overflow-x: auto;
+  flex-wrap: wrap;
 `;
 
 const DiningTypeWrap = styled.div`
