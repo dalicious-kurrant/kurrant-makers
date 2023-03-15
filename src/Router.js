@@ -15,13 +15,24 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Schedule from './pages/SalesCalendar/Schedule';
 import ScrollToTop from './Shared/ScrollToTop';
 import PrivateRoute from './PrivateRoute';
+import {useEffect} from 'react';
+import {useAtom} from 'jotai';
+import {pageWidthAtom} from './utils/store/store';
+import Header from './component/Snb/Header';
 
 function Router() {
   const token = localStorage.getItem('token');
-
+  const [innerWidth, setInnerWidth] = useAtom(pageWidthAtom);
+  useEffect(() => {
+    const resizeListener = () => {
+      console.log(window.innerWidth);
+      setInnerWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', resizeListener);
+  });
   return (
     <BrowserRouter>
-      {token !== null && <Sidebar />}
+      {token !== null && innerWidth > 768 ? <Sidebar /> : <Header />}
       <ScrollToTop />
       <Container token={token}>
         <Routes>
@@ -52,7 +63,7 @@ const Container = styled.div`
       return css`
         min-width: 1000px;
         @media (max-width: 768px) {
-          min-width: 768px;
+          max-width: ${window.innerWidth}px;
         }
       `;
     } else {
@@ -63,7 +74,7 @@ const Container = styled.div`
   }}
   margin-left: ${({token}) => (token === null ? '0px' : '280px')};
   @media (max-width: 768px) {
-    margin-left: 10px;
+    margin-left: 0px;
   }
 
   overflow-x: auto;

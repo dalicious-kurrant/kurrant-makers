@@ -11,7 +11,9 @@ export const BtnWrapper = styled.div`
 `;
 
 export const TableWrapper = styled.div`
-  background-color: red;
-  min-width: 800px;
+  width: 100%;
   overflow: auto;
+  @media (max-width: 768px) {
+    min-width: 200px;
+  }
 `;

@@ -8,20 +8,16 @@ function App() {
   const token = getToken();
 
   return (
-    <Container>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Wrap>
-          <Router />
-        </Wrap>
-      </ThemeProvider>
-    </Container>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <Wrap>
+        <Router />
+      </Wrap>
+    </ThemeProvider>
   );
 }
 
 export default App;
-
-const Container = styled.div``;
 
 const GlobalStyle = createGlobalStyle`
 ${reset}; // Reset CSS

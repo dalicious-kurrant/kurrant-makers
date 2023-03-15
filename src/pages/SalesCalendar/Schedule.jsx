@@ -1,19 +1,43 @@
 import {useEffect, useRef, useState} from 'react';
 import {Button, Header, Label, Table} from 'semantic-ui-react';
-import styled from 'styled-components';
+import {Table as AntTable} from 'antd';
+import styled, {css} from 'styled-components';
 import {formattedWeekDate} from '../../utils/dateFormatter';
 import DiningButton from './components/DiningButton';
 import {PageWrapper, TableWrapper} from '../../layout/common.style';
 import {useGetSalesList} from '../../hook/useSalesList';
 import {maskingName} from '../../utils/maskingName';
 import TestData from './test';
+import {useAtom} from 'jotai';
+import {pageWidthAtom} from '../../utils/store/store';
+
+const columns = [
+  {
+    title: '상품명',
+    dataIndex: 'foodName',
+    key: 'foodName',
+  },
+  {
+    title: '상품상세정보',
+    dataIndex: 'description',
+    key: 'description',
+  },
+  {
+    title: '합계(개)',
+    dataIndex: 'totalFoodCount',
+    key: 'totalFoodCount',
+  },
+];
 const Schedule = () => {
   const day = new Date();
   const days = formattedWeekDate(day);
   const [startDate, setStartDate] = useState(days);
+  const [innerWidth] = useAtom(pageWidthAtom);
   const [endDate, setEndDate] = useState(days);
+  const [yScroll, setYScroll] = useState(false);
+  const [xScroll, setXScroll] = useState('scroll');
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
-  console.log(TestData, '---');
+  console.log(window.innerWidth, '---');
   const types =
     diningSelect &&
     diningSelect.map(el => {
@@ -43,6 +67,13 @@ const Schedule = () => {
   // };
   const totalFood = salesList?.data?.data?.totalFoods;
 
+  const scroll = {};
+  if (yScroll) {
+    scroll.y = 240;
+  }
+  if (xScroll) {
+    scroll.x = '100vw';
+  }
   const totalCount = totalFood
     ?.map(el => el.totalFoodCount)
     .reduce((acc, cur) => {
@@ -51,8 +82,9 @@ const Schedule = () => {
   useEffect(() => {
     refetch();
   }, [startDate, endDate, refetch]);
+
   return (
-    <Wrap>
+    <Wrap innerWidth={innerWidth}>
       <Header as="h2">기간별 판매 내역</Header>
       <CalendarWrap>
         <div>
@@ -75,98 +107,145 @@ const Schedule = () => {
       <DiningButton touch={diningSelect} setTouch={setDiningSelect} />
 
       <TableWrapper>
-        <TopTable>
+        <TopTable innerWidth={innerWidth}>
           <TotalTable>
-            <Table singleLine styld={{overflow: 'hidden'}}>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell textAlign="center">상품명</Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center">
-                    상품상세정보
-                  </Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center">
-                    합계(개)
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {salesList?.data?.data?.totalFoods?.map((el, i) => {
-                  return (
-                    <Table.Row key={el.foodName + i + el.foodId}>
-                      <Table.Cell>
-                        <FoodName>{el.foodName}</FoodName>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <Description>{el.description}</Description>
-                      </Table.Cell>
-                      <Table.Cell textAlign="center">
-                        <div style={{width: 50}}> {el.totalFoodCount}</div>
-                      </Table.Cell>
-                    </Table.Row>
-                  );
-                })}
+            {innerWidth < 786 ? (
+              <AntTable
+                dataSource={salesList?.data?.data?.totalFoods}
+                columns={columns}
+                pagination={false}
+                scroll={{x: '100vw'}}
+              />
+            ) : (
+              <Table singleLine styld={{overflow: 'hidden'}}>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell textAlign="center">
+                      상품명
+                    </Table.HeaderCell>
+                    <Table.HeaderCell textAlign="center">
+                      상품상세정보
+                    </Table.HeaderCell>
+                    <Table.HeaderCell textAlign="center">
+                      합계(개)
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {salesList?.data?.data?.totalFoods?.map((el, i) => {
+                    return (
+                      <Table.Row key={el.foodName + i + el.foodId}>
+                        <Table.Cell>
+                          <FoodName>{el.foodName}</FoodName>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Description>{el.description}</Description>
+                        </Table.Cell>
+                        <Table.Cell textAlign="center">
+                          <div style={{width: 50}}> {el.totalFoodCount}</div>
+                        </Table.Cell>
+                      </Table.Row>
+                    );
+                  })}
 
-                <Table.Row>
-                  <Table.Cell style={{borderTop: 'double black'}}>
-                    <BoldText>Total</BoldText>
-                  </Table.Cell>
-                  <Table.Cell style={{borderTop: 'double black'}}></Table.Cell>
-                  <Table.Cell
-                    textAlign="center"
-                    style={{borderTop: 'double black'}}>
-                    <BoldText>{totalCount}</BoldText>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            </Table>
+                  <Table.Row>
+                    <Table.Cell style={{borderTop: 'double black'}}>
+                      <BoldText>Total</BoldText>
+                    </Table.Cell>
+                    <Table.Cell
+                      style={{borderTop: 'double black'}}></Table.Cell>
+                    <Table.Cell
+                      textAlign="center"
+                      style={{borderTop: 'double black'}}>
+                      <BoldText>{totalCount}</BoldText>
+                    </Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
+            )}
           </TotalTable>
-          <DetailTable>
-            {salesList?.data?.data?.foodByDateDiningTypes.map((el, i) => {
-              const test = totalFood.map(s => {
-                return el.foods.filter(v => v.foodId === s.foodId)[0];
-              });
-              return (
-                <Table
-                  style={{height: 100, minWidth: 768}}
-                  key={el.serviceDate + i + el.diningType}>
-                  <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell
-                        key={el.serviceDate + el.diningType}
-                        style={{whiteSpace: 'nowrap'}}>
-                        {el.serviceDate + `\u00A0` + el.diningType}
-                      </Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Header>
-                  <Table.Body>
-                    {test.map((v, i) => {
-                      if (v) {
-                        return (
-                          <Table.Row key={v.foodId + i + v.foodName}>
-                            <Table.Cell textAlign="center">
-                              {v.foodCount}
-                            </Table.Cell>
-                          </Table.Row>
-                        );
-                      }
-                      return (
-                        <Table.Row key={i}>
-                          <Table.Cell textAlign="center">{`\u00A0`}</Table.Cell>
+          {innerWidth < 786 ? (
+            <DetailTableAnt>
+              {salesList?.data?.data?.foodByDateDiningTypes.map((el, i) => {
+                const test = totalFood.map(s => {
+                  return el.foods.filter(v => v.foodId === s.foodId)[0];
+                });
+                const removeUndefinedList = test.filter(
+                  data => data !== undefined,
+                );
+                console.log(test);
+                const columnsHeader = [
+                  {
+                    title: '상품명',
+                    dataIndex: 'foodName',
+                    key: 'foodName',
+                    width: '150px',
+                  },
+                  {
+                    title: el.serviceDate,
+                    dataIndex: 'foodCount',
+                    key: 'foodCount',
+                    width: '150px',
+                  },
+                ];
+                return (
+                  <div key={el.serviceDate + i + el.diningType}>
+                    <AntTable
+                      dataSource={removeUndefinedList}
+                      columns={columnsHeader}
+                      pagination={false}
+                    />
+                  </div>
+                );
+              })}
+            </DetailTableAnt>
+          ) : (
+            <DetailTable>
+              {salesList?.data?.data?.foodByDateDiningTypes.map((el, i) => {
+                const test = totalFood.map(s => {
+                  return el.foods.filter(v => v.foodId === s.foodId)[0];
+                });
+                return (
+                  <div key={el.serviceDate + i + el.diningType}>
+                    <Table style={{height: 100}}>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell style={{whiteSpace: 'nowrap'}}>
+                            {el.serviceDate + `\u00A0` + el.diningType}
+                          </Table.HeaderCell>
                         </Table.Row>
-                      );
-                    })}
-                    <Table.Row>
-                      <Table.Cell
-                        textAlign="center"
-                        style={{borderTop: 'double black'}}>
-                        <BoldText>{el.totalCount}</BoldText>
-                      </Table.Cell>
-                    </Table.Row>
-                  </Table.Body>
-                </Table>
-              );
-            })}
-          </DetailTable>
+                      </Table.Header>
+                      <Table.Body>
+                        {test.map((v, i) => {
+                          if (v) {
+                            return (
+                              <Table.Row key={v.foodId + i + v.foodName}>
+                                <Table.Cell textAlign="center">
+                                  {v.foodCount}
+                                </Table.Cell>
+                              </Table.Row>
+                            );
+                          }
+                          return (
+                            <Table.Row key={'foodId' + i}>
+                              <Table.Cell textAlign="center">{`\u00A0`}</Table.Cell>
+                            </Table.Row>
+                          );
+                        })}
+                        <Table.Row>
+                          <Table.Cell
+                            textAlign="center"
+                            style={{borderTop: 'double black'}}>
+                            <BoldText>{el.totalCount}</BoldText>
+                          </Table.Cell>
+                        </Table.Row>
+                      </Table.Body>
+                    </Table>
+                  </div>
+                );
+              })}
+            </DetailTable>
+          )}
         </TopTable>
       </TableWrapper>
       <TableWrapper>
@@ -190,8 +269,21 @@ const Schedule = () => {
                 <MealDetailWrap>
                   {el.foodByGroups.map((v, l) => {
                     return v.spotByDateDiningTypes.map((spot, i) => {
-                      console.log(spot);
                       let foodTotalCount = 0;
+                      const columnsHeader = [
+                        {
+                          title: '상품명',
+                          dataIndex: 'foodName',
+                          key: 'foodName',
+                          width: '150px',
+                        },
+                        {
+                          title: '수량',
+                          dataIndex: 'foodCount',
+                          key: 'foodCount',
+                          width: '150px',
+                        },
+                      ];
                       return (
                         <TableWrap
                           key={
@@ -212,54 +304,60 @@ const Schedule = () => {
                               color="blue"
                             />
                             <Label content={spot.pickupTime} color="black" />
-                            {/* 배송시간
-                              <Label content={spot.deliveryTime} color="black" /> 
-                            */}
-                            <Table celled>
-                              <Table.Header>
-                                <Table.Row>
-                                  <Table.HeaderCell textAlign="center">
-                                    <div style={{width: 150}}>상품명</div>
-                                  </Table.HeaderCell>
-                                  <Table.HeaderCell textAlign="center">
-                                    <div style={{width: 50}}>수량</div>
-                                  </Table.HeaderCell>
-                                </Table.Row>
-                              </Table.Header>
-                              <Table.Body>
-                                {spot.foods.map((food, index) => {
-                                  foodTotalCount =
-                                    foodTotalCount + food.foodCount;
-                                  return (
-                                    <Table.Row
-                                      key={
-                                        spot.spotId +
-                                        spot.spotName +
-                                        food.foodName +
-                                        index +
-                                        i +
-                                        l +
-                                        idx
-                                      }>
-                                      <Table.Cell>{food.foodName}</Table.Cell>
-                                      <Table.Cell textAlign="center">
-                                        {food.foodCount}
-                                      </Table.Cell>
-                                    </Table.Row>
-                                  );
-                                })}
-                                <Table.Row
-                                  style={{
-                                    backgroundColor: '#efefef',
-                                    fontWeight: 600,
-                                  }}>
-                                  <Table.Cell>합계</Table.Cell>
-                                  <Table.Cell textAlign="center">
-                                    {foodTotalCount}
-                                  </Table.Cell>
-                                </Table.Row>
-                              </Table.Body>
-                            </Table>
+                            {innerWidth < 786 ? (
+                              <AntTable
+                                dataSource={spot.foods}
+                                columns={columnsHeader}
+                                pagination={false}
+                              />
+                            ) : (
+                              <Table celled>
+                                <Table.Header>
+                                  <Table.Row>
+                                    <Table.HeaderCell textAlign="center">
+                                      <div style={{width: 150}}>상품명</div>
+                                    </Table.HeaderCell>
+                                    <Table.HeaderCell textAlign="center">
+                                      <div style={{width: 50}}>수량</div>
+                                    </Table.HeaderCell>
+                                  </Table.Row>
+                                </Table.Header>
+                                <Table.Body>
+                                  {spot.foods.map((food, index) => {
+                                    foodTotalCount =
+                                      foodTotalCount + food.foodCount;
+                                    return (
+                                      <Table.Row
+                                        key={
+                                          'BodyFood' +
+                                          spot.spotId +
+                                          spot.spotName +
+                                          food.foodName +
+                                          index +
+                                          i +
+                                          food.foodCount +
+                                          idx
+                                        }>
+                                        <Table.Cell>{food.foodName}</Table.Cell>
+                                        <Table.Cell textAlign="center">
+                                          {food.foodCount}
+                                        </Table.Cell>
+                                      </Table.Row>
+                                    );
+                                  })}
+                                  <Table.Row
+                                    style={{
+                                      backgroundColor: '#efefef',
+                                      fontWeight: 600,
+                                    }}>
+                                    <Table.Cell>합계</Table.Cell>
+                                    <Table.Cell textAlign="center">
+                                      {foodTotalCount}
+                                    </Table.Cell>
+                                  </Table.Row>
+                                </Table.Body>
+                              </Table>
+                            )}
                           </div>
                         </TableWrap>
                       );
@@ -280,6 +378,13 @@ export default Schedule;
 const Wrap = styled.div`
   margin: 100px 0px 50px 0;
   padding-right: 20px;
+  ${({innerWidth}) => {
+    return css`
+      max-width: ${innerWidth - 10}px;
+      padding: 10px;
+      overflow-x: hidden;
+    `;
+  }}
 `;
 
 const DateInput = styled.input`
@@ -297,10 +402,14 @@ const CalendarWrap = styled.div`
 `;
 
 const TopTable = styled.div`
-  min-width: 800px;
-  background-color: blue;
   margin-top: 50px;
   display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    min-width: 100px;
+    max-width: ${({innerWidth}) => innerWidth - 10}px;
+    padding: 15px;
+  }
 `;
 
 const MakersTable = styled.div`
@@ -308,9 +417,17 @@ const MakersTable = styled.div`
 `;
 
 const TotalTable = styled.div`
+  margin-bottom: 30px;
   //width: 30%;
 `;
 
+const DetailTableAnt = styled.div`
+  display: flex;
+  max-width: 800px;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+`;
 const DetailTable = styled.div`
   display: flex;
   overflow-x: auto;
