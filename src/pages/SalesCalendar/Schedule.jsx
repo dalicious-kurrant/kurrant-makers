@@ -16,6 +16,7 @@ const columns = [
     title: '상품명',
     dataIndex: 'foodName',
     key: 'foodName',
+    width: 150,
   },
   {
     title: '상품상세정보',
@@ -380,7 +381,7 @@ const Wrap = styled.div`
   padding-right: 20px;
   ${({innerWidth}) => {
     return css`
-      max-width: ${innerWidth - 10}px;
+      max-width: ${innerWidth}px;
       padding: 10px;
       overflow-x: hidden;
     `;
@@ -407,7 +408,7 @@ const TopTable = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     min-width: 100px;
-    max-width: ${({innerWidth}) => innerWidth - 10}px;
+    max-width: ${({innerWidth}) => innerWidth}px;
     padding: 15px;
   }
 `;

@@ -16,6 +16,8 @@ import {ReactComponent as ActiveSchedule} from '../../assets/snb/active/schedule
 import {ReactComponent as ActiveMakersInfo} from '../../assets/snb/active/makersInfo.svg';
 import {ReactComponent as ActiveDiagram} from '../../assets/snb/active/diagram.svg';
 import {ReactComponent as ActiveMoney} from '../../assets/snb/active/money.svg';
+import {Link, useNavigate} from 'react-router-dom';
+
 export const menuData = [
   // {
   //   name: '대시보드',
@@ -34,28 +36,44 @@ export const menuData = [
     path: '/product',
     icon: <Product />,
     activeIcon: <ActiveProduct />,
-    label: <a href="/product">상품관리</a>,
+    label: (
+      <Link style={{color: '#343337'}} to="/product">
+        상품관리
+      </Link>
+    ),
   },
   {
     key: '판매 관리',
     path: '/sales/schedule',
     icon: <Calendar />,
     activeIcon: <ActiveCalendar />,
-    label: <a href="/sales/schedule">판매 관리</a>,
+    label: (
+      <Link style={{color: '#343337'}} to="/sales/schedule">
+        판매 관리
+      </Link>
+    ),
   },
   {
     key: '일정 관리',
     path: '/calendar',
     icon: <Schedule />,
     activeIcon: <ActiveSchedule />,
-    label: <a href="/calendar">일정 관리</a>,
+    label: (
+      <Link style={{color: '#343337'}} to="/calendar">
+        일정 관리
+      </Link>
+    ),
   },
   {
     key: '메이커스 정보',
     path: '/makersInfo',
     icon: <MakersInfo />,
     activeIcon: <ActiveMakersInfo />,
-    label: <a href="/makersInfo">메이커스 정보</a>,
+    label: (
+      <Link style={{color: '#343337'}} to="/makersInfo">
+        메이커스 정보
+      </Link>
+    ),
   },
 
   // {
@@ -75,6 +93,10 @@ export const menuData = [
     path: '/calculate',
     icon: <Money />,
     activeIcon: <ActiveMoney />,
-    label: <a href="/product">정산 관리</a>,
+    label: (
+      <Link style={{color: '#343337'}} to="/calculate">
+        정산 관리
+      </Link>
+    ),
   },
 ];

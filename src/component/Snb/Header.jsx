@@ -1,35 +1,48 @@
 import React, {useState} from 'react';
-import {Link, NavLink, useLocation} from 'react-router-dom';
+import {NavLink, useLocation, useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 
-import {ReactComponent as Building} from '../../assets/snb/building.svg';
 import Logo from '../../assets/logo3.png';
 import {menuData} from './headerdata';
-import SidebarItem from './SideBarItem';
-import {ReactComponent as CsIcon} from '../../assets/icon/cs.svg';
-import {ReactComponent as Logout} from '../../assets/icon/logout.svg';
 import {useAtom} from 'jotai';
 import {pageWidthAtom} from '../../utils/store/store';
 import {MenuOutlined} from '@ant-design/icons';
-import {Button, Dropdown} from 'antd';
+import {Dropdown} from 'semantic-ui-react';
 function Header() {
-  const pathName = useLocation().pathname;
   const [innerWidth] = useAtom(pageWidthAtom);
-  const makersName = localStorage.getItem('makersName');
-  const token = localStorage.getItem('token');
-  const logoutButton = () => {
-    localStorage.clear();
-    window.location.replace('/');
-  };
-
+  const [open, setOpen] = useState(false);
+  const navigation = useNavigate();
   return (
     <Wrapper innerWidth={innerWidth}>
       <ImageWrap>
         <img src={Logo} alt="logo" width={85} height={24} />
       </ImageWrap>
-      <Dropdown menu={{menuData}}>
-        <MenuOutlined style={{color: 'white'}} />
-      </Dropdown>
+      <MenuBox>
+        <MenuOutlined
+          style={{fontSize: 24}}
+          color={'white'}
+          onClick={() => {
+            setOpen(!open);
+          }}
+        />
+      </MenuBox>
+      {open && (
+        <MenuContainer>
+          {menuData.map((menu, index) => {
+            return (
+              <MenuItem
+                key={menu.key}
+                onClick={() => {
+                  setOpen(!open);
+                  navigation(menu.path);
+                }}>
+                <MenuIcon>{menu.icon}</MenuIcon>
+                <MenuText>{menu.key}</MenuText>
+              </MenuItem>
+            );
+          })}
+        </MenuContainer>
+      )}
       {/* <ul style={{paddingLeft: 8}}>
         {menuData.map((menu, index) => {
           return (
@@ -74,48 +87,48 @@ const Wrapper = styled.div`
   position: fixed;
   min-height: 60px;
   background-color: #000046;
+  overflow: hidden;
+  z-index: 999;
   @media (min-width: 768px) {
     display: none;
   }
 `;
 
-const Profile = styled.div`
+const MenuBox = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 24px 0px;
-  margin: 0px 16px;
-`;
-
-const StyleNavLink = styled(NavLink)`
-  text-decoration: none;
-  color: #e4e3e7;
-  &.active {
-    color: #5a1eff;
-    font-weight: 600;
-  }
-`;
-
-const MakersName = styled.p`
-  font-size: 20px;
-  font-weight: 500;
-  margin-top: 16px;
   color: white;
+  width: 150px;
+  padding-right: 5px;
+  height: 60px;
+  align-items: center;
+  justify-content: flex-end;
+`;
+const MenuContainer = styled.div`
+  position: fixed;
+  background-color: red;
+  top: 55px;
+  border: 1px solid #aeaeae;
+  right: 5px;
+`;
+const MenuItem = styled.div`
+  border: 1px solid #e4e4e4;
+  background-color: white;
+  cursor: pointer;
+  padding: 10px;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 5px;
+  display: flex;
+`;
+const MenuText = styled.div`
+  color: #343337;
 `;
 
-const UserInfo = styled.div`
-  margin-top: 40px;
-`;
-
-const ProfileWrap = styled.div``;
+const MenuIcon = styled.div``;
 
 const TopBorder = styled.div`
   border-bottom: 1px solid #babac6;
   opacity: 0.5;
-`;
-
-const Border = styled(TopBorder)`
-  margin: 0px 18px 24px 8px;
 `;
 
 const ImageWrap = styled.div`
@@ -123,27 +136,6 @@ const ImageWrap = styled.div`
   padding-left: 24px;
 `;
 
-const MakersAdminWrap = styled.div`
-  p {
-    color: white;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  display: flex;
-  justify-content: center;
-  margin-bottom: 18px;
-`;
-
-const BottomIconWrap = styled.div`
-  display: flex;
-
-  position: absolute;
-  padding: 0px 50px;
-  bottom: 35px;
-  width: 100%;
-  justify-content: space-between;
-`;
 const BottomIcon = styled.div`
   display: flex;
   align-items: center;
@@ -154,5 +146,3 @@ const BottomIcon = styled.div`
     margin-right: 8px;
   }
 `;
-
-const CsWrap = styled(BottomIcon)``;

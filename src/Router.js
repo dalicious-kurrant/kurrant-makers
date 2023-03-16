@@ -32,8 +32,8 @@ function Router() {
   });
   return (
     <BrowserRouter>
-      {token !== null && innerWidth > 768 ? <Sidebar /> : <Header />}
       <ScrollToTop />
+      {token !== null && innerWidth > 768 ? <Sidebar /> : <Header />}
       <Container token={token}>
         <Routes>
           <Route path="/" element={<LoginPage />} />
