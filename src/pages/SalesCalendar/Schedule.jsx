@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {Button, Header, Label, Table} from 'semantic-ui-react';
 import {Table as AntTable} from 'antd';
+
 import styled, {css} from 'styled-components';
 import {formattedWeekDate} from '../../utils/dateFormatter';
 import DiningButton from './components/DiningButton';
@@ -13,20 +14,16 @@ import {pageWidthAtom} from '../../utils/store/store';
 
 const columns = [
   {
-    title: '상품명',
+    title: '상품명 및 상세정보',
     dataIndex: 'foodName',
     key: 'foodName',
     width: 150,
   },
   {
-    title: '상품상세정보',
-    dataIndex: 'description',
-    key: 'description',
-  },
-  {
     title: '합계(개)',
     dataIndex: 'totalFoodCount',
     key: 'totalFoodCount',
+    width: 100,
   },
 ];
 const Schedule = () => {
@@ -112,10 +109,15 @@ const Schedule = () => {
           <TotalTable>
             {innerWidth < 786 ? (
               <AntTable
-                dataSource={salesList?.data?.data?.totalFoods}
+                style={{whiteSpace: 'pre-wrap'}}
+                dataSource={salesList?.data?.data?.totalFoods.map(v => {
+                  return {
+                    foodName: v.foodName + `\n` + v.description,
+                    totalFoodCount: v.totalFoodCount,
+                  };
+                })}
                 columns={columns}
                 pagination={false}
-                scroll={{x: '100vw'}}
               />
             ) : (
               <Table singleLine styld={{overflow: 'hidden'}}>
@@ -174,7 +176,6 @@ const Schedule = () => {
                 const removeUndefinedList = test.filter(
                   data => data !== undefined,
                 );
-                console.log(test);
                 const columnsHeader = [
                   {
                     title: '상품명',
