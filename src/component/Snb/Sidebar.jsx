@@ -19,57 +19,55 @@ function Sidebar() {
   };
 
   return (
-    <>
-      <Wrapper>
-        <ImageWrap>
-          <img src={Logo} alt="logo" width={85} height={24} />
-        </ImageWrap>
+    <Wrapper>
+      <ImageWrap>
+        <img src={Logo} alt="logo" width={85} height={24} />
+      </ImageWrap>
 
-        <UserInfo>
-          <MakersAdminWrap>
-            <p>메이커스 관리자</p>
-          </MakersAdminWrap>
-          <TopBorder />
-          <ProfileWrap>
-            <Profile>
-              <Building />
-              <MakersName>{makersName}</MakersName>
-            </Profile>
-          </ProfileWrap>
-          <Border />
-        </UserInfo>
-        <ul style={{paddingLeft: 8}}>
-          {menuData.map((menu, index) => {
-            return (
-              <StyleNavLink
-                to={menu.path}
-                key={index}
-                className={({isActive}) => (isActive ? 'active' : undefined)}>
-                <SidebarItem
-                  menu={menu}
-                  isActive={pathName === menu.path ? true : false}
-                />
-              </StyleNavLink>
-            );
-          })}
-        </ul>
-        <BottomIconWrap>
-          <a
-            href="http://pf.kakao.com/_uAxixjxb/chat"
-            target="_blank"
-            rel="noreferrer">
-            <CsWrap>
-              <div>고객센터</div>
-              <CsIcon />
-            </CsWrap>
-          </a>
-          <BottomIcon onClick={logoutButton}>
-            <div>로그아웃</div>
-            <Logout />
-          </BottomIcon>
-        </BottomIconWrap>
-      </Wrapper>
-    </>
+      <UserInfo>
+        <MakersAdminWrap>
+          <p>메이커스 관리자</p>
+        </MakersAdminWrap>
+        <TopBorder />
+        <ProfileWrap>
+          <Profile>
+            <Building />
+            <MakersName>{makersName}</MakersName>
+          </Profile>
+        </ProfileWrap>
+        <Border />
+      </UserInfo>
+      <ul style={{paddingLeft: 8}}>
+        {menuData.map((menu, index) => {
+          return (
+            <StyleNavLink
+              to={menu.path}
+              key={index}
+              className={({isActive}) => (isActive ? 'active' : undefined)}>
+              <SidebarItem
+                menu={menu}
+                isActive={pathName === menu.path ? true : false}
+              />
+            </StyleNavLink>
+          );
+        })}
+      </ul>
+      <BottomIconWrap>
+        <a
+          href="http://pf.kakao.com/_uAxixjxb/chat"
+          target="_blank"
+          rel="noreferrer">
+          <CsWrap>
+            <div>고객센터</div>
+            <CsIcon />
+          </CsWrap>
+        </a>
+        <BottomIcon onClick={logoutButton}>
+          <div>로그아웃</div>
+          <Logout />
+        </BottomIcon>
+      </BottomIconWrap>
+    </Wrapper>
   );
 }
 
@@ -78,12 +76,14 @@ export default Sidebar;
 const Wrapper = styled.div`
   flex: 1;
   height: 100%;
-  // border-right: 1px solid ${({theme}) => theme.colors.grey[2]};
   min-width: 256px;
   box-sizing: border-box;
   position: fixed;
   overflow-y: auto;
   background-color: #000046;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Profile = styled.div`
