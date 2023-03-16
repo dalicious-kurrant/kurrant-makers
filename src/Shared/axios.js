@@ -16,6 +16,7 @@ const setToken = config => {
 };
 
 if (token) {
+  console.log(token);
   instance.interceptors.request.use(setToken);
 }
 

@@ -12,7 +12,6 @@ const ProductPage = () => {
   const {data: makersProcuctList, isLoading} = useGetMakerProductsList();
   const navigate = useNavigate();
   const [checkItems, setCheckItems] = useState([]);
-  console.log(makersProcuctList);
 
   const goToDetail = id => {
     navigate('/productDetail/' + id, {
