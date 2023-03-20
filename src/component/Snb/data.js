@@ -7,6 +7,8 @@ import {ReactComponent as Stock} from '../../assets/snb/stock.svg';
 import {ReactComponent as Diagram} from '../../assets/snb/diagram.svg';
 import {ReactComponent as Money} from '../../assets/snb/money.svg';
 import {ReactComponent as Schedule} from '../../assets/snb/schedule.svg';
+import {ReactComponent as DailyFood} from '../../assets/snb/dailyfood.svg';
+import {ReactComponent as ActiveDailyFood} from '../../assets/snb//active/dailyfood.svg';
 import {ReactComponent as ActiveDash} from '../../assets/snb/active/dashboard.svg';
 import {ReactComponent as ActiveSpeaker} from '../../assets/snb/active/speaker.svg';
 import {ReactComponent as ActiveCalendar} from '../../assets/snb/active/calendar.svg';
@@ -16,6 +18,7 @@ import {ReactComponent as ActiveSchedule} from '../../assets/snb/active/schedule
 import {ReactComponent as ActiveMakersInfo} from '../../assets/snb/active/makersInfo.svg';
 import {ReactComponent as ActiveDiagram} from '../../assets/snb/active/diagram.svg';
 import {ReactComponent as ActiveMoney} from '../../assets/snb/active/money.svg';
+import DailyFoodPage from '../../pages/DailyFood/DailyFoodPage';
 export const menuData = [
   // {
   //   name: '대시보드',
@@ -46,6 +49,12 @@ export const menuData = [
     path: '/calendar',
     icon: <Schedule />,
     activeIcon: <ActiveSchedule />,
+  },
+  {
+    name: '식단 일정',
+    path: '/dailyfood',
+    icon: <DailyFood />,
+    activeIcon: <ActiveDailyFood />,
   },
   {
     name: '메이커스 정보',

@@ -203,10 +203,12 @@ const Calendar = () => {
             testData={testData}
             setTestData={setTestData}
           />
+        ) : testData.length > 0 ? (
+          <CalendarSimple testData={testData} setTestData={setTestData} />
         ) : (
-          testData.length > 0 && (
-            <CalendarSimple testData={testData} setTestData={setTestData} />
-          )
+          <PageWrapper>
+            <div>요청된 일정이 없습니다.</div>
+          </PageWrapper>
         )}
       </Wrapper>
     </PageWrapper>
