@@ -19,6 +19,7 @@ import {useEffect} from 'react';
 import {useAtom} from 'jotai';
 import {pageWidthAtom} from './utils/store/store';
 import Header from './component/Snb/Header';
+import DailyFood from './pages/DailyFood/DailyFoodPage';
 
 function Router() {
   const token = localStorage.getItem('token');
@@ -45,6 +46,7 @@ function Router() {
             <Route path="/detail" element={<Detail />} />
             <Route path="/calculate" element={<Calculate />} />
             <Route path="/calendar" element={<Calendar />} />
+            <Route path="/dailyfood" element={<DailyFood />} />
             <Route path="/stock" element={<Stock />} />
             <Route path="/main" element={<Dashboard />} />
             <Route path="/sales/schedule" element={<Schedule />} />

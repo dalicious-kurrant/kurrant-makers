@@ -7,6 +7,8 @@ import {ReactComponent as Stock} from '../../assets/snb/stock.svg';
 import {ReactComponent as Diagram} from '../../assets/snb/diagram.svg';
 import {ReactComponent as Money} from '../../assets/snb/money.svg';
 import {ReactComponent as Schedule} from '../../assets/snb/schedule.svg';
+import {ReactComponent as DailyFood} from '../../assets/snb/dailyfood.svg';
+import {ReactComponent as ActiveDailyFood} from '../../assets/snb//active/dailyfood.svg';
 import {ReactComponent as ActiveDash} from '../../assets/snb/active/dashboard.svg';
 import {ReactComponent as ActiveSpeaker} from '../../assets/snb/active/speaker.svg';
 import {ReactComponent as ActiveCalendar} from '../../assets/snb/active/calendar.svg';
@@ -61,6 +63,17 @@ export const menuData = [
     label: (
       <Link style={{color: '#343337'}} to="/calendar">
         일정 관리
+      </Link>
+    ),
+  },
+  {
+    key: '식단 조회',
+    path: '/dailyfood',
+    icon: <DailyFood />,
+    activeIcon: <ActiveDailyFood />,
+    label: (
+      <Link style={{color: '#343337'}} to="/dailyfood">
+        식단 조회
       </Link>
     ),
   },
