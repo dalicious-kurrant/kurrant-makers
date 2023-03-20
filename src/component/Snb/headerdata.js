@@ -67,13 +67,13 @@ export const menuData = [
     ),
   },
   {
-    key: '식단 일정',
+    key: '식단 조회',
     path: '/dailyfood',
     icon: <DailyFood />,
     activeIcon: <ActiveDailyFood />,
     label: (
       <Link style={{color: '#343337'}} to="/dailyfood">
-        식단 일정
+        식단 조회
       </Link>
     ),
   },

@@ -51,7 +51,7 @@ export const menuData = [
     activeIcon: <ActiveSchedule />,
   },
   {
-    name: '식단 일정',
+    name: '식단 조회',
     path: '/dailyfood',
     icon: <DailyFood />,
     activeIcon: <ActiveDailyFood />,
