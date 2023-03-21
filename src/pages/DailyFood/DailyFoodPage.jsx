@@ -120,13 +120,13 @@ const DailyFoodPage = () => {
                   다이닝 타입
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">
-                  <div style={{width: 100}}>고객사 케파 합계</div>
+                  <div style={{width: 100}}>노출 고객</div>
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">
                   <div style={{width: 300}}>상품</div>
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">
-                  <div style={{width: 100}}>상품 케파</div>
+                  <div style={{width: 130}}>최대 상품 제작 가능 수</div>
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
