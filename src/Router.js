@@ -26,7 +26,7 @@ function Router() {
   const [innerWidth, setInnerWidth] = useAtom(pageWidthAtom);
   useEffect(() => {
     const resizeListener = () => {
-      console.log(window.innerWidth);
+      // console.log(window.innerWidth);
       setInnerWidth(window.innerWidth);
     };
     window.addEventListener('resize', resizeListener);
