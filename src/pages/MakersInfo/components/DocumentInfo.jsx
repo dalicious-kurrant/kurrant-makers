@@ -6,32 +6,34 @@ const DocumentInfo = () => {
     <Wrap>
       <h3>서류 정보</h3>
       <Table celled>
-        <Table.Row>
-          <Cell width={2} textAlign="center">
-            사업자등록증
-          </Cell>
-          <Table.Cell>
-            <div style={{padding: 4, minHeight: 200}}>
-              <input type="file" />
-            </div>
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Cell textAlign="center">영업신고증</Cell>
-          <Table.Cell>
-            <div style={{padding: 4, minHeight: 200}}>
-              <input type="file" />
-            </div>
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Cell textAlign="center">통장사본</Cell>
-          <Table.Cell>
-            <div style={{padding: 4, minHeight: 200}}>
-              <input type="file" />
-            </div>
-          </Table.Cell>
-        </Table.Row>
+        <Table.Body>
+          <Table.Row>
+            <Cell width={2} textAlign="center">
+              사업자등록증
+            </Cell>
+            <Table.Cell>
+              <div style={{padding: 4, minHeight: 200}}>
+                <input type="file" />
+              </div>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Cell textAlign="center">영업신고증</Cell>
+            <Table.Cell>
+              <div style={{padding: 4, minHeight: 200}}>
+                <input type="file" />
+              </div>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Cell textAlign="center">통장사본</Cell>
+            <Table.Cell>
+              <div style={{padding: 4, minHeight: 200}}>
+                <input type="file" />
+              </div>
+            </Table.Cell>
+          </Table.Row>
+        </Table.Body>
       </Table>
       <ButtonWrap>
         <Button content="저장" color="green" />

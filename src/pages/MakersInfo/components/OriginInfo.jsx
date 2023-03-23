@@ -1,27 +1,25 @@
-import {useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import {Button, Table} from 'semantic-ui-react';
 import styled from 'styled-components';
 import Input from '../../../component/Input/input';
+import {useAddOriginInfo, useGetOriginInfo} from '../../../hook/useMakersInfo';
 import OriginModify from './OriginModify';
 
 const OriginInfo = () => {
   const nameRef = useRef(null);
 
-  const [originArr, setOriginArr] = useState([]);
   const [checkItems, setCheckItems] = useState([]);
   const [clickData, setClickData] = useState();
   const [showOpenModal, setShowOpenModal] = useState(false);
+  const {data: originInfo} = useGetOriginInfo();
+  const {mutateAsync: saveOriginInfo} = useAddOriginInfo();
+  const originData = originInfo?.data?.data;
 
   const form = useForm({
     mode: 'all',
   });
-  const {
-    formState: {errors},
-    watch,
-    handleSubmit,
-    setValue,
-  } = form;
+  const {watch, setValue} = form;
 
   const name = watch('name');
   const origin = watch('origin');
@@ -33,34 +31,43 @@ const OriginInfo = () => {
     nameRef.current.focus();
   };
 
-  const AddRowButton = () => {
+  const AddRowButton = async () => {
     if (
       name !== '' &&
       name !== undefined &&
       origin !== '' &&
       origin !== undefined
     ) {
-      setOriginArr([...originArr, {name: name, origin: origin}]);
+      await saveOriginInfo([{name: name, from: origin}]);
       setValue('name', '');
       setValue('origin', '');
     }
   };
 
-  const handleSingleCheck = (checked, id) => {
+  const handleSingleCheck = (checked, id, data) => {
+    const getData = [data];
     if (checked) {
       setCheckItems(prev => [...prev, id]);
+      setClickData(getData.filter(el => el.id === id));
     } else {
       setCheckItems(checkItems.filter(el => el !== id));
     }
   };
 
   const showEditOpen = () => {
-    setShowOpenModal(true);
+    if (checkItems.length !== 0) {
+      setShowOpenModal(true);
+    }
   };
   return (
     <Wrap>
       <h3>원산지 정보</h3>
-
+      <div>품목과 원산지를 입력하고 추가 버튼을 클릭해 주세요.</div>
+      <div>
+        품목/원산지 수정은 한 품목씩 가능하며, 체크박스 선택 후 수정 버튼을
+        클릭해 주세요.
+      </div>
+      <div>삭제 시 체크박스 선택 후 삭제 버튼을 클릭해 주세요.</div>
       <FormProvider {...form}>
         <InputWrap>
           <Input ref={nameRef} name="name" label="품목" width="200px" />
@@ -102,17 +109,31 @@ const OriginInfo = () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          <Table.Row textAlign="center">
-            <Table.Cell>
-              <input type="checkbox" />
-            </Table.Cell>
-            <Table.Cell>김치</Table.Cell>
-            <Table.Cell>국내산</Table.Cell>
-          </Table.Row>
+          {originData?.map((el, idx) => (
+            <React.Fragment key={el.id + idx}>
+              <Table.Row textAlign="center">
+                <Table.Cell>
+                  <input
+                    checked={checkItems.includes(el.id) ? true : false}
+                    type="checkbox"
+                    onChange={e =>
+                      handleSingleCheck(e.target.checked, el.id, el)
+                    }
+                  />
+                </Table.Cell>
+                <Table.Cell>{el.name}</Table.Cell>
+                <Table.Cell>{el.from}</Table.Cell>
+              </Table.Row>
+            </React.Fragment>
+          ))}
         </Table.Body>
       </Table>
       {showOpenModal && (
-        <OriginModify open={showOpenModal} setOpen={setShowOpenModal} />
+        <OriginModify
+          open={showOpenModal}
+          setOpen={setShowOpenModal}
+          nowData={clickData}
+        />
       )}
     </Wrap>
   );

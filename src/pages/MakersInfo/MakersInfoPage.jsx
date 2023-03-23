@@ -34,7 +34,7 @@ const MakersInfoPage = () => {
             key={item.id}
             content={item.title}
             color="blue"
-            size="big"
+            size="large"
             style={{cursor: 'pointer'}}
             onClick={() => setIndex(item.id)}
           />
