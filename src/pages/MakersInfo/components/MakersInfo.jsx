@@ -146,7 +146,7 @@ const MakersInfo = () => {
               <Cell width={4}>외식영양정보 표시 대상 여부</Cell>
               <Table.Cell>
                 <div style={{padding: 4}}>
-                  {infoData?.isNutritionInformation}
+                  {infoData?.isNutritionInformation ? '대상' : '비대상'}
                 </div>
               </Table.Cell>
             </Table.Row>
