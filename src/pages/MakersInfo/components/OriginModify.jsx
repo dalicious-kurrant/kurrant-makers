@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Input from '../../../component/Input/input';
 import {useEditOriginInfo} from '../../../hook/useMakersInfo';
 
-const OriginModify = ({open, setOpen, nowData}) => {
+const OriginModify = ({open, setOpen, nowData, setCheckItems}) => {
   console.log(nowData);
   const {mutateAsync: editOriginInfo} = useEditOriginInfo();
   const form = useForm({
@@ -42,6 +42,7 @@ const OriginModify = ({open, setOpen, nowData}) => {
       origin !== undefined
     ) {
       await editOriginInfo({id: nowData[0].id, name: name, from: origin});
+      setCheckItems([]);
       setOpen(false);
     }
   };

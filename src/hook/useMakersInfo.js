@@ -36,3 +36,30 @@ export function useEditOriginInfo() {
     },
   });
 }
+
+export function useDeleteOriginInfo() {
+  const queryClient = useQueryClient();
+  return useMutation(data => makersApis.deleteOriginInformation(data), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('originInfo');
+    },
+  });
+}
+
+export function useGetDocuments() {
+  return useQuery('documents', () => {
+    return makersApis.documentsInformation();
+  });
+}
+
+export function useModifyDocuments() {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (formData, config) => makersApis.modifyDocuments(formData, config),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('documents');
+      },
+    },
+  );
+}

@@ -3,7 +3,11 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {Button, Table} from 'semantic-ui-react';
 import styled from 'styled-components';
 import Input from '../../../component/Input/input';
-import {useAddOriginInfo, useGetOriginInfo} from '../../../hook/useMakersInfo';
+import {
+  useAddOriginInfo,
+  useDeleteOriginInfo,
+  useGetOriginInfo,
+} from '../../../hook/useMakersInfo';
 import OriginModify from './OriginModify';
 
 const OriginInfo = () => {
@@ -14,6 +18,7 @@ const OriginInfo = () => {
   const [showOpenModal, setShowOpenModal] = useState(false);
   const {data: originInfo} = useGetOriginInfo();
   const {mutateAsync: saveOriginInfo} = useAddOriginInfo();
+  const {mutateAsync: deleteOriginInfo} = useDeleteOriginInfo();
   const originData = originInfo?.data?.data;
 
   const form = useForm({
@@ -44,6 +49,17 @@ const OriginInfo = () => {
     }
   };
 
+  const handleAllCheck = checked => {
+    if (checked) {
+      const idArray = [];
+      originData?.forEach(el => idArray.push(el.id));
+
+      setCheckItems(idArray);
+    } else {
+      setCheckItems([]);
+    }
+  };
+
   const handleSingleCheck = (checked, id, data) => {
     const getData = [data];
     if (checked) {
@@ -59,6 +75,13 @@ const OriginInfo = () => {
       setShowOpenModal(true);
     }
   };
+
+  const cancelButton = async () => {
+    if (checkItems.length !== 0) {
+      await deleteOriginInfo({idList: checkItems});
+    }
+  };
+
   return (
     <Wrap>
       <h3>원산지 정보</h3>
@@ -94,7 +117,15 @@ const OriginInfo = () => {
                 showEditOpen();
               }}
             />
-            <Button content="삭제" size="small" color="red" basic />
+            <Button
+              content="삭제"
+              size="small"
+              color="red"
+              basic
+              onClick={() => {
+                cancelButton();
+              }}
+            />
           </ButtonWrap>
         </InputWrap>
       </FormProvider>
@@ -102,7 +133,15 @@ const OriginInfo = () => {
         <Table.Header>
           <Table.Row textAlign="center">
             <Table.HeaderCell width={1}>
-              <input type="checkbox" />
+              <input
+                checked={
+                  checkItems.length === (originData && originData.length)
+                    ? true
+                    : false
+                }
+                type="checkbox"
+                onChange={e => handleAllCheck(e.target.checked)}
+              />
             </Table.HeaderCell>
             <Table.HeaderCell>품목</Table.HeaderCell>
             <Table.HeaderCell>원산지</Table.HeaderCell>
@@ -133,6 +172,7 @@ const OriginInfo = () => {
           open={showOpenModal}
           setOpen={setShowOpenModal}
           nowData={clickData}
+          setCheckItems={setCheckItems}
         />
       )}
     </Wrap>
