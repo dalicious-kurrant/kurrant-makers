@@ -3,6 +3,7 @@ import {Button, Label, Table, TableCell} from 'semantic-ui-react';
 import styled from 'styled-components';
 import {useGetDocuments, useModifyDocuments} from '../../../hook/useMakersInfo';
 import {ReactComponent as FileSvg} from '../../../assets/icon/file.svg';
+import {ReactComponent as CloseIcon} from '../../../assets/icon/close.svg';
 
 const DocumentInfo = () => {
   const licenseRef = useRef(null);
@@ -76,6 +77,22 @@ const DocumentInfo = () => {
     setShowAccount(null);
   };
 
+  const deletePreviewImage = () => {
+    if (showLicense) {
+      setShowLicense(null);
+      setLicenseData(null);
+    }
+
+    if (showPermit) {
+      setShowPermit(null);
+      setPermitData(null);
+    }
+    if (showAccount) {
+      setShowAccount(null);
+      setAccountData(null);
+    }
+  };
+
   const deleteImage = type => {
     const newImageURL = sendData.filter(el => el.imageType !== type);
 
@@ -107,49 +124,59 @@ const DocumentInfo = () => {
               사업자등록증
             </Cell>
             <Table.Cell>
-              <UploadButtonWrap style={{padding: 4, minHeight: 200}}>
-                {!labelArr?.includes(1) && (
-                  <UploadButton htmlFor="licenseInput">
-                    <div>
-                      <FileImage />
-                      이미지 업로드
-                    </div>
-                  </UploadButton>
-                )}
-
-                <Input
-                  id="licenseInput"
-                  ref={licenseRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={e => {
-                    handleImageUpload(e, 0);
-                  }}
-                />
-                {showLicense && <Image src={showLicense} alt="사업자 등록증" />}
-                <div>
-                  {sendData
-                    ?.filter(el => el.imageType === 1)
-                    .map(v => (
-                      <div key={v.imageType}>
-                        <Image src={v.location} alt="" />
-                        <Button
-                          content="삭제"
-                          onClick={() => {
-                            deleteImage(v.imageType);
-                            deletePreViewImage(v.imageType);
-                          }}
-                        />
+              <div style={{height: 220}}>
+                <UploadButtonWrap style={{padding: 4, minHeight: 200}}>
+                  {!labelArr?.includes(1) && (
+                    <UploadButton htmlFor="licenseInput">
+                      <div>
+                        <FileImage />
+                        이미지 업로드
                       </div>
-                    ))}
-                </div>
-              </UploadButtonWrap>
+                    </UploadButton>
+                  )}
+                  <Input
+                    id="licenseInput"
+                    ref={licenseRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={e => {
+                      handleImageUpload(e, 0);
+                    }}
+                  />
+                  {showLicense && (
+                    <PositionWrap>
+                      <Image src={showLicense} alt="사업자 등록증" />
+                      <CloseButton onClick={deletePreviewImage}>
+                        <CloseIcon />
+                      </CloseButton>
+                    </PositionWrap>
+                  )}
+                  <div>
+                    {sendData
+                      ?.filter(el => el.imageType === 1)
+                      .map(v => (
+                        <div key={v.imageType}>
+                          <div style={{position: 'relative'}}>
+                            <Image src={v.location} alt="" />
+                            <CloseButton
+                              onClick={() => {
+                                deleteImage(v.imageType);
+                                deletePreViewImage(v.imageType);
+                              }}>
+                              <CloseIcon />
+                            </CloseButton>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </UploadButtonWrap>
+              </div>
             </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Cell textAlign="center">영업신고증</Cell>
             <Table.Cell>
-              <div>
+              <div style={{height: 220}}>
                 <UploadButtonWrap style={{padding: 4, minHeight: 200}}>
                   {!labelArr?.includes(2) && (
                     <UploadButton htmlFor="permitInput">
@@ -168,20 +195,29 @@ const DocumentInfo = () => {
                       handleImageUpload(e, 1);
                     }}
                   />
-                  {showPermit && <Image src={showPermit} alt="영업 신고증" />}
+                  {showPermit && (
+                    <PositionWrap>
+                      <Image src={showPermit} alt="영업 신고증" />
+                      <CloseButton onClick={deletePreviewImage}>
+                        <CloseIcon />
+                      </CloseButton>
+                    </PositionWrap>
+                  )}
                   <div>
                     {sendData
                       ?.filter(el => el.imageType === 2)
                       .map(v => (
                         <div key={v.imageType}>
-                          <Image src={v.location} alt="" />
-                          <Button
-                            content="삭제"
-                            onClick={() => {
-                              deleteImage(v.imageType);
-                              deletePreViewImage(v.imageType);
-                            }}
-                          />
+                          <div style={{position: 'relative'}}>
+                            <Image src={v.location} alt="" />
+                            <CloseButton
+                              onClick={() => {
+                                deleteImage(v.imageType);
+                                deletePreViewImage(v.imageType);
+                              }}>
+                              <CloseIcon />
+                            </CloseButton>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -192,42 +228,53 @@ const DocumentInfo = () => {
           <Table.Row>
             <Cell textAlign="center">통장사본</Cell>
             <Table.Cell>
-              <UploadButtonWrap style={{padding: 4, minHeight: 200}}>
-                {!labelArr?.includes(3) && (
-                  <UploadButton htmlFor="accountInput">
-                    <div>
-                      <FileImage />
-                      이미지 업로드
-                    </div>
-                  </UploadButton>
-                )}
-                <Input
-                  id="accountInput"
-                  ref={accountRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={e => {
-                    handleImageUpload(e, 2);
-                  }}
-                />
-                {showAccount && <Image src={showAccount} alt="통장사본" />}
-                <div>
-                  {sendData
-                    ?.filter(el => el.imageType === 3)
-                    .map(v => (
-                      <div key={v.imageType}>
-                        <Image src={v.location} alt="" />
-                        <Button
-                          content="삭제"
-                          onClick={() => {
-                            deleteImage(v.imageType);
-                            deletePreViewImage(v.imageType);
-                          }}
-                        />
+              <div style={{height: 220}}>
+                <UploadButtonWrap style={{padding: 4, minHeight: 200}}>
+                  {!labelArr?.includes(3) && (
+                    <UploadButton htmlFor="accountInput">
+                      <div>
+                        <FileImage />
+                        이미지 업로드
                       </div>
-                    ))}
-                </div>
-              </UploadButtonWrap>
+                    </UploadButton>
+                  )}
+                  <Input
+                    id="accountInput"
+                    ref={accountRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={e => {
+                      handleImageUpload(e, 2);
+                    }}
+                  />
+                  {showAccount && (
+                    <PositionWrap>
+                      <Image src={showAccount} alt="통장사본" />
+                      <CloseButton onClick={deletePreviewImage}>
+                        <CloseIcon />
+                      </CloseButton>
+                    </PositionWrap>
+                  )}
+                  <div>
+                    {sendData
+                      ?.filter(el => el.imageType === 3)
+                      .map(v => (
+                        <div key={v.imageType}>
+                          <div style={{position: 'relative'}}>
+                            <Image src={v.location} alt="" />
+                            <CloseButton
+                              onClick={() => {
+                                deleteImage(v.imageType);
+                                deletePreViewImage(v.imageType);
+                              }}>
+                              <CloseIcon />
+                            </CloseButton>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </UploadButtonWrap>
+              </div>
             </Table.Cell>
           </Table.Row>
         </Table.Body>
@@ -252,7 +299,7 @@ const ButtonWrap = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100px;
+  width: 200px;
 `;
 
 const Input = styled.input`
@@ -278,4 +325,14 @@ const UploadButton = styled.label`
 
 const FileImage = styled(FileSvg)`
   margin-right: 4px;
+`;
+
+const CloseButton = styled.div`
+  position: absolute;
+  top: 4px;
+  right: 4px;
+`;
+
+const PositionWrap = styled.div`
+  position: relative;
 `;
