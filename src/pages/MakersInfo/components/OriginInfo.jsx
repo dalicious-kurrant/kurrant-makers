@@ -14,7 +14,6 @@ const OriginInfo = () => {
   const nameRef = useRef(null);
 
   const [checkItems, setCheckItems] = useState([]);
-  const [clickData, setClickData] = useState();
   const [showOpenModal, setShowOpenModal] = useState(false);
   const {data: originInfo} = useGetOriginInfo();
   const {mutateAsync: saveOriginInfo} = useAddOriginInfo();
@@ -38,12 +37,12 @@ const OriginInfo = () => {
 
   const AddRowButton = async () => {
     if (
-      name !== '' &&
+      name?.trim() !== '' &&
       name !== undefined &&
-      origin !== '' &&
+      origin?.trim() !== '' &&
       origin !== undefined
     ) {
-      await saveOriginInfo([{name: name, from: origin}]);
+      await saveOriginInfo([{name: name?.trim(), from: origin?.trim()}]);
       setValue('name', '');
       setValue('origin', '');
     }
@@ -60,28 +59,29 @@ const OriginInfo = () => {
     }
   };
 
-  const handleSingleCheck = (checked, id, data) => {
-    const getData = [data];
+  const handleSingleCheck = (checked, id) => {
     if (checked) {
       setCheckItems(prev => [...prev, id]);
-      setClickData(getData.filter(el => el.id === id));
     } else {
       setCheckItems(checkItems.filter(el => el !== id));
     }
   };
 
   const showEditOpen = () => {
-    if (checkItems.length !== 0) {
+    if (checkItems.length === 1) {
       setShowOpenModal(true);
+    } else {
+      alert('하나의 품목만 선택해 주세요');
     }
   };
 
   const cancelButton = async () => {
     if (checkItems.length !== 0) {
       await deleteOriginInfo({idList: checkItems});
+      setCheckItems([]);
     }
   };
-
+  console.log(checkItems);
   return (
     <Wrap>
       <h3>원산지 정보</h3>
@@ -155,9 +155,7 @@ const OriginInfo = () => {
                   <input
                     checked={checkItems.includes(el.id) ? true : false}
                     type="checkbox"
-                    onChange={e =>
-                      handleSingleCheck(e.target.checked, el.id, el)
-                    }
+                    onChange={e => handleSingleCheck(e.target.checked, el.id)}
                   />
                 </Table.Cell>
                 <Table.Cell>{el.name}</Table.Cell>
@@ -171,8 +169,9 @@ const OriginInfo = () => {
         <OriginModify
           open={showOpenModal}
           setOpen={setShowOpenModal}
-          nowData={clickData}
+          nowData={checkItems}
           setCheckItems={setCheckItems}
+          data={originData}
         />
       )}
     </Wrap>

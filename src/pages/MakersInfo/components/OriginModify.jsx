@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import Input from '../../../component/Input/input';
 import {useEditOriginInfo} from '../../../hook/useMakersInfo';
 
-const OriginModify = ({open, setOpen, nowData, setCheckItems}) => {
-  console.log(nowData);
+const OriginModify = ({open, setOpen, nowData, data, setCheckItems}) => {
   const {mutateAsync: editOriginInfo} = useEditOriginInfo();
   const form = useForm({
     mode: 'all',
@@ -23,10 +22,10 @@ const OriginModify = ({open, setOpen, nowData, setCheckItems}) => {
 
   useEffect(() => {
     if (nowData.length !== 0) {
-      setValue('name', nowData[0].name);
-      setValue('origin', nowData[0].from);
+      setValue('name', data.filter(el => el.id === nowData[0])[0].name);
+      setValue('origin', data.filter(el => el.id === nowData[0])[0].from);
     }
-  }, [nowData, setValue]);
+  }, [data, nowData, setValue]);
 
   const handleOnKeyPress = e => {
     if (e.key === 'Enter') {
@@ -36,12 +35,16 @@ const OriginModify = ({open, setOpen, nowData, setCheckItems}) => {
 
   const modifyButton = async () => {
     if (
-      name !== '' &&
+      name?.trim() !== '' &&
       name !== undefined &&
-      origin !== '' &&
+      origin?.trim() !== '' &&
       origin !== undefined
     ) {
-      await editOriginInfo({id: nowData[0].id, name: name, from: origin});
+      await editOriginInfo({
+        id: nowData[0],
+        name: name?.trim(),
+        from: origin?.trim(),
+      });
       setCheckItems([]);
       setOpen(false);
     }
