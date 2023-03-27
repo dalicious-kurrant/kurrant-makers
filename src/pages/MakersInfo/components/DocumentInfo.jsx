@@ -22,7 +22,7 @@ const DocumentInfo = () => {
 
   const handleImageUpload = (e, id) => {
     let reader = new FileReader();
-
+    console.log(e, id, '0-000');
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
       if (id === 0) {
@@ -41,12 +41,15 @@ const DocumentInfo = () => {
 
       if (previewImgUrl && id === 0) {
         setShowLicense(previewImgUrl);
+        e.target.value = '';
       }
       if (previewImgUrl && id === 1) {
         setShowPermit(previewImgUrl);
+        e.target.value = '';
       }
       if (previewImgUrl && id === 2) {
         setShowAccount(previewImgUrl);
+        e.target.value = '';
       }
     };
   };
@@ -117,6 +120,7 @@ const DocumentInfo = () => {
         <h3>서류 정보</h3>
         <Button content="저장" color="green" onClick={e => updateContent(e)} />
       </ButtonWrap>
+      <div>사진 업로드 또는 삭제 후 저장버튼을 클릭해 주세요.</div>
       <Table celled>
         <Table.Body>
           <Table.Row>
@@ -126,7 +130,7 @@ const DocumentInfo = () => {
             <Table.Cell>
               <div style={{height: 220}}>
                 <UploadButtonWrap style={{padding: 4, minHeight: 200}}>
-                  {!labelArr?.includes(1) && (
+                  {!labelArr?.includes(1) && !showLicense && (
                     <UploadButton htmlFor="licenseInput">
                       <div>
                         <FileImage />
@@ -178,7 +182,7 @@ const DocumentInfo = () => {
             <Table.Cell>
               <div style={{height: 220}}>
                 <UploadButtonWrap style={{padding: 4, minHeight: 200}}>
-                  {!labelArr?.includes(2) && (
+                  {!labelArr?.includes(2) && !showPermit && (
                     <UploadButton htmlFor="permitInput">
                       <div>
                         <FileImage />
@@ -230,7 +234,7 @@ const DocumentInfo = () => {
             <Table.Cell>
               <div style={{height: 220}}>
                 <UploadButtonWrap style={{padding: 4, minHeight: 200}}>
-                  {!labelArr?.includes(3) && (
+                  {!labelArr?.includes(3) && !showAccount && (
                     <UploadButton htmlFor="accountInput">
                       <div>
                         <FileImage />
@@ -300,6 +304,7 @@ const ButtonWrap = styled.div`
 
 const Image = styled.img`
   width: 200px;
+  height: 200px;
 `;
 
 const Input = styled.input`
