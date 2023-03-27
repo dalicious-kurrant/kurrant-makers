@@ -1,214 +1,63 @@
-import {Table} from 'semantic-ui-react';
+import {useEffect, useState} from 'react';
+import {Label} from 'semantic-ui-react';
 import styled from 'styled-components';
-import {useGetMakersInfo} from '../../hook/useMakersInfo';
-import {TableWrapper} from '../../layout/common.style';
-import {bizNoFormatter} from '../../utils/bizNumberFormatter';
+import DocumentInfo from './components/DocumentInfo';
+import MakersInfo from './components/MakersInfo';
+import OriginInfo from './components/OriginInfo';
 
 const MakersInfoPage = () => {
-  const {data: makersInfo} = useGetMakersInfo();
-  const infoData = makersInfo && makersInfo?.data?.data[0];
+  const [index, setIndex] = useState(0);
 
+  const data = [
+    {
+      id: 0,
+      title: '기본 정보',
+      component: <MakersInfo />,
+    },
+    {
+      id: 1,
+      title: '원산지 정보',
+      component: <OriginInfo />,
+    },
+    {
+      id: 2,
+      title: '서류 정보',
+      component: <DocumentInfo />,
+    },
+  ];
   return (
-    <Wrap>
-      <h1 style={{marginLeft: 24}}>메이커스 정보</h1>
-      <div style={{marginLeft: 20}}>
-        <Table celled>
-          <Table.Body>
-            <Table.Row>
-              <Cell width={4}>메이커스 코드</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.code}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>메이커스 이름</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.name}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>법인명</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.companyName}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>사업자대표</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.ceo}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>대표자 전화번호</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.ceoPhone}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>담당자 이름</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.managerName}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>담당자 전화번호</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.managerPhone}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>일일 최대 수량</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.dailyCapacity}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>가능 다이닝 타입</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>
-                  {infoData?.diningTypes.join(',')}
-                </div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>서비스 업종</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.serviceType}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>서비스 형태</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.serviceForm}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>모회사 여부</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>
-                  {infoData?.isParentCompany ? '있음' : '없음'}
-                </div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>모회사 ID</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>
-                  {infoData?.parentCompanyId ?? '없음'}
-                </div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>우편주소</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.zipCode}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>기본주소</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.address1}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>상세주소</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.address2}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>위치</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.location}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>사업자등록번호</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>
-                  {bizNoFormatter(infoData?.companyRegistrationNumber)}
-                </div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>계약 시작 날짜</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.contractStartDate}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>계약 종료 날짜</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.contractEndDate}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>외식영양정보 표시 대상 여부</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>
-                  {infoData?.isNutritionInformation}
-                </div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>영업 시작 시간</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.openTime}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>영업 종료 시간</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.closeTime}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>은행</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.bank}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>예금주명</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.depositHolder}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>계좌번호</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.accountNumber}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>생성일</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.createdDateTime}</div>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Cell width={4}>수정일</Cell>
-              <Table.Cell>
-                <div style={{padding: 4}}>{infoData?.updatedDateTime}</div>
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </div>
-    </Wrap>
+    <Wrapper>
+      <h1>메이커스 정보</h1>
+      <LabelWrap>
+        {data.map(item => (
+          <Label
+            key={item.id}
+            content={item.title}
+            color="blue"
+            size="large"
+            style={{cursor: 'pointer'}}
+            onClick={() => setIndex(item.id)}
+          />
+        ))}
+        {data
+          .filter(item => index === item.id)
+          .map(el => (
+            <div key={el.id}>{el.component}</div>
+          ))}
+      </LabelWrap>
+    </Wrapper>
   );
 };
 
 export default MakersInfoPage;
-const Wrap = styled.div`
+const Wrapper = styled.div`
   margin-top: 100px;
   margin-bottom: 50px;
+  margin-left: 20px;
 `;
 
-const Cell = styled(Table.Cell)`
-  background-color: #f5f5f5;
-`;
+const Wrap = styled.div``;
 
-const TableCell = styled(Table.Cell)`
-  padding: 10px 0px;
+const LabelWrap = styled.div`
+  margin-top: 24px;
 `;
