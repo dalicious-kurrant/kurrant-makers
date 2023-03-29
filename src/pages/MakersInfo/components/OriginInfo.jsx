@@ -81,7 +81,7 @@ const OriginInfo = () => {
       setCheckItems([]);
     }
   };
-  console.log(checkItems);
+
   return (
     <Wrap>
       <h3>원산지 정보</h3>
