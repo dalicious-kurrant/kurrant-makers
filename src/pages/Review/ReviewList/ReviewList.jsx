@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 
-import useReviewListQuery from './useReviewListQuery';
+import useGetReviewQuery from './useGetReviewQuery';
 
 const ReviewList = () => {
   const [orderItemNameAndCode, setOrderItemNameAndCode] = useState('');
@@ -10,14 +10,32 @@ const ReviewList = () => {
     console.log(orderItemNameAndCode);
   }, [orderItemNameAndCode]);
 
-  const {} = useReviewListQuery(
-    ['getUnansweredReviewList'],
-    `makers/reviews/pending?limit=2&page=1`,
+  // const {unansweredList} = useUnansweredQuery(
+  //   ['getUnansweredReviewList'],
+  //   `makers/reviews/pending?limit=2&page=1`,
+  // );
+  // const {everyList} = useEveryListQuery(
+  //   ['getEveryReviewList'],
+  //   `makers/reviews/all?limit=2&page=1`,
+  // );
+  const {
+    reviewList,
+    unansweredTotalPage,
+    everyListTotalPage,
+    unansweredQueryRefetch,
+    eveyListQueryRefetch,
+  } = useGetReviewQuery(
+    [['getUnansweredReviewList'], `makers/reviews/pending?limit=2&page=1`],
+    [['getEveryReviewList'], `makers/reviews/all?limit=2&page=1`],
   );
 
   const handleNameFilter = e => {
     setOrderItemNameAndCode(e.target.value);
   };
+
+  useEffect(() => {
+    console.log(reviewList);
+  }, [reviewList]);
 
   return (
     <Container>
