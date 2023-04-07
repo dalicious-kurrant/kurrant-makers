@@ -1,9 +1,41 @@
+import {useEffect, useState} from 'react';
 import styled from 'styled-components';
+import {Button, Checkbox, Dropdown, Table} from 'semantic-ui-react';
 
 const ReviewList = () => {
+  const [orderItemNameAndCode, setOrderItemNameAndCode] = useState('');
+
+  useEffect(() => {
+    console.log(orderItemNameAndCode);
+  }, [orderItemNameAndCode]);
+
+  const handleNameFilter = e => {
+    setOrderItemNameAndCode(e.target.value);
+  };
+
   return (
     <Container>
-      <p>리뷰 리스트에염</p>
+      <Header>
+        <TwoButtonWrap>
+          <TwoButton bgColor={'#deb832'}>미답변 리뷰 보기</TwoButton>
+          <TwoButton bgColor={'#4472C4'}>전체 리스트 보기</TwoButton>
+        </TwoButtonWrap>
+
+        <SearchWrap>
+          <TextInput
+            placeholder="상품명, 상품번호 검색"
+            name="nameFilter"
+            //   value={nameFilter}
+            onChange={handleNameFilter}
+          />
+
+          <TwoButton bgColor={'#4472C4'}>상품 검색</TwoButton>
+        </SearchWrap>
+      </Header>
+
+      <ReviewListWrap></ReviewListWrap>
+
+      <PaginationWrap></PaginationWrap>
     </Container>
   );
 };
@@ -14,4 +46,45 @@ const Container = styled.div`
   border: 1px solid black;
   height: 100%;
   flex: 4;
+`;
+
+const Header = styled.div`
+  width: 100%;
+  padding: 30px 20px;
+`;
+const ReviewListWrap = styled.div``;
+const PaginationWrap = styled.div``;
+
+const TwoButtonWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+`;
+const SearchWrap = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0px 5px;
+`;
+
+const TwoButton = styled.button`
+  outline: 0;
+  cursor: pointer;
+  border: 0;
+  width: 47%;
+  height: 30px;
+  font-size: 18px;
+  border-radius: 10px;
+  padding: 4px;
+  background-color: ${({bgColor}) => bgColor};
+  color: white;
+`;
+
+const TextInput = styled.input`
+  margin-right: 50px;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  height: 39px;
+  padding-left: 8px;
 `;

@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 
 const ReviewDetail = () => {
-  return (
-    <Container>
-      <p>리뷰 디테일이에염</p>
-    </Container>
-  );
+  return <Container></Container>;
 };
 
 export default ReviewDetail;
