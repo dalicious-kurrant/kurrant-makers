@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {Button, Checkbox, Dropdown, Table} from 'semantic-ui-react';
+
+import useReviewListQuery from './useReviewListQuery';
 
 const ReviewList = () => {
   const [orderItemNameAndCode, setOrderItemNameAndCode] = useState('');
@@ -8,6 +9,11 @@ const ReviewList = () => {
   useEffect(() => {
     console.log(orderItemNameAndCode);
   }, [orderItemNameAndCode]);
+
+  const {} = useReviewListQuery(
+    ['getUnansweredReviewList'],
+    `makers/reviews/pending?limit=2&page=1`,
+  );
 
   const handleNameFilter = e => {
     setOrderItemNameAndCode(e.target.value);
@@ -29,7 +35,7 @@ const ReviewList = () => {
             onChange={handleNameFilter}
           />
 
-          <TwoButton bgColor={'#4472C4'}>상품 검색</TwoButton>
+          <SearchButton bgColor={'#4472C4'}>상품 검색</SearchButton>
         </SearchWrap>
       </Header>
 
@@ -59,21 +65,23 @@ const TwoButtonWrap = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-
   margin-bottom: 20px;
 `;
 const SearchWrap = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 0px 5px;
+  /* padding: 0px 5px; */
 `;
 
 const TwoButton = styled.button`
   outline: 0;
   cursor: pointer;
   border: 0;
-  width: 47%;
-  height: 30px;
+  /* width: 47%;
+  height: 30px; */
+  width: 180px;
+  height: 34px;
   font-size: 18px;
   border-radius: 10px;
   padding: 4px;
@@ -81,10 +89,23 @@ const TwoButton = styled.button`
   color: white;
 `;
 
+const SearchButton = styled.button`
+  outline: 0;
+  cursor: pointer;
+  border: 0;
+  width: 180px;
+  height: 34px;
+  font-size: 18px;
+  border-radius: 10px;
+  /* padding: 4px; */
+  background-color: ${({bgColor}) => bgColor};
+  color: white;
+`;
+
 const TextInput = styled.input`
-  margin-right: 50px;
+  margin-left: 10px;
   border: 1px solid #cccccc;
   border-radius: 3px;
-  height: 39px;
+  height: 32px;
   padding-left: 8px;
 `;
