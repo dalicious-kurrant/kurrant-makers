@@ -20,6 +20,7 @@ import {useAtom} from 'jotai';
 import {pageWidthAtom} from './utils/store/store';
 import Header from './component/Snb/Header';
 import DailyFood from './pages/DailyFood/DailyFoodPage';
+import ReviewPage from './pages/Review/ReviewPage';
 
 function Router() {
   const token = localStorage.getItem('token');
@@ -50,6 +51,7 @@ function Router() {
             <Route path="/stock" element={<Stock />} />
             <Route path="/main" element={<Dashboard />} />
             <Route path="/sales/schedule" element={<Schedule />} />
+            <Route path="/review" element={<ReviewPage />} />
           </Route>
         </Routes>
       </Container>

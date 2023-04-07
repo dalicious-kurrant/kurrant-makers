@@ -81,4 +81,10 @@ export const menuData = [
     icon: <Money />,
     activeIcon: <ActiveMoney />,
   },
+  {
+    name: '리뷰 관리',
+    path: '/review',
+    icon: <Money />,
+    activeIcon: <ActiveMoney />,
+  },
 ];
