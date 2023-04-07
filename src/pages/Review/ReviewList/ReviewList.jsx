@@ -2,22 +2,26 @@ import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 
 import useGetReviewQuery from './useGetReviewQuery';
+import ReviewListRoom from './ReviewListRoom/ReviewListRoom';
 
 const ReviewList = () => {
-  const [orderItemNameAndCode, setOrderItemNameAndCode] = useState('');
+  const [foodNameInput, setFoodNameInput] = useState('');
+
+  // 버튼 누른 상태 보이게 하기
+  const [unansweredOrTotal, setUnansweredOrTotal] = useState();
 
   useEffect(() => {
-    console.log(orderItemNameAndCode);
-  }, [orderItemNameAndCode]);
+    console.log(foodNameInput);
+  }, [foodNameInput]);
 
-  // const {unansweredList} = useUnansweredQuery(
-  //   ['getUnansweredReviewList'],
-  //   `makers/reviews/pending?limit=2&page=1`,
-  // );
-  // const {everyList} = useEveryListQuery(
-  //   ['getEveryReviewList'],
-  //   `makers/reviews/all?limit=2&page=1`,
-  // );
+  const [totalUrl, setTotalUrl] = useState('makers/reviews/all?limit=1&page=1');
+  const [unansweredUrl, setUnansweredUrl] = useState(
+    'makers/reviews/pending?limit=1&page=1',
+  );
+
+  //// 표시
+  useEffect(() => {}, [setTotalUrl, setUnansweredUrl, foodNameInput]);
+
   const {
     reviewList,
     unansweredTotalPage,
@@ -30,7 +34,7 @@ const ReviewList = () => {
   );
 
   const handleNameFilter = e => {
-    setOrderItemNameAndCode(e.target.value);
+    setFoodNameInput(e.target.value);
   };
 
   useEffect(() => {
@@ -57,7 +61,9 @@ const ReviewList = () => {
         </SearchWrap>
       </Header>
 
-      <ReviewListWrap></ReviewListWrap>
+      <ReviewListWrap>
+        <ReviewListRoom />
+      </ReviewListWrap>
 
       <PaginationWrap></PaginationWrap>
     </Container>
