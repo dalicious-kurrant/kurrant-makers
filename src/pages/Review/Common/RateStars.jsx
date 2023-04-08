@@ -41,7 +41,7 @@ const RateStars = ({
             margin={marginNum}
             unitMargin={unitMargin}
             disabled={disableButton}
-            onPress={() => {
+            onClick={() => {
               setRating(1);
               callback && callback(1);
             }}>
@@ -53,7 +53,7 @@ const RateStars = ({
             margin={marginNum}
             unitMargin={unitMargin}
             disabled={disableButton}
-            onPress={() => {
+            onClick={() => {
               setRating(2);
 
               callback && callback(2);
@@ -66,7 +66,7 @@ const RateStars = ({
             margin={marginNum}
             unitMargin={unitMargin}
             disabled={disableButton}
-            onPress={() => {
+            onClick={() => {
               setRating(3);
 
               callback && callback(3);
@@ -79,7 +79,7 @@ const RateStars = ({
             margin={marginNum}
             unitMargin={unitMargin}
             disabled={disableButton}
-            onPress={() => {
+            onClick={() => {
               setRating(4);
 
               callback && callback(4);
@@ -92,7 +92,7 @@ const RateStars = ({
             margin={marginNum}
             unitMargin={unitMargin}
             disabled={disableButton}
-            onPress={() => {
+            onClick={() => {
               setRating(5);
 
               callback && callback(5);
@@ -110,7 +110,7 @@ const RateStars = ({
             margin={marginNum}
             unitMargin={unitMargin}
             disabled={disableButton}
-            onPress={() => {
+            onClick={() => {
               setRating(1);
 
               callback && callback(1);
@@ -123,7 +123,7 @@ const RateStars = ({
             margin={marginNum}
             unitMargin={unitMargin}
             disabled={disableButton}
-            onPress={() => {
+            onClick={() => {
               setRating(2);
 
               callback && callback(2);
@@ -136,7 +136,7 @@ const RateStars = ({
             margin={marginNum}
             unitMargin={unitMargin}
             disabled={disableButton}
-            onPress={() => {
+            onClick={() => {
               setRating(3);
 
               callback && callback(3);
@@ -149,7 +149,7 @@ const RateStars = ({
             margin={marginNum}
             unitMargin={unitMargin}
             disabled={disableButton}
-            onPress={() => {
+            onClick={() => {
               setRating(4);
 
               callback && callback(4);
@@ -162,7 +162,7 @@ const RateStars = ({
             margin={marginNum}
             unitMargin={unitMargin}
             disabled={disableButton}
-            onPress={() => {
+            onClick={() => {
               setRating(5);
 
               callback && callback(5);

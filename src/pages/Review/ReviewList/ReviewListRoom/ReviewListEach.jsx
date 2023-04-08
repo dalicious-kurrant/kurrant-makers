@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import RateStars from '../../Common/RateStars';
+import ReviewListEachImage from './ReviewListEachImage';
 
 const ReviewListEach = ({data}) => {
   //   content: '레몬에이드~~~~~~~';
@@ -13,13 +14,17 @@ const ReviewListEach = ({data}) => {
   //   updateDate: '2023-04-07';
   //   writer: '김지혜';
 
-  return (
-    <Container>
-      <Wrap1>
-        <OrderItemName>자장면</OrderItemName>
-        <Content>라라라라라라ㅏ라랄</Content>
+  const handleClick = () => {
+    console.log(data.reviewId);
+  };
 
-        <Writer>작성자: 라라ㅏ라라라</Writer>
+  return (
+    <Container onClick={handleClick}>
+      <Wrap1>
+        <OrderItemName>{data.orderItemName}</OrderItemName>
+        <Content>{data.content}</Content>
+
+        <Writer>{data.writer}</Writer>
 
         <RateStars
           ratingInput={data.satisfaction}
@@ -28,9 +33,9 @@ const ReviewListEach = ({data}) => {
         />
       </Wrap1>
       <Wrap2>
-        <Pic></Pic>
+        <ReviewListEachImage url={data.imageLocation} />
 
-        <CreateDate>2013-11-12</CreateDate>
+        <CreateDate>{data.createDate}</CreateDate>
       </Wrap2>
     </Container>
   );
@@ -41,6 +46,7 @@ export default ReviewListEach;
 const Container = styled.div`
   border: 1px solid black;
   display: flex;
+  cursor: pointer;
 
   margin-bottom: 10px;
   border-radius: 8px;
@@ -57,5 +63,6 @@ const Writer = styled.span``;
 const Wrap2 = styled.div`
   flex: 3;
 `;
+const PicWrap = styled.div``;
 const Pic = styled.img``;
 const CreateDate = styled.span``;
