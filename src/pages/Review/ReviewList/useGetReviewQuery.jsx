@@ -14,7 +14,7 @@ const useGetReviewQuery = (unanswered, total) => {
   // 리스트
   const [reviewList, setReviewList] = useState([]);
 
-  const {refetch: eveyListQueryRefetch} = useQuery(
+  const {refetch: everyListQueryRefetch} = useQuery(
     total[0],
 
     async ({queryKey}) => {
@@ -69,7 +69,7 @@ const useGetReviewQuery = (unanswered, total) => {
     everyListTotalPage,
 
     unansweredQueryRefetch,
-    eveyListQueryRefetch,
+    everyListQueryRefetch,
   };
 };
 export default useGetReviewQuery;

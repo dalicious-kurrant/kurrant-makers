@@ -5,7 +5,7 @@ export const buildCustomUrl = (
   foodName,
 ) => {
   let basicUrl;
-  if (type === 'total') {
+  if (type !== 'total') {
     basicUrl = [`makers/reviews/pending?limit=${limit}&page=${page}`];
   } else {
     basicUrl = [`makers/reviews/all?limit=${limit}&page=${page}`];
