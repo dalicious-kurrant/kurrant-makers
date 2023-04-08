@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import RateStars from '../../Common/RateStars';
 
 const ReviewListEach = ({data}) => {
   //   content: '레몬에이드~~~~~~~';
@@ -19,7 +20,12 @@ const ReviewListEach = ({data}) => {
         <Content>라라라라라라ㅏ라랄</Content>
 
         <Writer>작성자: 라라ㅏ라라라</Writer>
-        {/* <Satisfaction>별 4개</Satisfaction> */}
+
+        <RateStars
+          ratingInput={data.satisfaction}
+          width={'100px'}
+          margin={'1px'}
+        />
       </Wrap1>
       <Wrap2>
         <Pic></Pic>

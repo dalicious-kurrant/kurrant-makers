@@ -136,7 +136,9 @@ const Header = styled.div`
   width: 100%;
   padding: 30px 20px;
 `;
-const ReviewListWrap = styled.div``;
+const ReviewListWrap = styled.div`
+  height: 66%;
+`;
 const PaginationWrap = styled.div``;
 
 const TwoButtonWrap = styled.div`
