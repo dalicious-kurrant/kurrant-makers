@@ -51,6 +51,7 @@ const Container = styled.div`
   margin-bottom: 10px;
   border-radius: 8px;
   padding: 12px;
+  background-color: #fff;
 `;
 
 const Wrap1 = styled.div`

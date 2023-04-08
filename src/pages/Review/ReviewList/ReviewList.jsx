@@ -127,9 +127,10 @@ const ReviewList = () => {
 export default ReviewList;
 
 const Container = styled.div`
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 100%;
   flex: 4;
+  background-color: #eaeaea;
 `;
 
 const Header = styled.div`

@@ -16,7 +16,6 @@ const ReviewListRoom = ({reviewList}) => {
       {reviewList.map((v, i) => {
         return <ReviewListEach key={i} data={v} />;
       })}
-      {/* <TestDiv></TestDiv> */}
     </Container>
   );
 };
@@ -34,10 +33,5 @@ const Container = styled.div`
   /* flex: 8; */
   padding: 8px 14px;
   position: relative;
-  border: 1px solid black;
-`;
-
-const TestDiv = styled.div`
-  display: flex;
-  flex-direction: column;
+  /* border: 1px solid black; */
 `;
