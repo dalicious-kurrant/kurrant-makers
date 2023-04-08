@@ -14,10 +14,6 @@ const ReviewList = () => {
   // 버튼 누른 상태 보이게 하기 false -> 미답변 리뷰 보기, true -> 전체 리스트 보기
   const [unansweredOrTotal, setUnansweredOrTotal] = useState(false);
 
-  useEffect(() => {
-    console.log(foodNameInput);
-  }, [foodNameInput]);
-
   const [totalUrl, setTotalUrl] = useState(
     'makers/reviews/all?limit=50&page=1',
   );
@@ -68,9 +64,12 @@ const ReviewList = () => {
     }
   };
 
+  // 값 확인하기
   useEffect(() => {
-    console.log(reviewList);
-  }, [reviewList]);
+    console.log(foodNameInput);
+  }, [foodNameInput]);
+
+  //////// 채팅방 코드
 
   return (
     <Container>
@@ -111,7 +110,13 @@ const ReviewList = () => {
       </Header>
 
       <ReviewListWrap>
-        <ReviewListRoom />
+        {Array.isArray(reviewList) && reviewList.length > 0 ? (
+          <ReviewListRoom reviewList={reviewList} />
+        ) : (
+          <>
+            <p>리뷰 리스트에 암것도 없는데요?</p>
+          </>
+        )}
       </ReviewListWrap>
 
       <PaginationWrap></PaginationWrap>
