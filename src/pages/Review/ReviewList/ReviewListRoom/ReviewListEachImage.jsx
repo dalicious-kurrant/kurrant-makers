@@ -25,10 +25,12 @@ const ReviewListEachImage = ({url}) => {
       <Div
         ref={divRef}
         // divRef={divRef}
-
+        url={!!url}
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}>
-        <Img src={url} alt="" isHorizontal={isHorizontal} />
+        {!!url && <Img src={url} alt="" isHorizontal={isHorizontal} />}
+
+        {/* <Img src={imageSample} alt="" isHorizontal={isHorizontal} /> */}
       </Div>
     </>
   );
@@ -42,10 +44,18 @@ export const Div = styled.div`
   width: 80px;
   position: relative;
   margin: 10px;
+  align-items: center;
+  justify-content: center;
 
-  border: 1px solid black;
+  /* border: 1px solid black; */
   overflow: hidden;
   border-radius: 6px;
+  /* background-color: grey; */
+  ${({url}) => {
+    if (!url) {
+      return `background-color: #b2b1b1`;
+    }
+  }}
 `;
 
 export const Img = styled.img`
@@ -56,6 +66,5 @@ export const Img = styled.img`
       return `width: 100%;`;
     }
   }}
-
   margin: auto;
 `;
