@@ -22,7 +22,13 @@ const ReviewListEach = ({data}) => {
     <Container onClick={handleClick}>
       <Wrap1>
         <OrderItemName>{data.orderItemName}</OrderItemName>
-        <Content>{data.content}</Content>
+        <ContentDiv>
+          <Content>{data.content}</Content>
+          {/* sldkfjslkdfjlsdkjflskdjflskdjflskdjflskdfjlskdfjsdkljfsdlkjsdfsdfsdfsdfsldkfjslkdfjlsdkjflskdjflskdjflskdjflskdfjlskdfjsdkljfsdlkjsdfsdfsdfsdf */}
+          {/* <Content>
+            sldkfjslkdfjlsdkjflskdjflskdjflskdjflskdfjlskdfjsdkljfsdlkjsdfsdfsdfsdfsldkfjslkdfjlsdkjflskdjflskdjflskdjflskdfjlskdfjsdkljfsdlkjsdfsdfsdfsdf
+          </Content> */}
+        </ContentDiv>
 
         <Writer>{data.writer}</Writer>
 
@@ -58,12 +64,39 @@ const Wrap1 = styled.div`
   flex: 8;
 `;
 const OrderItemName = styled.span``;
-const Content = styled.p``;
+
+const ContentDiv = styled.div`
+  width: 200px;
+  /* height: 30px; */
+  border: 1px solid black;
+
+  /* overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; */
+  /* display: -webkit-box; */
+  /* display: -webkit-inline-box; */
+  /* -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden; */
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const Content = styled.p`
+  /* display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis; */
+`;
 const Writer = styled.span``;
 
 const Wrap2 = styled.div`
   flex: 3;
 `;
-const PicWrap = styled.div``;
-const Pic = styled.img``;
+
 const CreateDate = styled.span``;

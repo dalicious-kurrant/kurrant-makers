@@ -29,8 +29,6 @@ const RateStars = ({
 
   const widthAndHeight = `${widthWithoutMargin / 5}${unitWidth}`;
 
-  console.log(widthAndHeight);
-
   return (
     <>
       <Container>

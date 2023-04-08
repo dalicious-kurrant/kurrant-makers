@@ -2,30 +2,31 @@ import {useQuery} from 'react-query';
 import instance from '../../../Shared/axios';
 import {useEffect, useState} from 'react';
 
-const useGetReviewQuery = (unanswered, total) => {
+const useGetReviewQuery = (unanswered, all) => {
   // 미답변 리뷰 가져오기
 
   const [unansweredTotalPage, setUnansweredTotalPage] = useState(0);
 
   // 전체 리뷰 가져오기
 
-  const [everyListTotalPage, setEveryListTotalPage] = useState(0);
+  const [allListTotalPage, setAllListTotalPage] = useState(0);
 
   // 리스트
   const [reviewList, setReviewList] = useState([]);
 
-  const {refetch: everyListQueryRefetch} = useQuery(
-    total[0],
+  const {refetch: allListQueryRefetch} = useQuery(
+    all[0],
 
     async ({queryKey}) => {
-      const response = await instance.get(total[1]);
+      console.log(all[1]);
+      const response = await instance.get(all[1]);
 
       // 메이커스 목록
 
       setReviewList(response.data.data.items);
       // setReviewList(response);
 
-      setEveryListTotalPage(response.data.total);
+      setAllListTotalPage(response.data.data.total);
 
       return response.data;
     },
@@ -45,12 +46,13 @@ const useGetReviewQuery = (unanswered, total) => {
     unanswered[0],
 
     async ({queryKey}) => {
+      console.log(unanswered[1]);
       const response = await instance.get(unanswered[1]);
 
       // 메이커스 목록
 
       setReviewList(response.data.data.items.reviewListDtoList);
-      setUnansweredTotalPage(response.data.total);
+      setUnansweredTotalPage(response.data.data.total);
 
       return response.data;
     },
@@ -66,10 +68,10 @@ const useGetReviewQuery = (unanswered, total) => {
   return {
     reviewList,
     unansweredTotalPage,
-    everyListTotalPage,
+    allListTotalPage,
 
     unansweredQueryRefetch,
-    everyListQueryRefetch,
+    allListQueryRefetch,
   };
 };
 export default useGetReviewQuery;

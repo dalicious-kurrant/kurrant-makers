@@ -7,9 +7,9 @@ import {useState} from 'react';
 const ReviewListRoom = ({reviewList}) => {
   const [disable, setDisable] = useState(false);
 
-  useEffect(() => {
-    console.log(reviewList);
-  }, [reviewList]);
+  // useEffect(() => {
+  //   console.log(reviewList);
+  // }, [reviewList]);
 
   return (
     <Container>

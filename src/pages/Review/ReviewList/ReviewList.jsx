@@ -4,19 +4,19 @@ import styled from 'styled-components';
 import useGetReviewQuery from './useGetReviewQuery';
 import ReviewListRoom from './ReviewListRoom/ReviewListRoom';
 import {buildCustomUrl} from './ReviewLogic';
+import ReviewPagination from './ReviewPagination/ReviewPagination';
 
 const ReviewList = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(50);
+  const [totalPage, setTotalPage] = useState(1);
 
   const [foodNameInput, setFoodNameInput] = useState('');
 
   // 버튼 누른 상태 보이게 하기 false -> 미답변 리뷰 보기, true -> 전체 리스트 보기
   const [unansweredOrTotal, setUnansweredOrTotal] = useState(false);
 
-  const [totalUrl, setTotalUrl] = useState(
-    'makers/reviews/all?limit=50&page=1',
-  );
+  const [allUrl, setAllUrl] = useState('makers/reviews/all?limit=50&page=1');
   const [unansweredUrl, setUnansweredUrl] = useState(
     'makers/reviews/pending?limit=50&page=1',
   );
@@ -24,18 +24,28 @@ const ReviewList = () => {
   const {
     reviewList,
     unansweredTotalPage,
-    everyListTotalPage,
+    allListTotalPage,
     unansweredQueryRefetch,
-    everyListQueryRefetch,
+    allListQueryRefetch,
   } = useGetReviewQuery(
     [['getUnansweredReviewList'], unansweredUrl],
-    [['getEveryReviewList'], totalUrl],
+    [['getEveryReviewList'], allUrl],
   );
+
+  // pagination토탈페이지
+  useEffect(() => {
+    if (!unansweredOrTotal) {
+      // 미답변
+      setTotalPage(unansweredTotalPage);
+    } else {
+      setTotalPage(allListTotalPage);
+    }
+  }, [unansweredOrTotal, unansweredTotalPage, allListTotalPage]);
 
   useEffect(() => {
     setUnansweredUrl(buildCustomUrl('unanswered', limit, page, foodNameInput));
-    setTotalUrl(buildCustomUrl('total', limit, page, foodNameInput));
-  }, [setTotalUrl, setUnansweredUrl, foodNameInput]);
+    setAllUrl(buildCustomUrl('total', limit, page, foodNameInput));
+  }, [setAllUrl, setUnansweredUrl, foodNameInput, limit, page]);
 
   useEffect(() => {
     // 미답변일떄 false일때만 리펫치 하게끔 하기
@@ -46,9 +56,9 @@ const ReviewList = () => {
 
   useEffect(() => {
     if (unansweredOrTotal) {
-      everyListQueryRefetch();
+      allListQueryRefetch();
     }
-  }, [totalUrl]);
+  }, [allUrl]);
 
   const handleNameFilter = e => {
     setFoodNameInput(e.target.value);
@@ -60,16 +70,32 @@ const ReviewList = () => {
 
       unansweredQueryRefetch();
     } else {
-      everyListQueryRefetch();
+      allListQueryRefetch();
     }
   };
 
   // 값 확인하기
-  useEffect(() => {
-    console.log(foodNameInput);
-  }, [foodNameInput]);
+  // useEffect(() => {
+  //   if (!unansweredOrTotal) {
+  //     console.log(unansweredUrl);
+  //   } else {
+  //     console.log(allUrl);
+  //   }
 
-  //////// 채팅방 코드
+  //   console.log('page ' + page);
+  //   console.log('limit ' + limit);
+  //   console.log('totalPage ' + totalPage);
+  // }, [allUrl, unansweredUrl, totalPage]);
+
+  // 값 확인하기 2
+  // useEffect(() => {
+  //   console.log(foodNameInput);
+  // }, [foodNameInput]);
+  // useEffect(() => {
+  //   console.log(reviewList);
+  // }, [reviewList]);
+
+  ////////
 
   return (
     <Container>
@@ -87,7 +113,7 @@ const ReviewList = () => {
           <TwoButton
             unansweredOrTotal={unansweredOrTotal}
             onClick={() => {
-              everyListQueryRefetch();
+              allListQueryRefetch();
               setUnansweredOrTotal(true);
             }}
             bgColor={'#4472C4'}>
@@ -107,19 +133,38 @@ const ReviewList = () => {
             상품 검색
           </SearchButton>
         </SearchWrap>
+
+        <p>
+          tip: 검색어를 입력했음에도 상품이 뜨지 않는 경우, 상품 검색 버튼을
+          눌러보시오
+        </p>
       </Header>
 
       <ReviewListWrap>
         {Array.isArray(reviewList) && reviewList.length > 0 ? (
           <ReviewListRoom reviewList={reviewList} />
         ) : (
-          <>
-            <p>리뷰 리스트에 암것도 없는데요?</p>
-          </>
+          <PDiv>
+            <P>작성된 리뷰가 없습니다 </P>
+          </PDiv>
         )}
       </ReviewListWrap>
 
-      <PaginationWrap></PaginationWrap>
+      <PaginationWrap>
+        {reviewList && reviewList.length > 0 ? (
+          <ReviewPagination
+            page={page}
+            setPage={setPage}
+            limit={limit}
+            setLimit={setLimit}
+            totalPage={totalPage}
+            selectOptionArray={[50, 100, 200, 500]}
+            // selectOptionArray={[1, 2, 4, 5]}
+          />
+        ) : (
+          <Div></Div>
+        )}
+      </PaginationWrap>
     </Container>
   );
 };
@@ -139,6 +184,8 @@ const Header = styled.div`
 `;
 const ReviewListWrap = styled.div`
   height: 66%;
+
+  /* margin-bottom: 10px; */
 `;
 const PaginationWrap = styled.div``;
 
@@ -152,6 +199,7 @@ const SearchWrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
   /* padding: 0px 5px; */
 `;
 
@@ -175,11 +223,6 @@ const TwoButton = styled.button`
       // return ` outline: thick solid #00ff00"`;
     }
   }};
-
-  /* box-shadow: 5px 5px 5px 5px hotpink; */
-  /* box-shadow: 6px 4px 201px 14px rgba(8, 102, 245, 1);
-  -webkit-box-shadow: 6px 4px 201px 14px rgba(8, 102, 245, 1);
-  -moz-box-shadow: 6px 4px 201px 14px rgba(8, 102, 245, 1); */
 `;
 
 const SearchButton = styled.button`
@@ -190,7 +233,7 @@ const SearchButton = styled.button`
   height: 34px;
   font-size: 18px;
   border-radius: 10px;
-  /* padding: 4px; */
+
   background-color: ${({bgColor}) => bgColor};
   color: white;
 `;
@@ -202,3 +245,14 @@ const TextInput = styled.input`
   height: 32px;
   padding-left: 8px;
 `;
+
+const Div = styled.div``;
+
+const PDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const P = styled.p``;
