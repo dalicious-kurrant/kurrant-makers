@@ -30,6 +30,10 @@ const ReviewListEach = ({data}) => {
     `makers/reviews/detail?reviewId=${id}`,
   );
 
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
+
   const handleClick = () => {
     reviewDetailQueryRefetch();
   };
@@ -38,7 +42,11 @@ const ReviewListEach = ({data}) => {
     <Container onClick={handleClick}>
       <Wrap1>
         <Wrap3>
-          <OrderItemName>{data.orderItemName}</OrderItemName>
+          <Wrap4>
+            <OrderItemName>{data.orderItemName}</OrderItemName>
+            {data.isReport && <span>신고된 리뷰</span>}
+          </Wrap4>
+
           <ContentDiv>
             <Content>{data.content}</Content>
             {/* sldkfjslkdfjlsdkjflskdjflskdjflskdjflskdfjlskdfjsdkljfsdlkjsdfsdfsdfsdfsldkfjslkdfjlsdkjflskdjflskdjflskdjflskdfjlskdfjsdkljfsdlkjsdfsdfsdfsdf */}
@@ -92,6 +100,7 @@ const Wrap1 = styled.div`
 `;
 const OrderItemName = styled.span`
   margin-bottom: 3px;
+  margin-right: 5px;
 `;
 
 const ContentDiv = styled.div`
@@ -135,6 +144,11 @@ const Wrap2 = styled.div`
 const Wrap3 = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const Wrap4 = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 const CreateDate = styled.span``;
