@@ -22,7 +22,8 @@ const ReviewDetail = () => {
     }
   }, [reviewDetail.makersComment]);
 
-  const {reportReviewMutate, submitCommentMutate} = useReviewDetailMutation();
+  const {reportReviewMutate, submitCommentMutate, editCommentMutate} =
+    useReviewDetailMutation();
 
   const handleReport = () => {
     reportReviewMutate({
@@ -32,10 +33,21 @@ const ReviewDetail = () => {
   const handleSubmit = () => {
     // 리뷰 작성이냐 수정이냐 나눠야됨
 
-    submitCommentMutate({
-      content: value,
-      id: reviewDetail.reviewId,
-    });
+    if (reviewDetail.makersComment && reviewDetail.makersComment.commentId) {
+      // 수정
+
+      editCommentMutate({
+        id: reviewDetail.makersComment.commentId,
+        content: {
+          content: value,
+        },
+      });
+    } else {
+      submitCommentMutate({
+        content: value,
+        id: reviewDetail.reviewId,
+      });
+    }
   };
 
   useEffect(() => {
@@ -99,7 +111,11 @@ const ReviewDetail = () => {
       </ImageListWrap>
 
       <Wrap1>
-        <Title>댓글 작성</Title>
+        <Title>
+          {reviewDetail.makersComment && reviewDetail.makersComment.commentId
+            ? '댓글 수정'
+            : ' 댓글 작성'}
+        </Title>
         <Input disabled={false} onChange={handleChange} value={value} />
       </Wrap1>
 

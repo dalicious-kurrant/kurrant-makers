@@ -28,7 +28,7 @@ const useReviewDetailMutation = () => {
     },
   );
 
-  // 운영팀 댓글 작성
+  // 시징ㄴ;ㅁ 댓글 작성
 
   const {mutate: submitCommentMutate} = useMutation(
     async data => {
@@ -42,16 +42,44 @@ const useReviewDetailMutation = () => {
     },
     {
       onSuccess: () => {
-        console.log('운영자 댓글 작성 success');
+        console.log('사장님 댓글 작성 success');
 
         queryClient.invalidateQueries('getReviewDetail');
         // queryClient.invalidateQueries(['getReviewList']);
-        window.confirm('운영자 리뷰 작성이 정상적으로 이루워졌습니다');
+        window.confirm('사장님 리뷰 작성이 정상적으로 이루워졌습니다');
       },
       onError: err => {
         console.log('이런 ㅜㅜ 에러가 떳군요, 어서 코드를 확인해보셔요');
         console.log(err);
-        window.confirm('운영자 댓글 작성 실패');
+        window.confirm('사장님 댓글 작성 실패');
+      },
+    },
+  );
+
+  // 사장님 댓글 수정
+
+  const {mutate: editCommentMutate} = useMutation(
+    async data => {
+      console.log(data);
+
+      const response = await instance.post(
+        `makers/reviews/comment/update?commentId=${data.id}`,
+        data.content,
+      );
+      return response;
+    },
+    {
+      onSuccess: () => {
+        console.log('사장님 댓글 수정 success');
+
+        queryClient.invalidateQueries('getReviewDetail');
+        // queryClient.invalidateQueries(['getReviewList']);
+        window.confirm('사장님 리뷰 수정이 정상적으로 이루워졌습니다');
+      },
+      onError: err => {
+        console.log('이런 ㅜㅜ 에러가 떳군요, 어서 코드를 확인해보셔요');
+        console.log(err);
+        window.confirm('사장님 댓글 수정 실패');
       },
     },
   );
@@ -59,6 +87,7 @@ const useReviewDetailMutation = () => {
   return {
     reportReviewMutate,
     submitCommentMutate,
+    editCommentMutate,
   };
 };
 export default useReviewDetailMutation;
