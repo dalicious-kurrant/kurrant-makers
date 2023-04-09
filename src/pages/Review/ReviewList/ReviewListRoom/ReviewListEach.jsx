@@ -81,7 +81,7 @@ const ReviewListEach = ({data}) => {
 export default ReviewListEach;
 
 const Container = styled.div`
-  border: 1px solid black;
+  border: 1px solid #a5a5a5;
   display: flex;
   cursor: pointer;
 

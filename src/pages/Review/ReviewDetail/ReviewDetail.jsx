@@ -26,27 +26,48 @@ const ReviewDetail = () => {
     useReviewDetailMutation();
 
   const handleReport = () => {
-    reportReviewMutate({
-      id: reviewDetail.reviewId,
-    });
-  };
-  const handleSubmit = () => {
-    // 리뷰 작성이냐 수정이냐 나눠야됨
-
-    if (reviewDetail.makersComment && reviewDetail.makersComment.commentId) {
-      // 수정
-
-      editCommentMutate({
-        id: reviewDetail.makersComment.commentId,
-        content: {
-          content: value,
-        },
-      });
-    } else {
-      submitCommentMutate({
-        content: value,
+    if (window.confirm('이 리뷰를 신고하시겠습니까?')) {
+      if (reviewDetail && reviewDetail?.isReport) {
+        window.confirm('이미 신고된 리뷰입니다');
+        return;
+      }
+      if (reviewDetail && reviewDetail?.isDelete) {
+        window.confirm('이미 삭제된 리뷰입니다');
+        return;
+      }
+      reportReviewMutate({
         id: reviewDetail.reviewId,
       });
+
+      // window.location.reload();
+    } else {
+      return;
+    }
+  };
+  const handleSubmit = () => {
+    if (window.confirm('사장님 댓글을 작성하시겠습니까?')) {
+      if (reviewDetail && reviewDetail?.isDelete) {
+        window.confirm('이미 삭제된 리뷰입니다');
+      } else {
+        if (
+          reviewDetail.makersComment &&
+          reviewDetail.makersComment.commentId
+        ) {
+          editCommentMutate({
+            id: reviewDetail.makersComment.commentId,
+            content: {
+              content: value,
+            },
+          });
+        } else {
+          submitCommentMutate({
+            content: value,
+            id: reviewDetail.reviewId,
+          });
+        }
+      }
+    } else {
+      return;
     }
   };
 

@@ -181,13 +181,16 @@ const Container = styled.div`
 const Header = styled.div`
   width: 100%;
   padding: 30px 20px;
+  height: 23%;
 `;
 const ReviewListWrap = styled.div`
-  height: 66%;
+  height: 62%;
 
   /* margin-bottom: 10px; */
 `;
-const PaginationWrap = styled.div``;
+const PaginationWrap = styled.div`
+  height: 15%;
+`;
 
 const TwoButtonWrap = styled.div`
   width: 100%;

@@ -61,6 +61,8 @@ const useReviewDetailMutation = () => {
   const {mutate: editCommentMutate} = useMutation(
     async data => {
       console.log(data);
+      console.log(data.id);
+      console.log(data.content);
 
       const response = await instance.post(
         `makers/reviews/comment/update?commentId=${data.id}`,
