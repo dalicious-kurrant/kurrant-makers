@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 
 import styled from 'styled-components';
+
 import {splitNumberAndUnit} from './logic';
 
-import YellowStar from '../../../assets/img/StarRating/YellowStar.png';
-import GreyStar from '../../../assets/img/StarRating/GreyStar.png';
+import YellowStar from '../../../../assets/img/StarRating/YellowStar.png';
+import GreyStar from '../../../../assets/img/StarRating/GreyStar.png';
 
 const RateStars = ({
   ratingInput = 0,

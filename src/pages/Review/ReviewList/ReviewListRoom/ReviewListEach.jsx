@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import RateStars from '../../Common/RateStars';
+
 import ReviewListEachImage from './ReviewListEachImage';
 
 import imageSample from '../../../../assets/img/image_sample.jpg';
 import useGetReviewDetailQuery from '../../ReviewDetail/useGetReviewDetailQuery';
 import {useEffect, useState} from 'react';
+import RateStars from '../../Common/RateStars/RateStars';
 
 const ReviewListEach = ({data}) => {
   //   content: '레몬에이드~~~~~~~';
@@ -30,10 +31,6 @@ const ReviewListEach = ({data}) => {
     `makers/reviews/detail?reviewId=${id}`,
   );
 
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
-
   const handleClick = () => {
     reviewDetailQueryRefetch();
   };
@@ -44,7 +41,7 @@ const ReviewListEach = ({data}) => {
         <Wrap3>
           <Wrap4>
             <OrderItemName>{data.orderItemName}</OrderItemName>
-            {data.isReport && <span>신고된 리뷰</span>}
+            {data.isReport && <ReportSpan>신고된 리뷰</ReportSpan>}
           </Wrap4>
 
           <ContentDiv>
@@ -99,7 +96,9 @@ const Wrap1 = styled.div`
   justify-content: space-between;
 `;
 const OrderItemName = styled.span`
-  margin-bottom: 3px;
+  font-size: 16px;
+
+  /* margin-bottom: 3px; */
   margin-right: 5px;
 `;
 
@@ -148,7 +147,25 @@ const Wrap3 = styled.div`
 
 const Wrap4 = styled.div`
   display: flex;
+
   flex-direction: row;
+  align-items: center;
+  margin-bottom: 4px;
 `;
 
 const CreateDate = styled.span``;
+
+const ReportSpan = styled.span`
+  display: inline-block;
+
+  /* width: 80px; */
+  /* height: 30px; */
+  background-color: #ca2f2f;
+
+  border-radius: 4px;
+
+  align-items: center;
+  padding: 1px 5px;
+  text-align: center;
+  color: white;
+`;

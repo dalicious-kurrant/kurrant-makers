@@ -95,13 +95,15 @@ const ReviewDetail = () => {
         />
       )}
 
-      {reviewDetail.isReport && <ReportP>신고된 리뷰입니다</ReportP>}
+      <NoticeWrap>
+        <IsCommentP>
+          {reviewDetail.makersComment && reviewDetail.makersComment.commentId
+            ? '사장님 댓글이 있는 리뷰입니다.'
+            : ' 댓글이 아직 없는 리뷰입니다.'}
+        </IsCommentP>
 
-      <IsCommentP>
-        {reviewDetail.makersComment && reviewDetail.makersComment.commentId
-          ? '사장님 댓글이 있는 리뷰입니다.'
-          : ' 댓글이 아직 없는 리뷰입니다.'}
-      </IsCommentP>
+        {reviewDetail.isReport && <ReportP>신고된 리뷰입니다</ReportP>}
+      </NoticeWrap>
 
       <Wrap1>
         <Title>리뷰 내용</Title>
@@ -126,7 +128,7 @@ const ReviewDetail = () => {
           })
         ) : (
           <NoPhotosWrap>
-            <NoPhotosSpan> 등록된 리뷰 사진은 없어요</NoPhotosSpan>
+            <NoPhotosSpan> 등록된 리뷰 사진이 없습니다</NoPhotosSpan>
           </NoPhotosWrap>
         )}
       </ImageListWrap>
@@ -145,7 +147,9 @@ const ReviewDetail = () => {
           리뷰 신고하기
         </ReportBtn>
         <SubmitCommentBtn onClick={handleSubmit} bgColor={'#4472C4'}>
-          댓글 작성하기
+          {reviewDetail.makersComment && reviewDetail.makersComment.commentId
+            ? '댓글 수정하기'
+            : ' 댓글 작성하기'}
         </SubmitCommentBtn>
       </ButtonWrap>
     </Container>
@@ -155,25 +159,34 @@ const ReviewDetail = () => {
 export default ReviewDetail;
 
 const Container = styled.div`
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 100%;
   flex: 7;
 
-  padding: 20px 16px;
+  padding: 20px 24px;
 
   display: flex;
   flex-direction: column;
 `;
 
-const ReportP = styled.p`
-  color: #ca2f2f;
-  font-size: 16px;
-  margin: 8px 0;
+const NoticeWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  margin-bottom: 18px;
 `;
-const IsCommentP = styled.p`
+
+const ReportP = styled.span`
   color: #ca2f2f;
-  margin: 8px 0;
-  font-size: 16px;
+  font-size: 18px;
+  /* margin: 8px 0; */
+`;
+const IsCommentP = styled.span`
+  color: #315cac;
+  /* margin: 8px 0; */
+  font-size: 18px;
+  margin-right: 20px;
 `;
 
 const Input = styled.textarea`
@@ -187,10 +200,10 @@ const Input = styled.textarea`
   background-color: #fff;
   color: #000;
   border: 1px solid #000;
-
+  font-size: 18px;
   &:disabled {
     background-color: #fff;
-    color: #888;
+    color: #6c6c6c;
     border: 1px solid #888;
     /* border: 1px solid #000; */
   }
@@ -200,8 +213,12 @@ const Wrap1 = styled.div`
   display: flex;
   flex-direction: column;
   height: 35%;
+
+  /* border: 1px solid black; */
+
+  margin-bottom: 10px;
 `;
-const Title = styled.span`
+const Title = styled.h3`
   font-size: 20px;
   margin-bottom: 20px;
 `;
@@ -211,7 +228,7 @@ const ImageListWrap = styled.div`
 
 const NoPhotosWrap = styled.div`
   height: 110px;
-  padding: 24px 12px;
+  padding: 24px 0;
 `;
 
 const NoPhotosSpan = styled.span`

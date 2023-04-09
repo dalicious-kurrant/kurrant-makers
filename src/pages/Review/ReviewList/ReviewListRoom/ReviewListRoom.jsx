@@ -1,16 +1,8 @@
 import {useEffect} from 'react';
 import styled from 'styled-components';
 import ReviewListEach from './ReviewListEach';
-import RateStars from '../../Common/RateStars';
-import {useState} from 'react';
 
 const ReviewListRoom = ({reviewList}) => {
-  const [disable, setDisable] = useState(false);
-
-  // useEffect(() => {
-  //   console.log(reviewList);
-  // }, [reviewList]);
-
   return (
     <Container>
       {reviewList.map((v, i) => {
