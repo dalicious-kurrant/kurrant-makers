@@ -3,6 +3,8 @@ import RateStars from '../../Common/RateStars';
 import ReviewListEachImage from './ReviewListEachImage';
 
 import imageSample from '../../../../assets/img/image_sample.jpg';
+import useGetReviewDetailQuery from '../../ReviewDetail/useGetReviewDetailQuery';
+import {useEffect, useState} from 'react';
 
 const ReviewListEach = ({data}) => {
   //   content: '레몬에이드~~~~~~~';
@@ -16,8 +18,20 @@ const ReviewListEach = ({data}) => {
   //   updateDate: '2023-04-07';
   //   writer: '김지혜';
 
+  const [id, setId] = useState(undefined);
+
+  useEffect(() => {
+    setId(data.reviewId);
+  }, [data.reviewId]);
+
+  const {reviewDetailQueryRefetch} = useGetReviewDetailQuery(
+    ['getReviewDetail'],
+
+    `makers/reviews/detail?reviewId=${id}`,
+  );
+
   const handleClick = () => {
-    console.log(data.reviewId);
+    reviewDetailQueryRefetch();
   };
 
   return (
@@ -45,7 +59,9 @@ const ReviewListEach = ({data}) => {
         </Wrap3>
       </Wrap1>
       <Wrap2>
-        <ReviewListEachImage url={data.imageLocation} />
+        <ReviewListEachImage
+          url={Array.isArray(data.imageLocation) && data.imageLocation[0]}
+        />
         {/* <ReviewListEachImage url={imageSample} /> */}
 
         <CreateDate>{data.createDate}</CreateDate>
