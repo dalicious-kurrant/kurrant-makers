@@ -14,13 +14,13 @@ function ReviewImageModal({open, setOpen, imgArray}) {
 
   const [urlNow, setUrlNow] = useState(0);
 
-  useEffect(() => {
-    console.log(imgArray);
-  }, [imgArray]);
+  // useEffect(() => {
+  //   console.log(imgArray);
+  // }, [imgArray]);
 
-  useEffect(() => {
-    console.log(urlNow);
-  }, [urlNow]);
+  // useEffect(() => {
+  //   console.log(urlNow);
+  // }, [urlNow]);
 
   return (
     <ModalModal

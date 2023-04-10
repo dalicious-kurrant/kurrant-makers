@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import ReviewListEach from './ReviewListEach';
 
 const ReviewListRoom = ({reviewList}) => {
+  // console.log(reviewList);
+
   return (
     <Container>
       {reviewList.map((v, i) => {
@@ -19,11 +21,9 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* height: 40rem; */
-  /* overflow: auto; */
+
   overflow-y: scroll;
-  /* flex: 8; */
+
   padding: 8px 14px;
   position: relative;
-  /* border: 1px solid black; */
 `;

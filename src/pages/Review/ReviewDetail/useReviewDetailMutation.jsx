@@ -64,7 +64,7 @@ const useReviewDetailMutation = () => {
       console.log(data.id);
       console.log(data.content);
 
-      const response = await instance.post(
+      const response = await instance.patch(
         `makers/reviews/comment/update?commentId=${data.id}`,
         data.content,
       );

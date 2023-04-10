@@ -6,6 +6,9 @@ import imageSample from '../../../../assets/img/image_sample.jpg';
 import useGetReviewDetailQuery from '../../ReviewDetail/useGetReviewDetailQuery';
 import {useEffect, useState} from 'react';
 import RateStars from '../../Common/RateStars/RateStars';
+import {useRef} from 'react';
+import {clickedIdAtom} from './store';
+import {useAtom} from 'jotai';
 
 const ReviewListEach = ({data}) => {
   //   content: '레몬에이드~~~~~~~';
@@ -19,11 +22,29 @@ const ReviewListEach = ({data}) => {
   //   updateDate: '2023-04-07';
   //   writer: '김지혜';
 
+  // 클릭되면 표시되기
+
+  const [clickedId, setClickedId] = useAtom(clickedIdAtom);
+  const [isGlow, setIsGlow] = useState(false);
+
+  useEffect(() => {
+    if (clickedId === data.reviewId) {
+      setIsGlow(true);
+    } else {
+      setIsGlow(false);
+    }
+  }, [clickedId]);
+
   const [id, setId] = useState(undefined);
 
   useEffect(() => {
     setId(data.reviewId);
   }, [data.reviewId]);
+
+  useEffect(() => {
+    // console.log('데이터여');
+    // console.log(data);
+  }, [data]);
 
   const {reviewDetailQueryRefetch} = useGetReviewDetailQuery(
     ['getReviewDetail'],
@@ -33,10 +54,11 @@ const ReviewListEach = ({data}) => {
 
   const handleClick = () => {
     reviewDetailQueryRefetch();
+    setClickedId(data.reviewId);
   };
 
   return (
-    <Container onClick={handleClick}>
+    <Container isGlow={isGlow} onClick={handleClick}>
       <Wrap1>
         <Wrap3>
           <Wrap4>
@@ -46,10 +68,6 @@ const ReviewListEach = ({data}) => {
 
           <ContentDiv>
             <Content>{data.content}</Content>
-            {/* sldkfjslkdfjlsdkjflskdjflskdjflskdjflskdfjlskdfjsdkljfsdlkjsdfsdfsdfsdfsldkfjslkdfjlsdkjflskdjflskdjflskdjflskdfjlskdfjsdkljfsdlkjsdfsdfsdfsdf */}
-            {/* <Content>
-            sldkfjslkdfjlsdkjflskdjflskdjflskdjflskdfjlskdfjsdkljfsdlkjsdfsdfsdfsdfsldkfjslkdfjlsdkjflskdjflskdjflskdjflskdfjlskdfjsdkljfsdlkjsdfsdfsdfsdf
-          </Content> */}
           </ContentDiv>
         </Wrap3>
 
@@ -64,10 +82,7 @@ const ReviewListEach = ({data}) => {
         </Wrap3>
       </Wrap1>
       <Wrap2>
-        <ReviewListEachImage
-          url={Array.isArray(data.imageLocation) && data.imageLocation[0]}
-        />
-        {/* <ReviewListEachImage url={imageSample} /> */}
+        <ReviewListEachImage url={data.imageLocation && data.imageLocation} />
 
         <CreateDate>{data.createDate}</CreateDate>
       </Wrap2>
@@ -78,7 +93,8 @@ const ReviewListEach = ({data}) => {
 export default ReviewListEach;
 
 const Container = styled.div`
-  border: 1px solid #a5a5a5;
+  border: ${({isGlow}) =>
+    isGlow ? '3px solid rgb(220, 21, 210)' : '1px solid #a5a5a5;'};
   display: flex;
   cursor: pointer;
 
@@ -99,38 +115,25 @@ const OrderItemName = styled.span`
   font-size: 16px;
 
   /* margin-bottom: 3px; */
-  margin-right: 5px;
+  margin-right: 8px;
 `;
 
 const ContentDiv = styled.div`
-  width: 200px;
-  /* height: 30px; */
-  /* border: 1px solid black; */
+  width: 260px;
 
-  /* overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis; */
-  /* display: -webkit-box; */
-  /* display: -webkit-inline-box; */
-  /* -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden; */
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding: 8px 5px;
 `;
 
 const Content = styled.p`
-  /* display: -webkit-box;
-  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  text-overflow: ellipsis; */
+  overflow: hidden;
 `;
-const Writer = styled.span``;
+const Writer = styled.span`
+  margin-bottom: 4px;
+  padding-left: 2px;
+`;
 
 const Wrap2 = styled.div`
   flex: 3;

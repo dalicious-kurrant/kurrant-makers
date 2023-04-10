@@ -73,7 +73,7 @@ const ReviewDetail = () => {
 
   useEffect(() => {
     // console.log('잘 들어오고있다');
-    console.log(reviewDetail);
+    // console.log(reviewDetail);
   }, [reviewDetail]);
 
   // 내용 없을때
@@ -89,76 +89,89 @@ const ReviewDetail = () => {
           open={showImageModal}
           setOpen={setShowImageModal}
           imgArray={
-            Array.isArray(reviewDetail.imageLocations) &&
-            reviewDetail.imageLocations
+            Array.isArray(reviewDetail.imageLocation) &&
+            reviewDetail.imageLocation
           }
         />
       )}
 
-      <NoticeWrap>
-        <IsCommentP>
-          {reviewDetail.makersComment && reviewDetail.makersComment.commentId
-            ? '사장님 댓글이 있는 리뷰입니다.'
-            : ' 댓글이 아직 없는 리뷰입니다.'}
-        </IsCommentP>
+      {Object.keys(reviewDetail).length > 0 ? (
+        <BigDiv>
+          <NoticeWrap>
+            <IsCommentP>
+              {reviewDetail.makersComment &&
+              reviewDetail.makersComment.commentId
+                ? '사장님 댓글이 있는 리뷰입니다.'
+                : ' 댓글이 아직 없는 리뷰입니다.'}
+            </IsCommentP>
 
-        {reviewDetail.isReport && <ReportP>신고된 리뷰입니다</ReportP>}
-      </NoticeWrap>
+            {reviewDetail.isReport && <ReportP>신고된 리뷰입니다</ReportP>}
+          </NoticeWrap>
 
-      <Wrap1>
-        <Title>리뷰 내용</Title>
+          <Wrap1>
+            <Title>리뷰 내용</Title>
 
-        <Input
-          disabled={true}
-          value={reviewDetail.content ? reviewDetail.content : '(리뷰 글 없음)'}
-        />
-      </Wrap1>
+            <Input
+              disabled={true}
+              value={
+                reviewDetail.content ? reviewDetail.content : '(리뷰 글 없음)'
+              }
+            />
+          </Wrap1>
 
-      <ImageListWrap>
-        {Array.isArray(reviewDetail.imageLocations) &&
-        reviewDetail.imageLocations.length > 0 ? (
-          reviewDetail.imageLocations.map((v, i) => {
-            return (
-              <ReviewImage
-                key={i}
-                url={v}
-                setShowImageModal={setShowImageModal}
-              />
-            );
-          })
-        ) : (
-          <NoPhotosWrap>
-            <NoPhotosSpan> 등록된 리뷰 사진이 없습니다</NoPhotosSpan>
-          </NoPhotosWrap>
-        )}
-      </ImageListWrap>
+          <ImageListWrap>
+            {Array.isArray(reviewDetail.imageLocation) &&
+            reviewDetail.imageLocation.length > 0 ? (
+              reviewDetail.imageLocation.map((v, i) => {
+                return (
+                  <ReviewImage
+                    key={i}
+                    url={v}
+                    setShowImageModal={setShowImageModal}
+                  />
+                );
+              })
+            ) : (
+              <NoPhotosWrap>
+                <NoPhotosSpan> 등록된 리뷰 사진이 없습니다</NoPhotosSpan>
+              </NoPhotosWrap>
+            )}
+          </ImageListWrap>
 
-      <Wrap1>
-        <Title>
-          {reviewDetail.makersComment && reviewDetail.makersComment.commentId
-            ? '댓글 수정'
-            : ' 댓글 작성'}
-        </Title>
-        <Input disabled={false} onChange={handleChange} value={value} />
-      </Wrap1>
+          <Wrap1>
+            <Title>
+              {reviewDetail.makersComment &&
+              reviewDetail.makersComment.commentId
+                ? '댓글 수정'
+                : ' 댓글 작성'}
+            </Title>
+            <Input disabled={false} onChange={handleChange} value={value} />
+          </Wrap1>
 
-      <ButtonWrap>
-        <ReportBtn onClick={handleReport} bgColor={'#ca2f2f'}>
-          리뷰 신고하기
-        </ReportBtn>
-        <SubmitCommentBtn onClick={handleSubmit} bgColor={'#4472C4'}>
-          {reviewDetail.makersComment && reviewDetail.makersComment.commentId
-            ? '댓글 수정하기'
-            : ' 댓글 작성하기'}
-        </SubmitCommentBtn>
-      </ButtonWrap>
+          <ButtonWrap>
+            <ReportBtn onClick={handleReport} bgColor={'#ca2f2f'}>
+              리뷰 신고하기
+            </ReportBtn>
+            <SubmitCommentBtn onClick={handleSubmit} bgColor={'#4472C4'}>
+              {reviewDetail.makersComment &&
+              reviewDetail.makersComment.commentId
+                ? '댓글 수정하기'
+                : ' 댓글 작성하기'}
+            </SubmitCommentBtn>
+          </ButtonWrap>
+        </BigDiv>
+      ) : (
+        <NoDetailDiv>
+          <NoDetailP>관리할 리뷰를 왼쪽에서 골라 클릭해주세요</NoDetailP>
+        </NoDetailDiv>
+      )}
     </Container>
   );
 };
 
 export default ReviewDetail;
 
-const Container = styled.div`
+const Container = styled.section`
   /* border: 1px solid black; */
   height: 100%;
   flex: 7;
@@ -167,6 +180,22 @@ const Container = styled.div`
 
   display: flex;
   flex-direction: column;
+`;
+
+const BigDiv = styled.div`
+  height: 100%;
+`;
+
+const NoDetailDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  width: 100%;
+`;
+const NoDetailP = styled.p`
+  font-size: 20px;
 `;
 
 const NoticeWrap = styled.div`

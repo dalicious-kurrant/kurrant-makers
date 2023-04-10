@@ -40,16 +40,19 @@ export default ReviewImage;
 export const Div = styled.div`
   display: flex;
 
-  height: 80px;
-  width: 80px;
+  height: 110px;
+  width: 110px;
   position: relative;
   margin: 10px;
   align-items: center;
   justify-content: center;
 
-  /* border: 1px solid black; */
   overflow: hidden;
   border-radius: 6px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const Img = styled.img`
