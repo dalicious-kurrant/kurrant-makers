@@ -16,7 +16,8 @@ const useReviewDetailMutation = () => {
       onSuccess: () => {
         console.log('리뷰 신고 success');
         queryClient.invalidateQueries(['getReviewDetail']);
-        queryClient.invalidateQueries('getReviewDetail');
+        queryClient.invalidateQueries(['getUnansweredReviewList']);
+        queryClient.invalidateQueries(['getEveryReviewList']);
         // queryClient.invalidateQueries(['getReviewList']);
         window.confirm('리뷰 신고가 정상적으로 이루워졌습니다');
       },
@@ -45,6 +46,8 @@ const useReviewDetailMutation = () => {
         console.log('사장님 댓글 작성 success');
 
         queryClient.invalidateQueries('getReviewDetail');
+        queryClient.invalidateQueries(['getUnansweredReviewList']);
+        queryClient.invalidateQueries(['getEveryReviewList']);
         // queryClient.invalidateQueries(['getReviewList']);
         window.confirm('사장님 리뷰 작성이 정상적으로 이루워졌습니다');
       },
@@ -75,6 +78,8 @@ const useReviewDetailMutation = () => {
         console.log('사장님 댓글 수정 success');
 
         queryClient.invalidateQueries('getReviewDetail');
+        queryClient.invalidateQueries(['getUnansweredReviewList']);
+        queryClient.invalidateQueries(['getEveryReviewList']);
         // queryClient.invalidateQueries(['getReviewList']);
         window.confirm('사장님 리뷰 수정이 정상적으로 이루워졌습니다');
       },

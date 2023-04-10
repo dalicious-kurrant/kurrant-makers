@@ -5,6 +5,8 @@ import useGetReviewQuery from './useGetReviewQuery';
 import ReviewListRoom from './ReviewListRoom/ReviewListRoom';
 import {buildCustomUrl} from './ReviewLogic';
 import ReviewPagination from './ReviewPagination/ReviewPagination';
+import {unansweredOrTotalAtom} from './store';
+import {useAtom} from 'jotai';
 
 const ReviewList = () => {
   const [page, setPage] = useState(1);
@@ -14,7 +16,9 @@ const ReviewList = () => {
   const [foodNameInput, setFoodNameInput] = useState('');
 
   // 버튼 누른 상태 보이게 하기 false -> 미답변 리뷰 보기, true -> 전체 리스트 보기
-  const [unansweredOrTotal, setUnansweredOrTotal] = useState(false);
+  const [unansweredOrTotal, setUnansweredOrTotal] = useAtom(
+    unansweredOrTotalAtom,
+  );
 
   const [allUrl, setAllUrl] = useState('makers/reviews/all?limit=50&page=1');
   const [unansweredUrl, setUnansweredUrl] = useState(
@@ -91,9 +95,10 @@ const ReviewList = () => {
   // useEffect(() => {
   //   console.log(foodNameInput);
   // }, [foodNameInput]);
-  // useEffect(() => {
-  //   console.log(reviewList);
-  // }, [reviewList]);
+
+  useEffect(() => {
+    console.log(reviewList);
+  }, [reviewList]);
 
   ////////
 
@@ -145,7 +150,11 @@ const ReviewList = () => {
           <ReviewListRoom reviewList={reviewList} />
         ) : (
           <PDiv>
-            <P>작성된 리뷰가 없습니다 </P>
+            <P>
+              {unansweredOrTotal
+                ? '작성된 리뷰가 없습니다'
+                : '미답변된 리뷰가 없습니다'}{' '}
+            </P>
           </PDiv>
         )}
       </ReviewListWrap>

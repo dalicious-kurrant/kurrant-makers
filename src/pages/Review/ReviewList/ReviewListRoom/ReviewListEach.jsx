@@ -63,6 +63,10 @@ const ReviewListEach = ({data}) => {
         <Wrap3>
           <Wrap4>
             <OrderItemName>{data.orderItemName}</OrderItemName>
+
+            {data.isMakersComments && (
+              <IsMakersCommentsTrueSpan>작성된 리뷰</IsMakersCommentsTrueSpan>
+            )}
             {data.isReport && <ReportSpan>신고된 리뷰</ReportSpan>}
           </Wrap4>
 
@@ -171,4 +175,20 @@ const ReportSpan = styled.span`
   padding: 1px 5px;
   text-align: center;
   color: white;
+`;
+const IsMakersCommentsTrueSpan = styled.span`
+  display: inline-block;
+
+  /* width: 80px; */
+  /* height: 30px; */
+  background-color: #4472c4;
+
+  border-radius: 4px;
+
+  align-items: center;
+  padding: 1px 5px;
+  text-align: center;
+  color: white;
+
+  margin-right: 8px;
 `;
