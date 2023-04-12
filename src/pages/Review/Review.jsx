@@ -14,7 +14,7 @@ const Review = () => {
 export default Review;
 
 const Container = styled.div`
-  padding: 30px 10px;
+  /* padding: 30px 10px; */
   height: 100%;
   display: flex;
 `;
