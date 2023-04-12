@@ -7,6 +7,7 @@ import {buildCustomUrl} from './ReviewLogic';
 import ReviewPagination from './ReviewPagination/ReviewPagination';
 import {unansweredOrTotalAtom} from './store';
 import {useAtom} from 'jotai';
+import KeyDetector from '../../../utils/KeyDetector/KeyDetector';
 
 const ReviewList = () => {
   const [page, setPage] = useState(1);
@@ -51,18 +52,18 @@ const ReviewList = () => {
     setAllUrl(buildCustomUrl('total', limit, page, foodNameInput));
   }, [setAllUrl, setUnansweredUrl, foodNameInput, limit, page]);
 
-  useEffect(() => {
-    // 미답변일떄 false일때만 리펫치 하게끔 하기
-    if (!unansweredOrTotal) {
-      unansweredQueryRefetch();
-    }
-  }, [unansweredUrl]);
+  // useEffect(() => {
+  //   // 미답변일떄 false일때만 리펫치 하게끔 하기
+  //   if (!unansweredOrTotal) {
+  //     unansweredQueryRefetch();
+  //   }
+  // }, [unansweredUrl]);
 
-  useEffect(() => {
-    if (unansweredOrTotal) {
-      allListQueryRefetch();
-    }
-  }, [allUrl]);
+  // useEffect(() => {
+  //   if (unansweredOrTotal) {
+  //     allListQueryRefetch();
+  //   }
+  // }, [allUrl]);
 
   const handleNameFilter = e => {
     setFoodNameInput(e.target.value);
@@ -99,6 +100,18 @@ const ReviewList = () => {
   useEffect(() => {
     console.log(reviewList);
   }, [reviewList]);
+
+  const handleKeyDetector = keyValue => {
+    if (keyValue === 'Enter') {
+      if (!unansweredOrTotal) {
+        // 미답변
+
+        unansweredQueryRefetch();
+      } else {
+        allListQueryRefetch();
+      }
+    }
+  };
 
   ////////
 
@@ -138,11 +151,6 @@ const ReviewList = () => {
             상품 검색
           </SearchButton>
         </SearchWrap>
-
-        <p>
-          tip: 검색어를 입력했음에도 상품이 뜨지 않는 경우, 상품 검색 버튼을
-          눌러보시오
-        </p>
       </Header>
 
       <ReviewListWrap>
@@ -174,6 +182,7 @@ const ReviewList = () => {
           <Div></Div>
         )}
       </PaginationWrap>
+      <KeyDetector sendKeyValue={handleKeyDetector} />
     </Container>
   );
 };
