@@ -43,7 +43,7 @@ export const Div = styled.div`
   height: 80px;
   width: 80px;
   position: relative;
-  margin: 10px;
+  margin: 2px;
   align-items: center;
   justify-content: center;
 

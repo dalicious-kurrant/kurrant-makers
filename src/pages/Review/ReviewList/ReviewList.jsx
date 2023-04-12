@@ -199,7 +199,7 @@ const Container = styled.div`
 const Header = styled.div`
   width: 100%;
   padding: 30px 20px;
-  height: 23%;
+  height: 19%;
 `;
 const ReviewListWrap = styled.div`
   height: 62%;

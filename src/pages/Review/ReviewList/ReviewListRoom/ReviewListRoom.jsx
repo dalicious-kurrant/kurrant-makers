@@ -24,6 +24,6 @@ const Container = styled.div`
 
   overflow-y: scroll;
 
-  padding: 8px 14px;
+  padding: 8px 4px;
   position: relative;
 `;
