@@ -10,7 +10,7 @@ import {calendarApis} from '../../api/calendar';
 const Calendar = () => {
   // const {data: makersCalendar} = useGetCalendarList();
   const [count, setCount] = useState(0);
-  const [page, setPage] = useState(false);
+  const [page, setPage] = useState(true);
   const [group, setGroupAccess] = useState([{}]);
   const [foodAct, setFoodAct] = useState([{}]);
   const [testData, setTestData] = useState([]);
@@ -75,7 +75,7 @@ const Calendar = () => {
   return (
     <PageWrapper>
       <Wrapper>
-        <TitleBox>일정관리</TitleBox>
+        <TitleBox>식단 요청 승인/거절</TitleBox>
         <SaveContainer page={page}>
           <ExampleBox>
             <Button color="grey">요청</Button>
@@ -111,16 +111,6 @@ const Calendar = () => {
           <ViewTypeBox>
             <Button
               toggle
-              color={page ? 'grey' : 'facebook'}
-              active={false}
-              size={'large'}
-              onClick={() => {
-                setPage(false);
-              }}>
-              간편보기
-            </Button>
-            <Button
-              toggle
               color={page ? 'facebook' : 'grey'}
               active={false}
               size={'large'}
@@ -128,6 +118,16 @@ const Calendar = () => {
                 setPage(true);
               }}>
               상세보기
+            </Button>
+            <Button
+              toggle
+              color={page ? 'grey' : 'facebook'}
+              active={false}
+              size={'large'}
+              onClick={() => {
+                setPage(false);
+              }}>
+              간편보기
             </Button>
           </ViewTypeBox>
           {totalPage > 0 && (
