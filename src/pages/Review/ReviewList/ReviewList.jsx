@@ -145,6 +145,7 @@ const ReviewList = () => {
 
         <SearchWrap>
           <TextInput
+            style={{flex: 1}}
             placeholder="상품명, 상품번호 검색"
             name="nameFilter"
             //   value={nameFilter}
@@ -206,19 +207,20 @@ const Header = styled.div`
   height: 19%;
 `;
 const ReviewListWrap = styled.div`
-  height: 62%;
+  height: 70%;
 
   /* margin-bottom: 10px; */
 `;
 const PaginationWrap = styled.div`
-  height: 15%;
+  height: 5%;
 `;
 
 const SearchWrap = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  background-color: white;
+  border-radius: 10px;
   /* padding: 0px 5px; */
 `;
 
@@ -273,9 +275,9 @@ const SearchButton = styled.button`
   outline: 0;
   cursor: pointer;
   border: 0;
-  width: 180px;
+  width: 100px;
   height: 34px;
-  font-size: 18px;
+  font-size: 14px;
   border-radius: 10px;
 
   background-color: ${({bgColor}) => bgColor};
@@ -284,10 +286,14 @@ const SearchButton = styled.button`
 
 const TextInput = styled.input`
   margin-left: 10px;
-  border: 1px solid #cccccc;
+  border: none;
   border-radius: 3px;
   height: 32px;
-  padding-left: 8px;
+  padding-left: 3px;
+  :focus {
+    border: none;
+    outline: none;
+  }
 `;
 
 const Div = styled.div``;

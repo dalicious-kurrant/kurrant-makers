@@ -240,6 +240,7 @@ const Input = styled.textarea`
 
 const Wrap1 = styled.div`
   display: flex;
+  font-size: 15px;
   flex-direction: column;
   height: 35%;
 
@@ -266,6 +267,7 @@ const NoPhotosSpan = styled.span`
 
 const ButtonWrap = styled.div`
   display: flex;
+  font-size: 15px;
   justify-content: center;
   align-items: center;
   flex-direction: row;
@@ -274,9 +276,11 @@ const ReportBtn = styled.button`
   outline: 0;
   cursor: pointer;
   border: 0;
-  width: 180px;
-  height: 34px;
-  font-size: 18px;
+  padding: 11px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 15px;
+  font-weight: 600;
   border-radius: 10px;
   margin-right: 30px;
 
@@ -287,9 +291,11 @@ const SubmitCommentBtn = styled.button`
   outline: 0;
   cursor: pointer;
   border: 0;
-  width: 180px;
-  height: 34px;
-  font-size: 18px;
+  padding: 11px;
+  padding-left: 20px;
+  font-weight: 600;
+  padding-right: 20px;
+  font-size: 15px;
   border-radius: 10px;
 
   background-color: ${({bgColor}) => bgColor};

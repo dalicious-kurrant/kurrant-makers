@@ -47,5 +47,4 @@ const Container = styled.div`
   padding: 8px 4px;
 
   position: relative;
-  border: 1px solid black;
 `;
