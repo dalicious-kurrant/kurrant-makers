@@ -99,7 +99,7 @@ export default ReviewListEach;
 
 const Container = styled.div`
   border: ${({isGlow}) =>
-    isGlow ? '3px solid rgb(220, 21, 210)' : '1px solid #a5a5a5;'};
+    isGlow ? '2px solid rgb(97, 166, 195)' : '1px solid #a5a5a5;'};
   display: flex;
 
   flex-direction: column;

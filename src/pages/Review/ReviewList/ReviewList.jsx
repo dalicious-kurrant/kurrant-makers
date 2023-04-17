@@ -118,26 +118,30 @@ const ReviewList = () => {
   return (
     <Container>
       <Header>
-        <TwoButtonWrap>
-          <TwoButton
-            unansweredOrTotal={!unansweredOrTotal}
-            onClick={() => {
-              unansweredQueryRefetch();
-              setUnansweredOrTotal(false);
-            }}
-            bgColor={'#deb832'}>
-            미답변 리뷰 보기
-          </TwoButton>
-          <TwoButton
-            unansweredOrTotal={unansweredOrTotal}
-            onClick={() => {
-              allListQueryRefetch();
-              setUnansweredOrTotal(true);
-            }}
-            bgColor={'#4472C4'}>
-            전체 리스트 보기
-          </TwoButton>
-        </TwoButtonWrap>
+        <Wrap1>
+          <TwoButtonWrap>
+            <TwoButton
+              // unansweredOrTotal={!unansweredOrTotal}
+              onClick={() => {
+                unansweredQueryRefetch();
+                setUnansweredOrTotal(false);
+              }}>
+              미답변 리뷰 보기
+            </TwoButton>
+            <TwoButton
+              // unansweredOrTotal={unansweredOrTotal}
+              onClick={() => {
+                allListQueryRefetch();
+                setUnansweredOrTotal(true);
+              }}>
+              전체 리스트 보기
+            </TwoButton>
+          </TwoButtonWrap>
+
+          <BottomBarDiv unansweredOrTotal={unansweredOrTotal}>
+            <BottomBar />
+          </BottomBarDiv>
+        </Wrap1>
 
         <SearchWrap>
           <TextInput
@@ -210,12 +214,6 @@ const PaginationWrap = styled.div`
   height: 15%;
 `;
 
-const TwoButtonWrap = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-`;
 const SearchWrap = styled.div`
   display: flex;
   justify-content: space-between;
@@ -224,26 +222,51 @@ const SearchWrap = styled.div`
   /* padding: 0px 5px; */
 `;
 
+const Wrap1 = styled.div`
+  margin-bottom: 18px;
+`;
+const TwoButtonWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* margin-bottom: 20px; */
+`;
+
 const TwoButton = styled.button`
   outline: 0;
   cursor: pointer;
   border: 0;
-  /* width: 47%;
+  /* 
   height: 30px; */
-  width: 180px;
+  /* width: 180px; */
+  width: 49.5%;
   height: 34px;
   font-size: 18px;
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
   padding: 4px;
-  background-color: ${({bgColor}) => bgColor};
-  color: white;
 
-  ${({unansweredOrTotal}) => {
-    if (unansweredOrTotal) {
-      return ` border: 5px solid rgb(220, 21, 210)`;
-      // return ` outline: thick solid #00ff00"`;
-    }
-  }};
+  background-color: #c2c2c2;
+
+  color: #2f2f2f;
+`;
+
+const BottomBarDiv = styled.div`
+  width: 100%;
+  height: 6px;
+
+  display: flex;
+
+  transition: all 0.5s;
+  flex-direction: ${({unansweredOrTotal}) =>
+    !unansweredOrTotal ? 'row' : 'row-reverse'};
+
+  /* ; */
+`;
+
+const BottomBar = styled.div`
+  width: 49.5%;
+  height: 100%;
+  background-color: #4d4c4c;
 `;
 
 const SearchButton = styled.button`
