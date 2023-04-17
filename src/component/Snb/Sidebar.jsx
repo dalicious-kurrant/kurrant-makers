@@ -37,7 +37,7 @@ function Sidebar() {
         </ProfileWrap>
         <Border />
       </UserInfo>
-      <ul style={{paddingLeft: 8}}>
+      <ul style={{paddingLeft: 8, marginBottom: 70}}>
         {menuData.map((menu, index) => {
           return (
             <StyleNavLink
@@ -147,7 +147,7 @@ const BottomIconWrap = styled.div`
 
   position: absolute;
   padding: 0px 50px;
-  bottom: 35px;
+  bottom: 0px;
   width: 100%;
   justify-content: space-between;
 `;

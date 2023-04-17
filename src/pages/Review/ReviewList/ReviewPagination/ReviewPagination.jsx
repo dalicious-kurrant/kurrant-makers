@@ -122,7 +122,6 @@ const Container = styled.div`
   height: 100px;
   align-items: center;
   position: relative;
-  flex-direction: column;
 
   /* border: 1px solid black; */
 
@@ -154,6 +153,7 @@ const NumberButton = styled.button`
 `;
 
 const Wrap = styled.div`
-  /* position: absolute;
-  right: 16px; */
+  position: absolute;
+  right: 16px;
+  top: 26px;
 `;

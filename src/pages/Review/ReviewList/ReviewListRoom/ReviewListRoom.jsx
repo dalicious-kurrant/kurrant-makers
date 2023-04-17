@@ -1,12 +1,32 @@
-import {useEffect} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 import ReviewListEach from './ReviewListEach';
 
 const ReviewListRoom = ({reviewList}) => {
   // console.log(reviewList);
 
+  const myDivRef = useRef(null);
+  const [isScrollbarVisible, setIsScrollbarVisible] = useState(false);
+
+  useEffect(() => {
+    const myDiv = myDivRef.current;
+    const handleScroll = () => {
+      const {clientHeight, scrollHeight} = myDiv;
+      setIsScrollbarVisible(scrollHeight > clientHeight);
+    };
+
+    // Add event listener to div scroll
+    myDiv.addEventListener('scroll', handleScroll);
+
+    // Call handleScroll initially to check if scrollbar is visible
+    handleScroll();
+
+    // Remove event listener on unmount
+    return () => myDiv.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <Container>
+    <Container ref={myDivRef}>
       {reviewList.map((v, i) => {
         return <ReviewListEach key={i} data={v} />;
       })}
@@ -24,6 +44,7 @@ const Container = styled.div`
 
   overflow-y: scroll;
 
-  padding: 8px 14px;
+  padding: 8px 4px;
+
   position: relative;
 `;

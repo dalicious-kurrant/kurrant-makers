@@ -61,34 +61,35 @@ const ReviewListEach = ({data}) => {
     <Container isGlow={isGlow} onClick={handleClick}>
       <Wrap1>
         <Wrap3>
-          <Wrap4>
+          <Wrap5>
             <OrderItemName>{data.orderItemName}</OrderItemName>
 
-            {data.isMakersComments && (
-              <IsMakersCommentsTrueSpan>작성된 리뷰</IsMakersCommentsTrueSpan>
-            )}
-            {data.isReport && <ReportSpan>신고된 리뷰</ReportSpan>}
-          </Wrap4>
+            <ContentDiv>
+              <Content>{data.content}</Content>
+            </ContentDiv>
+          </Wrap5>
 
-          <ContentDiv>
-            <Content>{data.content}</Content>
-          </ContentDiv>
-        </Wrap3>
-
-        <Wrap3>
           <Writer>{data.writer}</Writer>
-
-          <RateStars
-            ratingInput={data.satisfaction}
-            width={'100px'}
-            margin={'1px'}
-          />
         </Wrap3>
-      </Wrap1>
-      <Wrap2>
-        <ReviewListEachImage url={data.imageLocation && data.imageLocation} />
 
-        <CreateDate>{data.createDate}</CreateDate>
+        <ReviewListEachImage url={data.imageLocation && data.imageLocation} />
+      </Wrap1>
+
+      <Wrap2>
+        <RateStars
+          ratingInput={data.satisfaction}
+          width={'80px'}
+          margin={'1px'}
+        />
+
+        <Wrap4>
+          {data.isMakersComments && (
+            <IsMakersCommentsTrueSpan>답변 완료</IsMakersCommentsTrueSpan>
+          )}
+          {data.isReport && <ReportSpan>신고 리뷰</ReportSpan>}
+
+          <CreateDate>{data.createDate}</CreateDate>
+        </Wrap4>
       </Wrap2>
     </Container>
   );
@@ -98,26 +99,50 @@ export default ReviewListEach;
 
 const Container = styled.div`
   border: ${({isGlow}) =>
-    isGlow ? '3px solid rgb(220, 21, 210)' : '1px solid #a5a5a5;'};
+    isGlow ? '2px solid rgb(97, 166, 195)' : '1px solid #a5a5a5;'};
   display: flex;
+
+  flex-direction: column;
+  justify-content: space-between;
+
   cursor: pointer;
 
   margin-bottom: 10px;
   border-radius: 8px;
   padding: 12px;
   background-color: #fff;
+
+  min-height: 160px;
 `;
 
 const Wrap1 = styled.div`
-  flex: 8;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex: 1;
+  margin-bottom: 6px;
+`;
+const Wrap2 = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+const Wrap3 = styled.div`
   display: flex;
   flex-direction: column;
-  /* border: 1px solid black; */
   justify-content: space-between;
 `;
+const Wrap4 = styled.div``;
+const Wrap5 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
 const OrderItemName = styled.span`
   font-size: 16px;
-
+  font-weight: 600;
   /* margin-bottom: 3px; */
   margin-right: 8px;
 `;
@@ -125,7 +150,7 @@ const OrderItemName = styled.span`
 const ContentDiv = styled.div`
   width: 260px;
 
-  padding: 8px 5px;
+  padding: 10px 6px;
 `;
 
 const Content = styled.p`
@@ -139,56 +164,32 @@ const Writer = styled.span`
   padding-left: 2px;
 `;
 
-const Wrap2 = styled.div`
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* border: 1px solid black; */
-`;
-
-const Wrap3 = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Wrap4 = styled.div`
-  display: flex;
-
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 4px;
-`;
-
 const CreateDate = styled.span``;
 
 const ReportSpan = styled.span`
   display: inline-block;
 
-  /* width: 80px; */
-  /* height: 30px; */
-  background-color: #ca2f2f;
-
+  background-color: #cacaca;
   border-radius: 4px;
 
   align-items: center;
-  padding: 1px 5px;
+  padding: 0 13px;
   text-align: center;
-  color: white;
+  color: #ca2f2f;
+  font-size: smaller;
+  margin-right: 10px;
 `;
 const IsMakersCommentsTrueSpan = styled.span`
   display: inline-block;
 
-  /* width: 80px; */
-  /* height: 30px; */
-  background-color: #4472c4;
+  background-color: #cacaca;
 
   border-radius: 4px;
 
   align-items: center;
-  padding: 1px 5px;
+  padding: 0 13px;
   text-align: center;
-  color: white;
-
+  color: #4472c4;
+  font-size: smaller;
   margin-right: 8px;
 `;

@@ -22,7 +22,6 @@ const DataLimitSelect = ({currentValue, setLimit, options, setPage}) => {
           );
         })}
       </Select>
-      <Label>개 씩 보이게 하기 </Label>
     </Form>
   );
 };
@@ -31,7 +30,10 @@ export default DataLimitSelect;
 
 const Form = styled.form``;
 const Select = styled.select`
-  font-size: 20px;
+  padding: 4px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 15px;
   margin-right: 0.6rem;
 `;
 const Option = styled.option`
