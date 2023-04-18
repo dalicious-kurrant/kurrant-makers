@@ -8,7 +8,7 @@ import {useMakersAdjustList} from '../../hook/useAdjustment';
 
 const Calculate = () => {
   const {data: makersAdjustList} = useMakersAdjustList();
-  console.log(makersAdjustList);
+  // console.log(makersAdjustList);
   return (
     <PageWrapper>
       <Title>메이커스 정산 페이지</Title>

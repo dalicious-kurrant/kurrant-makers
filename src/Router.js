@@ -20,10 +20,15 @@ import {useAtom} from 'jotai';
 import {pageWidthAtom} from './utils/store/store';
 import Header from './component/Snb/Header';
 import DailyFood from './pages/DailyFood/DailyFoodPage';
+import ReviewPage from './pages/Review/ReviewPage';
+import {isUrlReviewAtom} from './pages/Review/store';
 
 function Router() {
   const token = localStorage.getItem('token');
   const [innerWidth, setInnerWidth] = useAtom(pageWidthAtom);
+
+  const [isUrlReview, setIsUrlReview] = useAtom(isUrlReviewAtom);
+
   useEffect(() => {
     const resizeListener = () => {
       // console.log(window.innerWidth);
@@ -35,7 +40,7 @@ function Router() {
     <BrowserRouter>
       <ScrollToTop />
       {token !== null && (innerWidth > 768 ? <Sidebar /> : <Header />)}
-      <Container token={token}>
+      <Container token={token} isUrlReview={isUrlReview}>
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route element={<PrivateRoute redirectPath="/" />}>
@@ -50,6 +55,7 @@ function Router() {
             <Route path="/stock" element={<Stock />} />
             <Route path="/main" element={<Dashboard />} />
             <Route path="/sales/schedule" element={<Schedule />} />
+            <Route path="/review" element={<ReviewPage />} />
           </Route>
         </Routes>
       </Container>
@@ -74,7 +80,10 @@ const Container = styled.div`
       `;
     }
   }}
-  margin-left: ${({token}) => (token === null ? '0px' : '280px')};
+
+  margin-left: ${({token, isUrlReview}) =>
+    token === null ? '0px' : isUrlReview ? '256px' : '280px'};
+
   @media (max-width: 768px) {
     margin-left: 0px;
   }
