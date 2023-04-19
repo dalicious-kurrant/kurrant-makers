@@ -45,6 +45,7 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     setValue('foodName', listData?.foodName);
+    setValue('supplyPrice', withCommas(listData?.supplyPrice));
     setValue('foodPrice', withCommas(listData?.foodPrice));
     setValue(
       'membershipRate',
@@ -109,6 +110,7 @@ const ProductDetailPage = () => {
     listData?.customPrice,
     listData?.foodName,
     listData?.foodPrice,
+    listData?.supplyPrice,
     listData?.makersDiscountPrice,
     listData?.makersDiscountRate,
     listData?.periodDiscountPrice,
@@ -132,6 +134,7 @@ const ProductDetailPage = () => {
             <div>
               <PriceWrap>
                 <Input name="foodName" label="메뉴명" width="200px" readOnly />
+                <Input name="supplyPrice" label="공급가" readOnly />
                 <Input name="foodPrice" label="매장가" readOnly />
                 <Input name="membershipRate" label="멤버십 할인율" readOnly />
                 <Input name="membershipPrice" label="멤버십 할인가" readOnly />
