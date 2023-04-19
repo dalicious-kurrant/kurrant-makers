@@ -43,6 +43,9 @@ const ProductPage = () => {
                 <div style={{width: 200}}>식품 이름</div>
               </Table.HeaderCell>
               <Table.HeaderCell textAlign="center">
+                <div style={{width: 100}}>공급 가격</div>
+              </Table.HeaderCell>
+              <Table.HeaderCell textAlign="center">
                 <div style={{width: 100}}>매장 가격</div>
               </Table.HeaderCell>
               <Table.HeaderCell textAlign="center">
@@ -67,6 +70,7 @@ const ProductPage = () => {
           </Table.Header>
           <Table.Body>
             {makersProcuctList?.data?.data?.map((el, idx) => {
+              console.log(el);
               return (
                 <TableRow
                   onClick={() => goToDetail(el.foodId)}
@@ -76,6 +80,9 @@ const ProductPage = () => {
                     <Image src={el.foodImage} alt="" />
                   </Table.Cell>
                   <Table.Cell>{el.foodName}</Table.Cell>
+                  <Table.Cell textAlign="center">
+                    {withCommas(el.supplyPrice)}원
+                  </Table.Cell>
                   <Table.Cell textAlign="center">
                     {withCommas(el.defaultPrice)}원
                   </Table.Cell>
