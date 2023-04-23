@@ -387,6 +387,7 @@ const Wrap = styled.div`
       overflow-x: hidden;
     `;
   }}
+  padding-left:24px;
 `;
 
 const DateInput = styled.input`

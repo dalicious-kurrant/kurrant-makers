@@ -37,7 +37,13 @@ function Sidebar() {
         </ProfileWrap>
         <Border />
       </UserInfo>
-      <ul style={{paddingLeft: 8, marginBottom: 70}}>
+      <ul
+        style={{
+          paddingLeft: 8,
+          marginBottom: 70,
+
+          overflowY: 'auto',
+        }}>
         {menuData.map((menu, index) => {
           return (
             <StyleNavLink
@@ -79,7 +85,7 @@ const Wrapper = styled.div`
   min-width: 256px;
   box-sizing: border-box;
   position: fixed;
-  overflow-y: auto;
+  //overflow-y: auto;
   background-color: #000046;
   @media (max-width: 768px) {
     display: none;
@@ -150,6 +156,7 @@ const BottomIconWrap = styled.div`
   bottom: 0px;
   width: 100%;
   justify-content: space-between;
+  margin-bottom: 25px;
 `;
 const BottomIcon = styled.div`
   display: flex;
