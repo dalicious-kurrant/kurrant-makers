@@ -10,9 +10,9 @@ const Calculate = () => {
   const {data: makersAdjustList} = useMakersAdjustList();
   // console.log(makersAdjustList);
   return (
-    <PageWrapper>
-      <Title>메이커스 정산 페이지</Title>
-      <Table celled>
+    <Wrap>
+      <h1>메이커스 정산 페이지</h1>
+      {/* <Table celled>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell textAlign="center">년도</Table.HeaderCell>
@@ -54,8 +54,8 @@ const Calculate = () => {
             );
           })}
         </Table.Body>
-      </Table>
-    </PageWrapper>
+      </Table> */}
+    </Wrap>
   );
 };
 
@@ -72,4 +72,11 @@ const Title = styled.div`
   font-weight: 600;
   padding-bottom: 20px;
   margin-top: 24px;
+`;
+
+const Wrap = styled.div`
+  margin-top: 100px;
+  margin-bottom: 50px;
+  padding-right: 24px;
+  padding-left: 24px;
 `;

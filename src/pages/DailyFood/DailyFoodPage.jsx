@@ -198,6 +198,7 @@ const Wrap = styled.div`
   margin-top: 100px;
   margin-bottom: 50px;
   padding-right: 24px;
+  padding-left: 24px;
 `;
 const FoodBox = styled.div`
   border-left-width: 1px;
