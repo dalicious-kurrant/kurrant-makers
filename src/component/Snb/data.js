@@ -47,7 +47,7 @@ export const menuData = [
     activeIcon: <ActiveCalendar />,
   },
   {
-    name: '일정 관리',
+    name: '식단 요청 승인/거절',
     path: '/calendar',
     icon: <Schedule />,
     activeIcon: <ActiveSchedule />,
