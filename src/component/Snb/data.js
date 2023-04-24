@@ -8,6 +8,7 @@ import {ReactComponent as Diagram} from '../../assets/snb/diagram.svg';
 import {ReactComponent as Money} from '../../assets/snb/money.svg';
 import {ReactComponent as Schedule} from '../../assets/snb/schedule.svg';
 import {ReactComponent as DailyFood} from '../../assets/snb/dailyfood.svg';
+import {ReactComponent as Review} from '../../assets/snb/review.svg';
 import {ReactComponent as ActiveDailyFood} from '../../assets/snb//active/dailyfood.svg';
 import {ReactComponent as ActiveDash} from '../../assets/snb/active/dashboard.svg';
 import {ReactComponent as ActiveSpeaker} from '../../assets/snb/active/speaker.svg';
@@ -18,6 +19,7 @@ import {ReactComponent as ActiveSchedule} from '../../assets/snb/active/schedule
 import {ReactComponent as ActiveMakersInfo} from '../../assets/snb/active/makersInfo.svg';
 import {ReactComponent as ActiveDiagram} from '../../assets/snb/active/diagram.svg';
 import {ReactComponent as ActiveMoney} from '../../assets/snb/active/money.svg';
+import {ReactComponent as ActiveReview} from '../../assets/snb/active/review.svg';
 import DailyFoodPage from '../../pages/DailyFood/DailyFoodPage';
 export const menuData = [
   // {
@@ -45,7 +47,7 @@ export const menuData = [
     activeIcon: <ActiveCalendar />,
   },
   {
-    name: '일정 관리',
+    name: '식단 요청 승인/거절',
     path: '/calendar',
     icon: <Schedule />,
     activeIcon: <ActiveSchedule />,
@@ -84,7 +86,8 @@ export const menuData = [
   {
     name: '리뷰 관리',
     path: '/review',
-    icon: <Money />,
-    activeIcon: <ActiveMoney />,
+    icon: <Review />,
+    activeIcon: <ActiveReview />,
+
   },
 ];
