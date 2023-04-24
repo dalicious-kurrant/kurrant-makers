@@ -88,5 +88,6 @@ export const menuData = [
     path: '/review',
     icon: <Review />,
     activeIcon: <ActiveReview />,
+
   },
 ];

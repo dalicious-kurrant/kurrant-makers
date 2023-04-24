@@ -80,3 +80,4 @@ const Wrap = styled.div`
   padding-right: 24px;
   padding-left: 24px;
 `;
+
