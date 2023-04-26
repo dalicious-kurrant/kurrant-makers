@@ -26,3 +26,11 @@ export function formattedWeekDateZ(data, delimiter = '-') {
   const day = leftPad(dateTime.getDate());
   return `${[year, month, day].join(delimiter)}`;
 }
+
+export function formattedYearMonthDate(data, delimiter = '-') {
+  const dateTime = transDateType(data);
+  const year = dateTime.getFullYear();
+  const month = leftPad(dateTime.getMonth());
+
+  return `${[year, month].join(delimiter)}`;
+}

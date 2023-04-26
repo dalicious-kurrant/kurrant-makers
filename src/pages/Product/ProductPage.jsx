@@ -3,7 +3,6 @@ import React, {useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Table} from 'semantic-ui-react';
 import styled from 'styled-components';
-import {TbodyCell} from '../../component/Table/table';
 import {useGetMakerProductsList} from '../../hook/useProductsList';
 import {PageWrapper, TableWrapper} from '../../layout/common.style';
 import withCommas from '../../utils/withCommas';

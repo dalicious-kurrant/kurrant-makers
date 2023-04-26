@@ -101,14 +101,13 @@ const Input = styled.input`
   height: 56px;
   padding: 0 18px;
   font-size: 16px;
-  border: 0.5px solid
-    ${({theme, status}) => (status ? '#eb5757' : theme.colors.grey[2])};
+  border: 0.5px solid ${({theme, status}) => (status ? '#eb5757' : '#C8C8D2')};
   border-radius: 8px;
   margin-bottom: 10px;
   outline: none;
 
   ::placeholder {
-    color: ${({theme}) => theme.colors.grey[2]};
+    color: #c8c8d2;
   }
 `;
 
@@ -123,7 +122,7 @@ const LoginButton = styled.button`
   color: ${({disabled}) => !disabled && 'white'};
   background: ${({theme, disabled}) =>
     disabled
-      ? theme.colors.grey[1]
+      ? '#F3F3F3'
       : 'linear-gradient(270deg, #0A0AA4 0%, #3D00E6 57.86%, #5A1EFF 100%)'};
   border: none;
   font-weight: 600;
