@@ -22,6 +22,7 @@ import Header from './component/Snb/Header';
 import DailyFood from './pages/DailyFood/DailyFoodPage';
 import ReviewPage from './pages/Review/ReviewPage';
 import {isUrlReviewAtom} from './pages/Review/store';
+import MakersCalcDetail from './pages/Calculate/components/MakersCalcDetail';
 
 function Router() {
   const token = localStorage.getItem('token');
@@ -50,6 +51,7 @@ function Router() {
             <Route path="/notice" element={<Notice />} />
             <Route path="/detail" element={<Detail />} />
             <Route path="/calculate" element={<Calculate />} />
+            <Route path="/calculate/detail" element={<MakersCalcDetail />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/dailyfood" element={<DailyFood />} />
             <Route path="/stock" element={<Stock />} />

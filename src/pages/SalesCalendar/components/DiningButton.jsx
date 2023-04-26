@@ -39,8 +39,7 @@ const Wrap = styled.div`
   margin-bottom: 8px;
 `;
 const ButtonWrap = styled.div`
-  background-color: ${({theme, touch}) =>
-    touch ? '#b5cc18' : theme.colors.grey[1]};
+  background-color: ${({theme, touch}) => (touch ? '#b5cc18' : '#F3F3F3')};
   padding: 8px 24px;
   border-radius: 7px;
   margin-right: 10px;
@@ -48,6 +47,6 @@ const ButtonWrap = styled.div`
 `;
 
 const TypeText = styled.div`
-  color: ${({theme, touch}) => (touch ? 'white' : theme.colors.grey[2])};
+  color: ${({theme, touch}) => (touch ? 'white' : '#C8C8D2')};
   font-weight: 600;
 `;

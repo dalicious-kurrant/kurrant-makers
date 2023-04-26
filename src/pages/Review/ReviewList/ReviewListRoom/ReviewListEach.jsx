@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 import ReviewListEachImage from './ReviewListEachImage';
 
-import imageSample from '../../../../assets/img/image_sample.jpg';
 import useGetReviewDetailQuery from '../../ReviewDetail/useGetReviewDetailQuery';
 import {useEffect, useState} from 'react';
 import RateStars from '../../Common/RateStars/RateStars';
