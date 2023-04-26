@@ -3,7 +3,6 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Button, Table} from 'semantic-ui-react';
 import styled from 'styled-components';
-import {TbodyCell} from '../../component/Table/table';
 import {useGetDailyFoodList} from '../../hook/useDailyFoods';
 import {PageWrapper, TableWrapper} from '../../layout/common.style';
 import {formattedWeekDate, formattedWeekDateZ} from '../../utils/dateFormatter';
