@@ -118,13 +118,14 @@ export default ReviewPagination;
 const Container = styled.div`
   flex: 1;
   display: flex;
+
   justify-content: center;
-  height: 100px;
+  /* height: 100px; */
   align-items: center;
   position: relative;
 
   /* border: 1px solid black; */
-
+  padding: 10px 0;
   margin-bottom: 20px;
 `;
 
@@ -132,7 +133,8 @@ const ButtonWrap = styled.div`
   > button {
     background-color: transparent;
   }
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
+  /* border: 1px solid black; */
 `;
 const Button = styled.button`
   font-size: 18px;
@@ -154,6 +156,7 @@ const NumberButton = styled.button`
 
 const Wrap = styled.div`
   position: absolute;
-  right: 16px;
-  top: 26px;
+  right: 0px;
+  /* top: 26px; */
+  /* border: 1px solid black; */
 `;

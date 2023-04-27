@@ -203,16 +203,21 @@ const Container = styled.div`
 
 const Header = styled.div`
   width: 100%;
-  padding: 30px 20px;
-  height: 19%;
+  /* padding: 30px 20px; */
+  padding: 10px 10px;
+  padding-bottom: 20px;
+  /* height: 19%; */
+  /* border: 1px solid black; */
 `;
 const ReviewListWrap = styled.div`
-  height: 70%;
+  height: 80%;
+  /* flex: 1; */
 
   /* margin-bottom: 10px; */
 `;
 const PaginationWrap = styled.div`
-  height: 5%;
+  /* height: 5%; */
+  /* border: 1px solid black; */
 `;
 
 const SearchWrap = styled.div`

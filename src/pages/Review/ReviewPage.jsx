@@ -15,8 +15,6 @@ const ReviewPage = () => {
     if (pathname === '/review') {
       setIsUrlReview(true);
     }
-
-    console.log(pathname);
   }, [pathname]);
   return (
     <ReviewPageContainer>

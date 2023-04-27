@@ -111,7 +111,7 @@ const Container = styled.div`
   padding: 12px;
   background-color: #fff;
 
-  min-height: 160px;
+  min-height: 131px;
 `;
 
 const Wrap1 = styled.div`
