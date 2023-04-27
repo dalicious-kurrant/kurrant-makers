@@ -84,7 +84,7 @@ const ReviewDetail = () => {
 
   return (
     <Container>
-      {/* {showImageModal && (
+      {showImageModal && (
         <ReviewImageModal
           open={showImageModal}
           setOpen={setShowImageModal}
@@ -93,7 +93,7 @@ const ReviewDetail = () => {
             reviewDetail.imageLocation
           }
         />
-      )} */}
+      )}
 
       {Object.keys(reviewDetail).length > 0 ? (
         <BigDiv>
@@ -155,10 +155,10 @@ const ReviewDetail = () => {
                 <IsCommentPD2>
                   {reviewDetail.makersComment &&
                   reviewDetail.makersComment.commentId
-                    ? '댓글 작성 완료'
+                    ? '댓글 작성이 완료된 리뷰입니다.'
                     : ' 댓글이 아직 없는 리뷰입니다.'}
                 </IsCommentPD2>
-                {/* <SubmitCommentBtnD2 onClick={handleSubmit} bgColor={'#4472C4'}> */}
+
                 <BtnD2 onClick={handleSubmit} color={'#4472C4'}>
                   {reviewDetail.makersComment &&
                   reviewDetail.makersComment.commentId
@@ -299,7 +299,7 @@ const ContentInput = styled.textarea`
   height: 80%;
   border-radius: 10px;
 
-  padding: 14px 4px;
+  padding: 14px 6px;
 
   background-color: #fff;
   color: #000;
@@ -311,6 +311,9 @@ const ContentInput = styled.textarea`
     border: 1px solid #888;
     /* border: 1px solid #000; */
   }
+  &:focus {
+  }
+  resize: none;
 `;
 
 const BottomWrapD2 = styled.div`
@@ -318,7 +321,7 @@ const BottomWrapD2 = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 6px;
 `;
 
 const BtnD2 = styled.button`
@@ -340,6 +343,8 @@ const BtnD2 = styled.button`
 const ImageListWrap = styled.div`
   display: flex;
   flex: 1;
+
+  min-height: 130px;
 `;
 
 const NoPhotosWrap = styled.div`
