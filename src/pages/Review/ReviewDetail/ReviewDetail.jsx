@@ -6,6 +6,8 @@ import {useAtom} from 'jotai';
 import ReviewImage from './components/ReviewImage';
 import ReviewImageModal from './ReviewImageModal/ReviewImageModal';
 import useReviewDetailMutation from './useReviewDetailMutation';
+import {useRef} from 'react';
+import useWindowSizeChangeDetector from '../../../utils/useWindowSizeChangeDetector/useWindowSizeChangeDetector';
 
 const ReviewDetail = () => {
   const [showImageModal, setShowImageModal] = useState(false);
@@ -14,6 +16,37 @@ const ReviewDetail = () => {
 
   const [value, setValue] = useState('');
 
+  // inpu값의 width 알아내기
+
+  const reviewRef = useRef(null);
+  const makersCommentRef = useRef(null);
+
+  const [makersCommentWidth, setMakersCommentWidth] = useState(0);
+
+  const {widthIsIncreasing} = useWindowSizeChangeDetector();
+
+  const detectWidth = () => {
+    let makersCurrent;
+    let width;
+
+    if (makersCommentRef.current) {
+      makersCurrent = makersCommentRef.current;
+      width =
+        makersCurrent.getBoundingClientRect().right -
+        makersCurrent.getBoundingClientRect().left;
+    }
+
+    console.log('width' + width);
+    setMakersCommentWidth(width);
+  };
+
+  useEffect(() => {
+    detectWidth();
+
+    console.log('잘 바뀌고 있다 ');
+  }, [widthIsIncreasing]);
+
+  //
   useEffect(() => {
     if (reviewDetail.makersComment && reviewDetail.makersComment.commentId) {
       setValue(reviewDetail.makersComment.content);
@@ -125,6 +158,7 @@ const ReviewDetail = () => {
               <TitleD2>리뷰 내용</TitleD2>
 
               <ContentInput
+                ref={reviewRef}
                 disabled={true}
                 value={
                   reviewDetail.content ? reviewDetail.content : '(리뷰 글 없음)'
@@ -143,9 +177,11 @@ const ReviewDetail = () => {
             </ReviewContentWrap>
 
             <MakersCommentWrap>
-              <TitleD2>사장님 댓글</TitleD2>
+              {/* <TitleD2>사장님 댓글</TitleD2> */}
+              <TitleD2>{makersCommentWidth}</TitleD2>
 
               <ContentInput
+                ref={makersCommentRef}
                 disabled={false}
                 onChange={handleChange}
                 value={value}
