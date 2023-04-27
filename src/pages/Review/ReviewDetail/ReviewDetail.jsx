@@ -40,7 +40,7 @@ const ReviewDetail = () => {
 
   useEffect(() => {
     detectWidth();
-  }, [widthIsIncreasing, windowWidth]);
+  }, [widthIsIncreasing, windowWidth, value]);
 
   //
   useEffect(() => {
