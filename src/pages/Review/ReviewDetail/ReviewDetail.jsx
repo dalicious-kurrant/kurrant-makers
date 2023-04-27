@@ -18,12 +18,11 @@ const ReviewDetail = () => {
 
   // inpu값의 width 알아내기
 
-  const reviewRef = useRef(null);
   const makersCommentRef = useRef(null);
 
-  const [makersCommentWidth, setMakersCommentWidth] = useState(0);
+  const [relativeFontSize, setRelativeFontSize] = useState(20);
 
-  const {widthIsIncreasing} = useWindowSizeChangeDetector();
+  const {widthIsIncreasing, windowWidth} = useWindowSizeChangeDetector();
 
   const detectWidth = () => {
     let makersCurrent;
@@ -36,15 +35,12 @@ const ReviewDetail = () => {
         makersCurrent.getBoundingClientRect().left;
     }
 
-    console.log('width' + width);
-    setMakersCommentWidth(width);
+    setRelativeFontSize((2 / 39) * width);
   };
 
   useEffect(() => {
     detectWidth();
-
-    console.log('잘 바뀌고 있다 ');
-  }, [widthIsIncreasing]);
+  }, [widthIsIncreasing, windowWidth]);
 
   //
   useEffect(() => {
@@ -158,7 +154,7 @@ const ReviewDetail = () => {
               <TitleD2>리뷰 내용</TitleD2>
 
               <ContentInput
-                ref={reviewRef}
+                relativeFontSize={relativeFontSize}
                 disabled={true}
                 value={
                   reviewDetail.content ? reviewDetail.content : '(리뷰 글 없음)'
@@ -177,10 +173,10 @@ const ReviewDetail = () => {
             </ReviewContentWrap>
 
             <MakersCommentWrap>
-              {/* <TitleD2>사장님 댓글</TitleD2> */}
-              <TitleD2>{makersCommentWidth}</TitleD2>
+              <TitleD2>사장님 댓글</TitleD2>
 
               <ContentInput
+                relativeFontSize={relativeFontSize}
                 ref={makersCommentRef}
                 disabled={false}
                 onChange={handleChange}
@@ -340,7 +336,7 @@ const ContentInput = styled.textarea`
   background-color: #fff;
   color: #000;
   border: 1px solid #000;
-  font-size: 20px;
+  font-size: ${({relativeFontSize}) => `${relativeFontSize}px`};
 
   font-family: 'Pretendard-Regular';
   &:disabled {
@@ -352,10 +348,6 @@ const ContentInput = styled.textarea`
   &:focus {
   }
   resize: none;
-
-  /* font-weight: 400;
-  font-size: 16px;
-  width: 312px; */
 `;
 
 const BottomWrapD2 = styled.div`
