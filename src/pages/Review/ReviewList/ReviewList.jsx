@@ -179,8 +179,8 @@ const ReviewList = () => {
             onChange={handleNameFilter}
           />
 
-          {/* <SearchButton onClick={handleSearchButton} bgColor={'#4472C4'}> */}
-          <SearchButton onClick={handleSearchButton} bgColor={'#c2c2c2'}>
+          <SearchButton onClick={handleSearchButton} bgColor={'#4472C4'}>
+            {/* <SearchButton onClick={handleSearchButton} bgColor={'#c2c2c2'}> */}
             상품 검색
           </SearchButton>
         </SearchWrap>
@@ -341,7 +341,8 @@ const SearchButton = styled.button`
   border-radius: 10px;
 
   background-color: ${({bgColor}) => bgColor};
-  color: #2f2f2f;
+  /* color: #2f2f2f; */
+  color: #ffffff;
 `;
 const Div = styled.div``;
 

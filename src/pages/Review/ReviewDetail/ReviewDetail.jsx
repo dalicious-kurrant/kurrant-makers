@@ -304,7 +304,9 @@ const ContentInput = styled.textarea`
   background-color: #fff;
   color: #000;
   border: 1px solid #000;
-  font-size: 18px;
+  font-size: 20px;
+
+  font-family: 'Pretendard-Regular';
   &:disabled {
     background-color: #fff;
     color: #6c6c6c;
@@ -314,6 +316,10 @@ const ContentInput = styled.textarea`
   &:focus {
   }
   resize: none;
+
+  /* font-weight: 400;
+  font-size: 16px;
+  width: 312px; */
 `;
 
 const BottomWrapD2 = styled.div`
