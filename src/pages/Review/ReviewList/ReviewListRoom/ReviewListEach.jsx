@@ -111,7 +111,7 @@ const Container = styled.div`
   padding: 12px;
   background-color: #fff;
 
-  min-height: 131px;
+  min-height: 135px;
 `;
 
 const Wrap1 = styled.div`
@@ -119,7 +119,8 @@ const Wrap1 = styled.div`
   flex-direction: row;
   justify-content: space-between;
   flex: 1;
-  margin-bottom: 6px;
+  margin-bottom: 2px;
+  /* border: 1px solid black; */
 `;
 const Wrap2 = styled.div`
   display: flex;
@@ -131,6 +132,7 @@ const Wrap3 = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  /* border: 1px solid black; */
 `;
 const Wrap4 = styled.div``;
 const Wrap5 = styled.div`
@@ -142,14 +144,14 @@ const Wrap5 = styled.div`
 const OrderItemName = styled.span`
   font-size: 16px;
   font-weight: 600;
-  /* margin-bottom: 3px; */
+  margin-bottom: 2px;
   margin-right: 8px;
 `;
 
 const ContentDiv = styled.div`
   width: 260px;
 
-  padding: 10px 6px;
+  /* padding: 10px 6px; */
 `;
 
 const Content = styled.p`
@@ -157,10 +159,13 @@ const Content = styled.p`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  line-height: 16px;
 `;
 const Writer = styled.span`
-  margin-bottom: 4px;
-  padding-left: 2px;
+  /* margin-bottom: 4px; */
+  font-size: 12px;
+  /* padding-left: 2px; */
 `;
 
 const CreateDate = styled.span``;

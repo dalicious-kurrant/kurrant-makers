@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 import useGetReviewQuery from './useGetReviewQuery';
 import ReviewListRoom from './ReviewListRoom/ReviewListRoom';
@@ -121,6 +121,7 @@ const ReviewList = () => {
         <Wrap1>
           <TwoButtonWrap>
             <TwoButton
+              count={1}
               // unansweredOrTotal={!unansweredOrTotal}
               onClick={() => {
                 unansweredQueryRefetch();
@@ -129,6 +130,7 @@ const ReviewList = () => {
               미답변 리뷰 보기
             </TwoButton>
             <TwoButton
+              count={2}
               // unansweredOrTotal={unansweredOrTotal}
               onClick={() => {
                 allListQueryRefetch();
@@ -152,7 +154,8 @@ const ReviewList = () => {
             onChange={handleNameFilter}
           />
 
-          <SearchButton onClick={handleSearchButton} bgColor={'#4472C4'}>
+          {/* <SearchButton onClick={handleSearchButton} bgColor={'#4472C4'}> */}
+          <SearchButton onClick={handleSearchButton} bgColor={'#c2c2c2'}>
             상품 검색
           </SearchButton>
         </SearchWrap>
@@ -210,7 +213,7 @@ const Header = styled.div`
   /* border: 1px solid black; */
 `;
 const ReviewListWrap = styled.div`
-  height: 80%;
+  height: 82%;
   /* flex: 1; */
 
   /* margin-bottom: 10px; */
@@ -218,15 +221,6 @@ const ReviewListWrap = styled.div`
 const PaginationWrap = styled.div`
   /* height: 5%; */
   /* border: 1px solid black; */
-`;
-
-const SearchWrap = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  background-color: white;
-  border-radius: 10px;
-  /* padding: 0px 5px; */
 `;
 
 const Wrap1 = styled.div`
@@ -246,13 +240,27 @@ const TwoButton = styled.button`
   /* 
   height: 30px; */
   /* width: 180px; */
-  width: 49.5%;
-  height: 34px;
-  font-size: 18px;
+  width: 49.8%;
+  /* width: 50%; */
+  height: 26px;
+  font-size: 14px;
   border-radius: 10px 10px 0 0;
   padding: 4px;
 
   background-color: #c2c2c2;
+
+  ${({count}) => {
+    if (count === 1) {
+      return css`
+        /* border-right: 1px solid #232323; */
+        /* border: 1px solid #232323; */
+      `;
+    } else {
+      return css`
+        /* border-left: 1px solid #8d8d8d; */
+      `;
+    }
+  }}
 
   color: #2f2f2f;
 `;
@@ -271,9 +279,31 @@ const BottomBarDiv = styled.div`
 `;
 
 const BottomBar = styled.div`
-  width: 49.5%;
+  width: 49.8%;
+  /* width: 50%; */
   height: 100%;
   background-color: #4d4c4c;
+`;
+const SearchWrap = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 10px;
+`;
+
+const TextInput = styled.input`
+  margin-left: 10px;
+  border: none;
+  border-radius: 3px;
+  height: 22px;
+  padding-left: 2px;
+  font-size: 12px;
+
+  :focus {
+    border: none;
+    outline: none;
+  }
 `;
 
 const SearchButton = styled.button`
@@ -281,26 +311,13 @@ const SearchButton = styled.button`
   cursor: pointer;
   border: 0;
   width: 100px;
-  height: 34px;
-  font-size: 14px;
+  height: 22px;
+  font-size: 12px;
   border-radius: 10px;
 
   background-color: ${({bgColor}) => bgColor};
-  color: white;
+  color: #2f2f2f;
 `;
-
-const TextInput = styled.input`
-  margin-left: 10px;
-  border: none;
-  border-radius: 3px;
-  height: 32px;
-  padding-left: 3px;
-  :focus {
-    border: none;
-    outline: none;
-  }
-`;
-
 const Div = styled.div``;
 
 const PDiv = styled.div`

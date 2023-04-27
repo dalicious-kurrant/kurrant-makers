@@ -126,7 +126,7 @@ const Container = styled.div`
 
   /* border: 1px solid black; */
   padding: 10px 0;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 `;
 
 const ButtonWrap = styled.div`
@@ -156,7 +156,7 @@ const NumberButton = styled.button`
 
 const Wrap = styled.div`
   position: absolute;
-  right: 0px;
+  right: 5px;
   /* top: 26px; */
   /* border: 1px solid black; */
 `;
