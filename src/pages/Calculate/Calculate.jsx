@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {Table} from 'semantic-ui-react';
 import styled from 'styled-components';
 import {PageWrapper} from '../../layout/common.style';
@@ -6,10 +6,48 @@ import ExcelIcon from '../../assets/icon/excel.svg';
 import PDFIcon from '../../assets/icon/pdfIcon.svg';
 import {useMakersAdjustList} from '../../hook/useAdjustment';
 import MakersFilter from './components/MakersFilter';
+import {useAtom} from 'jotai';
+import {
+  endMonthAtom,
+  selectClientAtom,
+  selectModifyAtom,
+  selectStatusAtom,
+  startMonthAtom,
+} from '../../utils/store/store';
+import {useEffect} from 'react';
+import withCommas from '../../utils/withCommas';
 
 const Calculate = () => {
-  const {data: makersAdjustList} = useMakersAdjustList();
-  // console.log(makersAdjustList);
+  const navigate = useNavigate();
+  const [startMonth, setStartMonth] = useAtom(startMonthAtom);
+  const [endMonth, setEndMonth] = useAtom(endMonthAtom);
+  const [selectClient, setSelectClient] = useAtom(selectClientAtom);
+  const [selectStatus, setSelectStatus] = useAtom(selectStatusAtom);
+  const [selectModify, setSelectModify] = useAtom(selectModifyAtom);
+
+  const start = startMonth?.split('-')[0] + startMonth?.split('-')[1];
+  const end = endMonth?.split('-')[0] + endMonth?.split('-')[1];
+
+  const {data: makersAdjustList, refetch} = useMakersAdjustList(
+    start,
+    end,
+    selectClient,
+    selectStatus,
+    selectModify,
+  );
+
+  const goToPage = (id, name) => {
+    navigate('/calculate/detail', {
+      state: {
+        makersId: id,
+        name: name,
+      },
+    });
+  };
+  useEffect(() => {
+    refetch();
+  }, [refetch, startMonth, endMonth, selectClient, selectStatus, selectModify]);
+
   return (
     <Wrap>
       <h1>메이커스 정산 페이지</h1>
@@ -30,13 +68,59 @@ const Calculate = () => {
           </Table.Row>
         </Table.Header>
 
-        {/* <Table.Body>
-          {makersAdjustList?.data?.data?.map(v => {
+        <Table.Body>
+          {makersAdjustList?.data?.data?.makersLists?.map(v => {
             return (
-              <Table.Row key={v.id}>
-                <Table.Cell textAlign="center">{v.year}</Table.Cell>
-                <Table.Cell textAlign="center">{v.month}</Table.Cell>
-                <Table.Cell textAlign="center">{v.makersName}</Table.Cell>
+              <Table.Row key={v.id} style={{cursor: 'pointer'}}>
+                <Table.Cell
+                  textAlign="center"
+                  onClick={() => {
+                    goToPage(v.id, v.makersName);
+                  }}>
+                  {v.year}
+                </Table.Cell>
+                <Table.Cell
+                  textAlign="center"
+                  onClick={() => {
+                    goToPage(v.id, v.makersName);
+                  }}>
+                  {v.month}
+                </Table.Cell>
+                <Table.Cell
+                  textAlign="center"
+                  onClick={() => {
+                    goToPage(v.id, v.makersName);
+                  }}>
+                  {v.makersName}
+                </Table.Cell>
+                <Table.Cell
+                  textAlign="center"
+                  onClick={() => {
+                    goToPage(v.id, v.makersName);
+                  }}>
+                  {withCommas(v.totalPrice)}
+                </Table.Cell>
+                <Table.Cell
+                  textAlign="center"
+                  onClick={() => {
+                    goToPage(v.id, v.makersName);
+                  }}>
+                  {v.accountHolder}
+                </Table.Cell>
+                <Table.Cell
+                  textAlign="center"
+                  onClick={() => {
+                    goToPage(v.id, v.makersName);
+                  }}>
+                  {v.nameOfBank}
+                </Table.Cell>
+                <Table.Cell
+                  textAlign="center"
+                  onClick={() => {
+                    goToPage(v.id, v.makersName);
+                  }}>
+                  {v.accountNumber}
+                </Table.Cell>
                 <Table.Cell textAlign="center">{v.paycheckStatus}</Table.Cell>
                 <Table.Cell textAlign="center">
                   {v.excelFile ? (
@@ -59,7 +143,7 @@ const Calculate = () => {
               </Table.Row>
             );
           })}
-        </Table.Body> */}
+        </Table.Body>
       </Table>
     </Wrap>
   );
