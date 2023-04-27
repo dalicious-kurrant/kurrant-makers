@@ -37,11 +37,11 @@ const ReviewList = () => {
     [['getEveryReviewList'], allUrl],
   );
 
-  useEffect(() => {
-    console.log('여여여여여');
-    console.log(unansweredTotalPage);
-    console.log(allListTotalPage);
-  }, [unansweredTotalPage, allListTotalPage]);
+  // useEffect(() => {
+  //   console.log('여여여여여');
+  //   console.log(unansweredTotalPage);
+  //   console.log(allListTotalPage);
+  // }, [unansweredTotalPage, allListTotalPage]);
 
   // pagination토탈페이지
   useEffect(() => {

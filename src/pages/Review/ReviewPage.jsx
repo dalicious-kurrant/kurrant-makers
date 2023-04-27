@@ -16,8 +16,15 @@ const ReviewPage = () => {
       setIsUrlReview(true);
     }
   }, [pathname]);
+
+  useEffect(() => {
+    return () => {
+      setIsUrlReview(false);
+    };
+  }, []);
+
   return (
-    <ReviewPageContainer>
+    <ReviewPageContainer id="review">
       <Review />
     </ReviewPageContainer>
   );
@@ -25,6 +32,5 @@ const ReviewPage = () => {
 export default ReviewPage;
 
 const ReviewPageContainer = styled.section`
-  width: 80vw;
   height: 100vh;
 `;

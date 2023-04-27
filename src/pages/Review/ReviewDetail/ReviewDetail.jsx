@@ -99,8 +99,8 @@ const ReviewDetail = () => {
         <BigDiv>
           {/* 2차 디자인 */}
 
-          {/* <VacentSpaceDiv /> */}
-          {/* 
+          <VacentSpaceDiv />
+
           <ImageListWrap>
             {Array.isArray(reviewDetail.imageLocation) &&
             reviewDetail.imageLocation.length > 0 ? (
@@ -118,10 +118,61 @@ const ReviewDetail = () => {
                 <NoPhotosSpan> 등록된 리뷰 사진이 없습니다</NoPhotosSpan>
               </NoPhotosWrap>
             )}
-          </ImageListWrap> */}
+          </ImageListWrap>
+
+          <ContentWrapper>
+            <ReviewContentWrap>
+              <TitleD2>리뷰 내용</TitleD2>
+
+              <ContentInput
+                disabled={true}
+                value={
+                  reviewDetail.content ? reviewDetail.content : '(리뷰 글 없음)'
+                }
+              />
+
+              <BottomWrapD2>
+                <BtnD2 onClick={handleReport} color={'#ca2f2f'}>
+                  리뷰 신고하기
+                </BtnD2>
+
+                {reviewDetail.isReport && (
+                  <ReportPD2>신고된 리뷰입니다</ReportPD2>
+                )}
+              </BottomWrapD2>
+            </ReviewContentWrap>
+
+            <MakersCommentWrap>
+              <TitleD2>사장님 댓글</TitleD2>
+
+              <ContentInput
+                disabled={false}
+                onChange={handleChange}
+                value={value}
+              />
+
+              <BottomWrapD2>
+                <IsCommentPD2>
+                  {reviewDetail.makersComment &&
+                  reviewDetail.makersComment.commentId
+                    ? '댓글 작성 완료'
+                    : ' 댓글이 아직 없는 리뷰입니다.'}
+                </IsCommentPD2>
+                {/* <SubmitCommentBtnD2 onClick={handleSubmit} bgColor={'#4472C4'}> */}
+                <BtnD2 onClick={handleSubmit} color={'#4472C4'}>
+                  {reviewDetail.makersComment &&
+                  reviewDetail.makersComment.commentId
+                    ? '댓글 수정하기'
+                    : ' 댓글 작성하기'}
+                </BtnD2>
+              </BottomWrapD2>
+            </MakersCommentWrap>
+          </ContentWrapper>
 
           {/* 1차 디자인 */}
-          <NoticeWrap>
+          <>
+            {' '}
+            {/* <NoticeWrap>
             <IsCommentP>
               {reviewDetail.makersComment &&
               reviewDetail.makersComment.commentId
@@ -182,7 +233,8 @@ const ReviewDetail = () => {
                 ? '댓글 수정하기'
                 : ' 댓글 작성하기'}
             </SubmitCommentBtn>
-          </ButtonWrap>
+          </ButtonWrap> */}
+          </>
         </BigDiv>
       ) : (
         <NoDetailDiv>
@@ -204,56 +256,50 @@ const Container = styled.section`
 
   display: flex;
   flex-direction: column;
+  background-color: #d9d9d9;
 `;
 
 const BigDiv = styled.div`
   height: 100%;
+
+  display: flex;
+  flex-direction: column;
 `;
 
 // 2차 디자인
 
-/////////////////////
-// 1차 디자인
-
-const NoDetailDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  height: 100%;
-  width: 100%;
+const VacentSpaceDiv = styled.div`
+  flex: 9;
 `;
-const NoDetailP = styled.p`
+
+const ContentWrapper = styled.div`
+  flex: 10;
+  display: flex;
+`;
+
+const ReviewContentWrap = styled.div`
+  flex: 1;
+
+  padding-right: 10px;
+`;
+const MakersCommentWrap = styled.div`
+  flex: 1;
+
+  padding-left: 10px;
+`;
+
+const TitleD2 = styled.h3`
   font-size: 20px;
+  margin: 0;
+  /* margin-bottom: 20px; */
 `;
-
-const NoticeWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  margin-bottom: 18px;
-`;
-
-const ReportP = styled.span`
-  color: #ca2f2f;
-  font-size: 18px;
-  /* margin: 8px 0; */
-`;
-const IsCommentP = styled.span`
-  color: #315cac;
-  /* margin: 8px 0; */
-  font-size: 18px;
-  margin-right: 20px;
-`;
-
-const Input = styled.textarea`
+const ContentInput = styled.textarea`
   width: 100%;
 
-  height: 90%;
+  height: 80%;
   border-radius: 10px;
-  margin-bottom: 20px;
-  padding: 20px;
+
+  padding: 14px 4px;
 
   background-color: #fff;
   color: #000;
@@ -267,22 +313,33 @@ const Input = styled.textarea`
   }
 `;
 
-const Wrap1 = styled.div`
+const BottomWrapD2 = styled.div`
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+`;
+
+const BtnD2 = styled.button`
+  outline: 0;
+  cursor: pointer;
+  border: 0;
+  padding: 4px;
+  padding-left: 30px;
+  padding-right: 30px;
   font-size: 15px;
-  flex-direction: column;
-  height: 35%;
+  font-weight: 600;
+  border-radius: 6px;
+  margin-right: 30px;
 
-  /* border: 1px solid black; */
+  background-color: #bfbfbf;
+  color: ${({color}) => color};
+`;
 
-  margin-bottom: 10px;
-`;
-const Title = styled.h3`
-  font-size: 20px;
-  margin-bottom: 20px;
-`;
 const ImageListWrap = styled.div`
   display: flex;
+  flex: 1;
 `;
 
 const NoPhotosWrap = styled.div`
@@ -294,39 +351,148 @@ const NoPhotosSpan = styled.span`
   font-size: 26px;
 `;
 
-const ButtonWrap = styled.div`
+const ReportPD2 = styled.span`
+  color: #ca2f2f;
+  font-size: 14px;
+  /* margin: 8px 0; */
+`;
+
+const IsCommentPD2 = styled.span`
+  color: #315cac;
+  /* margin: 8px 0; */
+  font-size: 14px;
+  margin-right: 20px;
+`;
+
+const NoDetailDiv = styled.div`
   display: flex;
-  font-size: 15px;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
-`;
-const ReportBtn = styled.button`
-  outline: 0;
-  cursor: pointer;
-  border: 0;
-  padding: 11px;
-  padding-left: 20px;
-  padding-right: 20px;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 10px;
-  margin-right: 30px;
 
-  background-color: ${({bgColor}) => bgColor};
-  color: white;
+  height: 100%;
+  width: 100%;
 `;
-const SubmitCommentBtn = styled.button`
-  outline: 0;
-  cursor: pointer;
-  border: 0;
-  padding: 11px;
-  padding-left: 20px;
-  font-weight: 600;
-  padding-right: 20px;
-  font-size: 15px;
-  border-radius: 10px;
+const NoDetailP = styled.p`
+  font-size: 20px;
+`;
 
-  background-color: ${({bgColor}) => bgColor};
-  color: white;
-`;
+/////////////////////
+// 1차 디자인
+
+// const NoDetailDiv = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   height: 100%;
+//   width: 100%;
+// `;
+// const NoDetailP = styled.p`
+//   font-size: 20px;
+// `;
+
+// const NoticeWrap = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+
+//   margin-bottom: 18px;
+// `;
+
+// const ReportP = styled.span`
+//   color: #ca2f2f;
+//   font-size: 18px;
+//   /* margin: 8px 0; */
+// `;
+// const IsCommentP = styled.span`
+//   color: #315cac;
+//   /* margin: 8px 0; */
+//   font-size: 18px;
+//   margin-right: 20px;
+// `;
+
+// const Input = styled.textarea`
+//   width: 100%;
+
+//   height: 90%;
+//   border-radius: 10px;
+//   margin-bottom: 20px;
+//   padding: 20px;
+
+//   background-color: #fff;
+//   color: #000;
+//   border: 1px solid #000;
+//   font-size: 18px;
+//   &:disabled {
+//     background-color: #fff;
+//     color: #6c6c6c;
+//     border: 1px solid #888;
+//     /* border: 1px solid #000; */
+//   }
+// `;
+
+// const Wrap1 = styled.div`
+//   display: flex;
+//   font-size: 15px;
+//   flex-direction: column;
+//   height: 35%;
+
+//   /* border: 1px solid black; */
+
+//   margin-bottom: 10px;
+// `;
+// const Title = styled.h3`
+//   font-size: 20px;
+//   margin-bottom: 20px;
+// `;
+
+// const ImageListWrap = styled.div`
+//   display: flex;
+//   flex: 1;
+// `;
+
+// const NoPhotosWrap = styled.div`
+//   height: 110px;
+//   padding: 24px 0;
+// `;
+
+// const NoPhotosSpan = styled.span`
+//   font-size: 26px;
+// `;
+
+// const ButtonWrap = styled.div`
+//   display: flex;
+//   font-size: 15px;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: row;
+// `;
+// const ReportBtn = styled.button`
+//   outline: 0;
+//   cursor: pointer;
+//   border: 0;
+//   padding: 11px;
+//   padding-left: 20px;
+//   padding-right: 20px;
+//   font-size: 15px;
+//   font-weight: 600;
+//   border-radius: 10px;
+//   margin-right: 30px;
+
+//   background-color: ${({bgColor}) => bgColor};
+//   color: white;
+// `;
+// const SubmitCommentBtn = styled.button`
+//   outline: 0;
+//   cursor: pointer;
+//   border: 0;
+//   padding: 11px;
+//   padding-left: 20px;
+//   font-weight: 600;
+//   padding-right: 20px;
+//   font-size: 15px;
+//   border-radius: 10px;
+
+//   background-color: ${({bgColor}) => bgColor};
+//   color: white;
+// `;
