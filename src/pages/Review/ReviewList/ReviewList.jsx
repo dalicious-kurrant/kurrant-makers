@@ -52,6 +52,28 @@ const ReviewList = () => {
     setAllUrl(buildCustomUrl('total', limit, page, foodNameInput));
   }, [setAllUrl, setUnansweredUrl, foodNameInput, limit, page]);
 
+  // 페이지네이션 숫자가 바뀔떄 리펫치 하기하기
+
+  // 리미트 페이지가 바뀔때는 뭔가 값
+
+  const [isLimitPageEdited, setIsLimitPageEdited] = useState(false);
+
+  useEffect(() => {
+    setIsLimitPageEdited(true);
+  }, [limit, page]);
+
+  useEffect(() => {
+    if (!isLimitPageEdited) return;
+
+    if (!unansweredOrTotal) {
+      unansweredQueryRefetch();
+    } else {
+      allListQueryRefetch();
+    }
+    setIsLimitPageEdited(false);
+  }, [isLimitPageEdited]);
+
+  // 타이핑만 하면 자동으로 리펫치하기
   // useEffect(() => {
   //   // 미답변일떄 false일때만 리펫치 하게끔 하기
   //   if (!unansweredOrTotal) {
@@ -92,20 +114,17 @@ const ReviewList = () => {
   //   console.log('totalPage ' + totalPage);
   // }, [allUrl, unansweredUrl, totalPage]);
 
-  // 값 확인하기 2
   // useEffect(() => {
   //   console.log(foodNameInput);
   // }, [foodNameInput]);
 
-  useEffect(() => {
-    console.log(reviewList);
-  }, [reviewList]);
+  // useEffect(() => {
+  //   console.log(reviewList);
+  // }, [reviewList]);
 
   const handleKeyDetector = keyValue => {
     if (keyValue === 'Enter') {
       if (!unansweredOrTotal) {
-        // 미답변
-
         unansweredQueryRefetch();
       } else {
         allListQueryRefetch();
