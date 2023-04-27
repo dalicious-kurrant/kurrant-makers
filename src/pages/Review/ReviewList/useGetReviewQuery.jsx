@@ -9,13 +9,14 @@ const useGetReviewQuery = (unanswered, all) => {
   // 미답변 리뷰 가져오기
 
   const [unansweredTotalPage, setUnansweredTotalPage] = useState(0);
-
   const [reviewList, setReviewList] = useState([]);
 
   // 미답변 리뷰, 전체리스트
 
   const [allList, setAllList] = useState([]);
   const [unansweredList, setUnansweredList] = useState([]);
+
+  // 총 몇개인지 보기
 
   // true false로 어떤걸 보낼지 확인하기
 
@@ -31,28 +32,20 @@ const useGetReviewQuery = (unanswered, all) => {
     }
   }, [unansweredOrTotal, setReviewList, allList, unansweredList]);
 
-  const [isMount, setIsMount] = useState(false);
-
   // 전체 리뷰 가져오기
 
   const [allListTotalPage, setAllListTotalPage] = useState(0);
 
-  // 리스트
+  // 전체 리스트 보기 GET
 
   const {refetch: allListQueryRefetch} = useQuery(
     all[0],
 
     async ({queryKey}) => {
-      console.log(all[1]);
       const response = await instance.get(all[1]);
-
-      // 메이커스 목록
-
-      // setReviewList(response.data.data.items);
+      console.log('전체리스트');
+      console.log(response.data);
       setAllList(response.data.data.items);
-
-      // setReviewList(response);
-
       setAllListTotalPage(response.data.data.total);
 
       return response.data;
@@ -68,13 +61,10 @@ const useGetReviewQuery = (unanswered, all) => {
     unanswered[0],
 
     async ({queryKey}) => {
-      console.log(unanswered[1]);
       const response = await instance.get(unanswered[1]);
 
-      // 메이커스 목록
-
-      // setReviewList(response.data.data.items.reviewListDtoList);
-
+      console.log('미답변리스트');
+      console.log(response.data);
       setUnansweredList(response.data.data.items.reviewListDtoList);
 
       setUnansweredTotalPage(response.data.data.total);

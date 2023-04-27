@@ -37,6 +37,12 @@ const ReviewList = () => {
     [['getEveryReviewList'], allUrl],
   );
 
+  useEffect(() => {
+    console.log('여여여여여');
+    console.log(unansweredTotalPage);
+    console.log(allListTotalPage);
+  }, [unansweredTotalPage, allListTotalPage]);
+
   // pagination토탈페이지
   useEffect(() => {
     if (!unansweredOrTotal) {
@@ -127,7 +133,7 @@ const ReviewList = () => {
                 unansweredQueryRefetch();
                 setUnansweredOrTotal(false);
               }}>
-              미답변 리뷰 보기
+              미답변 리뷰 보기 ({1})
             </TwoButton>
             <TwoButton
               count={2}
@@ -136,7 +142,7 @@ const ReviewList = () => {
                 allListQueryRefetch();
                 setUnansweredOrTotal(true);
               }}>
-              전체 리스트 보기
+              전체 리스트 보기 ({1})
             </TwoButton>
           </TwoButtonWrap>
 
@@ -282,7 +288,7 @@ const BottomBar = styled.div`
   width: 49.8%;
   /* width: 50%; */
   height: 100%;
-  background-color: #4d4c4c;
+  background-color: #020046;
 `;
 const SearchWrap = styled.div`
   display: flex;

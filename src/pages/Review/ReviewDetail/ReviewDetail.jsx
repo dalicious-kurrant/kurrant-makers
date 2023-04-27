@@ -84,7 +84,7 @@ const ReviewDetail = () => {
 
   return (
     <Container>
-      {showImageModal && (
+      {/* {showImageModal && (
         <ReviewImageModal
           open={showImageModal}
           setOpen={setShowImageModal}
@@ -93,10 +93,34 @@ const ReviewDetail = () => {
             reviewDetail.imageLocation
           }
         />
-      )}
+      )} */}
 
       {Object.keys(reviewDetail).length > 0 ? (
         <BigDiv>
+          {/* 2차 디자인 */}
+
+          {/* <VacentSpaceDiv /> */}
+          {/* 
+          <ImageListWrap>
+            {Array.isArray(reviewDetail.imageLocation) &&
+            reviewDetail.imageLocation.length > 0 ? (
+              reviewDetail.imageLocation.map((v, i) => {
+                return (
+                  <ReviewImage
+                    key={i}
+                    url={v}
+                    setShowImageModal={setShowImageModal}
+                  />
+                );
+              })
+            ) : (
+              <NoPhotosWrap>
+                <NoPhotosSpan> 등록된 리뷰 사진이 없습니다</NoPhotosSpan>
+              </NoPhotosWrap>
+            )}
+          </ImageListWrap> */}
+
+          {/* 1차 디자인 */}
           <NoticeWrap>
             <IsCommentP>
               {reviewDetail.makersComment &&
@@ -185,6 +209,11 @@ const Container = styled.section`
 const BigDiv = styled.div`
   height: 100%;
 `;
+
+// 2차 디자인
+
+/////////////////////
+// 1차 디자인
 
 const NoDetailDiv = styled.div`
   display: flex;
