@@ -20,7 +20,6 @@ const MakersFilter = () => {
   const [selectClient, setSelectClient] = useAtom(selectClientAtom);
   const [selectStatus, setSelectStatus] = useAtom(selectStatusAtom);
   const [selectModify, setSelectModify] = useAtom(selectModifyAtom);
-  // const {data: makersList} = useMakersList();
 
   const statusData = [
     {key: 5, text: '전체', value: 99},
