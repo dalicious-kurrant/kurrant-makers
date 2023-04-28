@@ -100,11 +100,6 @@ const ReviewDetail = () => {
     }
   };
 
-  useEffect(() => {
-    // console.log('잘 들어오고있다');
-    // console.log(reviewDetail);
-  }, [reviewDetail]);
-
   // 내용 없을때
 
   const handleChange = e => {
