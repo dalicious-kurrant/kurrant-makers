@@ -149,7 +149,6 @@ const ReviewList = () => {
           <TwoButtonWrap>
             <TwoButton
               count={1}
-              // unansweredOrTotal={!unansweredOrTotal}
               onClick={() => {
                 unansweredQueryRefetch();
                 setUnansweredOrTotal(false);
@@ -158,7 +157,6 @@ const ReviewList = () => {
             </TwoButton>
             <TwoButton
               count={2}
-              // unansweredOrTotal={unansweredOrTotal}
               onClick={() => {
                 allListQueryRefetch();
                 setUnansweredOrTotal(true);
@@ -225,7 +223,6 @@ const ReviewList = () => {
 export default ReviewList;
 
 const Container = styled.div`
-  /* border: 1px solid black; */
   height: 100%;
   flex: 4;
   background-color: #eaeaea;
@@ -233,22 +230,13 @@ const Container = styled.div`
 
 const Header = styled.div`
   width: 100%;
-  /* padding: 30px 20px; */
   padding: 10px 10px;
   padding-bottom: 20px;
-  /* height: 19%; */
-  /* border: 1px solid black; */
 `;
 const ReviewListWrap = styled.div`
   height: 82%;
-  /* flex: 1; */
-
-  /* margin-bottom: 10px; */
 `;
-const PaginationWrap = styled.div`
-  /* height: 5%; */
-  /* border: 1px solid black; */
-`;
+const PaginationWrap = styled.div``;
 
 const Wrap1 = styled.div`
   margin-bottom: 18px;
@@ -297,17 +285,14 @@ const BottomBarDiv = styled.div`
   height: 6px;
 
   display: flex;
-
   transition: all 0.5s;
   flex-direction: ${({unansweredOrTotal}) =>
     !unansweredOrTotal ? 'row' : 'row-reverse'};
-
-  /* ; */
 `;
 
 const BottomBar = styled.div`
   width: 49.8%;
-  /* width: 50%; */
+
   height: 100%;
   background-color: #020046;
 `;
@@ -343,7 +328,7 @@ const SearchButton = styled.button`
   border-radius: 10px;
 
   background-color: ${({bgColor}) => bgColor};
-  /* color: #2f2f2f; */
+
   color: #ffffff;
 `;
 const Div = styled.div``;
