@@ -36,7 +36,7 @@ const ReviewDetail = () => {
     }
 
     // setRelativeFontSize(0.05115 * width);
-    setRelativeFontSize(0.051079 * width);
+    setRelativeFontSize(0.04905 * width);
   };
 
   useEffect(() => {
