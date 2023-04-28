@@ -3,7 +3,11 @@ import instance from '../../../Shared/axios';
 import {useEffect, useState} from 'react';
 import {useRef} from 'react';
 import {useAtom} from 'jotai';
-import {unansweredOrTotalAtom} from './store';
+import {
+  AllTotalCountAtom,
+  UnansweredTotalCountAtom,
+  unansweredOrTotalAtom,
+} from './store';
 
 const useGetReviewQuery = (unanswered, all) => {
   // 미답변 리뷰 가져오기
@@ -17,6 +21,11 @@ const useGetReviewQuery = (unanswered, all) => {
   const [unansweredList, setUnansweredList] = useState([]);
 
   // 총 몇개인지 보기
+
+  const [unansweredTotalCount, setUnansweredTotalCount] = useAtom(
+    UnansweredTotalCountAtom,
+  );
+  const [allTotalCount, setAllTotalCount] = useAtom(AllTotalCountAtom);
 
   // true false로 어떤걸 보낼지 확인하기
 
@@ -47,7 +56,7 @@ const useGetReviewQuery = (unanswered, all) => {
       console.log(response.data);
       setAllList(response.data.data.items);
       setAllListTotalPage(response.data.data.total);
-
+      setAllTotalCount(response.data.data.items.count);
       return response.data;
     },
     {
@@ -65,10 +74,10 @@ const useGetReviewQuery = (unanswered, all) => {
 
       console.log('미답변리스트');
       console.log(response.data);
+
       setUnansweredList(response.data.data.items.reviewListDtoList);
-
       setUnansweredTotalPage(response.data.data.total);
-
+      setUnansweredTotalCount(response.data.data.items.count);
       return response.data;
     },
     {
@@ -82,6 +91,8 @@ const useGetReviewQuery = (unanswered, all) => {
     reviewList,
     unansweredTotalPage,
     allListTotalPage,
+    unansweredTotalCount,
+    allTotalCount,
     unansweredQueryRefetch,
     allListQueryRefetch,
   };

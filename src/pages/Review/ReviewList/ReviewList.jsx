@@ -30,6 +30,8 @@ const ReviewList = () => {
     reviewList,
     unansweredTotalPage,
     allListTotalPage,
+    unansweredTotalCount,
+    allTotalCount,
     unansweredQueryRefetch,
     allListQueryRefetch,
   } = useGetReviewQuery(
@@ -152,7 +154,7 @@ const ReviewList = () => {
                 unansweredQueryRefetch();
                 setUnansweredOrTotal(false);
               }}>
-              미답변 리뷰 보기 ({1})
+              미답변 리뷰 보기 ({unansweredTotalCount})
             </TwoButton>
             <TwoButton
               count={2}
@@ -161,7 +163,7 @@ const ReviewList = () => {
                 allListQueryRefetch();
                 setUnansweredOrTotal(true);
               }}>
-              전체 리스트 보기 ({1})
+              전체 리스트 보기 ({allTotalCount})
             </TwoButton>
           </TwoButtonWrap>
 
