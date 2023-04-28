@@ -6,6 +6,8 @@ import {useAtom} from 'jotai';
 import ReviewImage from './components/ReviewImage';
 import ReviewImageModal from './ReviewImageModal/ReviewImageModal';
 import useReviewDetailMutation from './useReviewDetailMutation';
+import {useRef} from 'react';
+import useWindowSizeChangeDetector from '../../../utils/useWindowSizeChangeDetector/useWindowSizeChangeDetector';
 
 const ReviewDetail = () => {
   const [showImageModal, setShowImageModal] = useState(false);
@@ -14,6 +16,33 @@ const ReviewDetail = () => {
 
   const [value, setValue] = useState('');
 
+  // inpu값의 width 알아내기
+
+  const makersCommentRef = useRef(null);
+
+  const [relativeFontSize, setRelativeFontSize] = useState(20);
+
+  const {widthIsIncreasing, windowWidth} = useWindowSizeChangeDetector();
+
+  const detectWidth = () => {
+    let makersCurrent;
+    let width;
+
+    if (makersCommentRef.current) {
+      makersCurrent = makersCommentRef.current;
+      width =
+        makersCurrent.getBoundingClientRect().right -
+        makersCurrent.getBoundingClientRect().left;
+    }
+
+    setRelativeFontSize((2 / 39) * width);
+  };
+
+  useEffect(() => {
+    detectWidth();
+  }, [widthIsIncreasing, windowWidth, value]);
+
+  //
   useEffect(() => {
     if (reviewDetail.makersComment && reviewDetail.makersComment.commentId) {
       setValue(reviewDetail.makersComment.content);
@@ -97,7 +126,85 @@ const ReviewDetail = () => {
 
       {Object.keys(reviewDetail).length > 0 ? (
         <BigDiv>
-          <NoticeWrap>
+          {/* 2차 디자인 */}
+
+          <VacentSpaceDiv />
+
+          <ImageListWrap>
+            {Array.isArray(reviewDetail.imageLocation) &&
+            reviewDetail.imageLocation.length > 0 ? (
+              reviewDetail.imageLocation.map((v, i) => {
+                return (
+                  <ReviewImage
+                    key={i}
+                    url={v}
+                    setShowImageModal={setShowImageModal}
+                  />
+                );
+              })
+            ) : (
+              <NoPhotosWrap>
+                <NoPhotosSpan> 등록된 리뷰 사진이 없습니다</NoPhotosSpan>
+              </NoPhotosWrap>
+            )}
+          </ImageListWrap>
+
+          <ContentWrapper>
+            <ReviewContentWrap>
+              <TitleD2>리뷰 내용</TitleD2>
+
+              <ContentInput
+                relativeFontSize={relativeFontSize}
+                disabled={true}
+                value={
+                  reviewDetail.content ? reviewDetail.content : '(리뷰 글 없음)'
+                }
+              />
+
+              <BottomWrapD2>
+                <BtnD2 onClick={handleReport} color={'#ca2f2f'}>
+                  리뷰 신고하기
+                </BtnD2>
+
+                {reviewDetail.isReport && (
+                  <ReportPD2>신고된 리뷰입니다</ReportPD2>
+                )}
+              </BottomWrapD2>
+            </ReviewContentWrap>
+
+            <MakersCommentWrap>
+              <TitleD2>사장님 댓글</TitleD2>
+
+              <ContentInput
+                relativeFontSize={relativeFontSize}
+                ref={makersCommentRef}
+                disabled={false}
+                onChange={handleChange}
+                value={value}
+              />
+
+              <BottomWrapD2>
+                <IsCommentPD2>
+                  {reviewDetail.makersComment &&
+                  reviewDetail.makersComment.commentId
+                    ? '댓글 작성이 완료된 리뷰입니다.'
+                    : ' 댓글이 아직 없는 리뷰입니다.'}
+                </IsCommentPD2>
+
+                <BtnD2 onClick={handleSubmit} color={'#4472C4'}>
+                  {reviewDetail.makersComment &&
+                  reviewDetail.makersComment.commentId
+                    ? '댓글 수정하기'
+                    : ' 댓글 작성하기'}
+                </BtnD2>
+              </BottomWrapD2>
+            </MakersCommentWrap>
+          </ContentWrapper>
+
+          {/* 1차 디자인 */}
+          <>
+            {' '}
+            {/* <NoticeWrap>
             <IsCommentP>
               {reviewDetail.makersComment &&
               reviewDetail.makersComment.commentId
@@ -158,7 +265,8 @@ const ReviewDetail = () => {
                 ? '댓글 수정하기'
                 : ' 댓글 작성하기'}
             </SubmitCommentBtn>
-          </ButtonWrap>
+          </ButtonWrap> */}
+          </>
         </BigDiv>
       ) : (
         <NoDetailDiv>
@@ -180,10 +288,119 @@ const Container = styled.section`
 
   display: flex;
   flex-direction: column;
+  background-color: #d9d9d9;
 `;
 
 const BigDiv = styled.div`
   height: 100%;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+// 2차 디자인
+
+const VacentSpaceDiv = styled.div`
+  flex: 9;
+`;
+
+const ContentWrapper = styled.div`
+  flex: 10;
+  display: flex;
+`;
+
+const ReviewContentWrap = styled.div`
+  flex: 1;
+
+  padding-right: 10px;
+`;
+const MakersCommentWrap = styled.div`
+  flex: 1;
+
+  padding-left: 10px;
+`;
+
+const TitleD2 = styled.h3`
+  font-size: 20px;
+  margin: 0;
+  /* margin-bottom: 20px; */
+`;
+const ContentInput = styled.textarea`
+  width: 100%;
+
+  height: 80%;
+  border-radius: 10px;
+
+  padding: 14px 6px;
+
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+  font-size: ${({relativeFontSize}) => `${relativeFontSize}px`};
+
+  font-family: 'Pretendard-Regular';
+  &:disabled {
+    background-color: #fff;
+    color: #6c6c6c;
+    border: 1px solid #888;
+    /* border: 1px solid #000; */
+  }
+  &:focus {
+  }
+  resize: none;
+`;
+
+const BottomWrapD2 = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+`;
+
+const BtnD2 = styled.button`
+  outline: 0;
+  cursor: pointer;
+  border: 0;
+  padding: 4px;
+  padding-left: 30px;
+  padding-right: 30px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 6px;
+  margin-right: 30px;
+
+  background-color: #bfbfbf;
+  color: ${({color}) => color};
+`;
+
+const ImageListWrap = styled.div`
+  display: flex;
+  flex: 1;
+
+  min-height: 130px;
+`;
+
+const NoPhotosWrap = styled.div`
+  height: 110px;
+  padding: 24px 0;
+`;
+
+const NoPhotosSpan = styled.span`
+  font-size: 26px;
+`;
+
+const ReportPD2 = styled.span`
+  color: #ca2f2f;
+  font-size: 14px;
+  /* margin: 8px 0; */
+`;
+
+const IsCommentPD2 = styled.span`
+  color: #315cac;
+  /* margin: 8px 0; */
+  font-size: 14px;
+  margin-right: 20px;
 `;
 
 const NoDetailDiv = styled.div`
@@ -198,106 +415,123 @@ const NoDetailP = styled.p`
   font-size: 20px;
 `;
 
-const NoticeWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+/////////////////////
+// 1차 디자인
 
-  margin-bottom: 18px;
-`;
+// const NoDetailDiv = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
 
-const ReportP = styled.span`
-  color: #ca2f2f;
-  font-size: 18px;
-  /* margin: 8px 0; */
-`;
-const IsCommentP = styled.span`
-  color: #315cac;
-  /* margin: 8px 0; */
-  font-size: 18px;
-  margin-right: 20px;
-`;
+//   height: 100%;
+//   width: 100%;
+// `;
+// const NoDetailP = styled.p`
+//   font-size: 20px;
+// `;
 
-const Input = styled.textarea`
-  width: 100%;
+// const NoticeWrap = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
 
-  height: 90%;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  padding: 20px;
+//   margin-bottom: 18px;
+// `;
 
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #000;
-  font-size: 18px;
-  &:disabled {
-    background-color: #fff;
-    color: #6c6c6c;
-    border: 1px solid #888;
-    /* border: 1px solid #000; */
-  }
-`;
+// const ReportP = styled.span`
+//   color: #ca2f2f;
+//   font-size: 18px;
+//   /* margin: 8px 0; */
+// `;
+// const IsCommentP = styled.span`
+//   color: #315cac;
+//   /* margin: 8px 0; */
+//   font-size: 18px;
+//   margin-right: 20px;
+// `;
 
-const Wrap1 = styled.div`
-  display: flex;
-  font-size: 15px;
-  flex-direction: column;
-  height: 35%;
+// const Input = styled.textarea`
+//   width: 100%;
 
-  /* border: 1px solid black; */
+//   height: 90%;
+//   border-radius: 10px;
+//   margin-bottom: 20px;
+//   padding: 20px;
 
-  margin-bottom: 10px;
-`;
-const Title = styled.h3`
-  font-size: 20px;
-  margin-bottom: 20px;
-`;
-const ImageListWrap = styled.div`
-  display: flex;
-`;
+//   background-color: #fff;
+//   color: #000;
+//   border: 1px solid #000;
+//   font-size: 18px;
+//   &:disabled {
+//     background-color: #fff;
+//     color: #6c6c6c;
+//     border: 1px solid #888;
+//     /* border: 1px solid #000; */
+//   }
+// `;
 
-const NoPhotosWrap = styled.div`
-  height: 110px;
-  padding: 24px 0;
-`;
+// const Wrap1 = styled.div`
+//   display: flex;
+//   font-size: 15px;
+//   flex-direction: column;
+//   height: 35%;
 
-const NoPhotosSpan = styled.span`
-  font-size: 26px;
-`;
+//   /* border: 1px solid black; */
 
-const ButtonWrap = styled.div`
-  display: flex;
-  font-size: 15px;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-`;
-const ReportBtn = styled.button`
-  outline: 0;
-  cursor: pointer;
-  border: 0;
-  padding: 11px;
-  padding-left: 20px;
-  padding-right: 20px;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 10px;
-  margin-right: 30px;
+//   margin-bottom: 10px;
+// `;
+// const Title = styled.h3`
+//   font-size: 20px;
+//   margin-bottom: 20px;
+// `;
 
-  background-color: ${({bgColor}) => bgColor};
-  color: white;
-`;
-const SubmitCommentBtn = styled.button`
-  outline: 0;
-  cursor: pointer;
-  border: 0;
-  padding: 11px;
-  padding-left: 20px;
-  font-weight: 600;
-  padding-right: 20px;
-  font-size: 15px;
-  border-radius: 10px;
+// const ImageListWrap = styled.div`
+//   display: flex;
+//   flex: 1;
+// `;
 
-  background-color: ${({bgColor}) => bgColor};
-  color: white;
-`;
+// const NoPhotosWrap = styled.div`
+//   height: 110px;
+//   padding: 24px 0;
+// `;
+
+// const NoPhotosSpan = styled.span`
+//   font-size: 26px;
+// `;
+
+// const ButtonWrap = styled.div`
+//   display: flex;
+//   font-size: 15px;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: row;
+// `;
+// const ReportBtn = styled.button`
+//   outline: 0;
+//   cursor: pointer;
+//   border: 0;
+//   padding: 11px;
+//   padding-left: 20px;
+//   padding-right: 20px;
+//   font-size: 15px;
+//   font-weight: 600;
+//   border-radius: 10px;
+//   margin-right: 30px;
+
+//   background-color: ${({bgColor}) => bgColor};
+//   color: white;
+// `;
+// const SubmitCommentBtn = styled.button`
+//   outline: 0;
+//   cursor: pointer;
+//   border: 0;
+//   padding: 11px;
+//   padding-left: 20px;
+//   font-weight: 600;
+//   padding-right: 20px;
+//   font-size: 15px;
+//   border-radius: 10px;
+
+//   background-color: ${({bgColor}) => bgColor};
+//   color: white;
+// `;

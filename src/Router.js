@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom';
 import styled, {css} from 'styled-components';
 
 import LoginPage from './pages/Login/LoginPage';
@@ -23,6 +23,7 @@ import DailyFood from './pages/DailyFood/DailyFoodPage';
 import ReviewPage from './pages/Review/ReviewPage';
 import {isUrlReviewAtom} from './pages/Review/store';
 import MakersCalcDetail from './pages/Calculate/components/MakersCalcDetail';
+import {useState} from 'react';
 
 function Router() {
   const token = localStorage.getItem('token');
@@ -37,11 +38,12 @@ function Router() {
     };
     window.addEventListener('resize', resizeListener);
   });
+
   return (
     <BrowserRouter>
       <ScrollToTop />
       {token !== null && (innerWidth > 768 ? <Sidebar /> : <Header />)}
-      <Container token={token} isUrlReview={isUrlReview}>
+      <Container token={token} isUrlReview={isUrlReview} id="container">
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route element={<PrivateRoute redirectPath="/" />}>
@@ -82,6 +84,15 @@ const Container = styled.div`
       `;
     }
   }}
+
+  ${({isUrlReview}) => {
+    if (isUrlReview) {
+      return css`
+        flex: 1;
+      `;
+    }
+  }}
+
 
   margin-left: ${({token, isUrlReview}) =>
     token === null ? '0px' : isUrlReview ? '256px' : '280px'};

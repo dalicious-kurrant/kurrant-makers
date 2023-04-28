@@ -20,7 +20,7 @@ function Sidebar() {
   };
 
   return (
-    <Wrapper>
+    <Wrapper id="sidebar">
       <ImageWrap>
         <img src={Logo} alt="logo" width={85} height={24} />
       </ImageWrap>

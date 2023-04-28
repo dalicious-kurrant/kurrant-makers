@@ -40,8 +40,8 @@ export default ReviewImage;
 export const Div = styled.div`
   display: flex;
 
-  height: 110px;
-  width: 110px;
+  height: 100px;
+  width: 100px;
   position: relative;
   margin: 10px;
   align-items: center;
