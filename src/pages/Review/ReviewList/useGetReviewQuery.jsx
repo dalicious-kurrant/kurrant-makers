@@ -52,9 +52,8 @@ const useGetReviewQuery = (unanswered, all) => {
 
     async ({queryKey}) => {
       const response = await instance.get(all[1]);
-      console.log('전체리스트');
-      console.log(response.data);
-      setAllList(response.data.data.items);
+
+      setAllList(response.data.data.items.reviewListDtoList);
       setAllListTotalPage(response.data.data.total);
       setAllTotalCount(response.data.data.items.count);
       return response.data;
@@ -71,9 +70,6 @@ const useGetReviewQuery = (unanswered, all) => {
 
     async ({queryKey}) => {
       const response = await instance.get(unanswered[1]);
-
-      console.log('미답변리스트');
-      console.log(response.data);
 
       setUnansweredList(response.data.data.items.reviewListDtoList);
       setUnansweredTotalPage(response.data.data.total);
