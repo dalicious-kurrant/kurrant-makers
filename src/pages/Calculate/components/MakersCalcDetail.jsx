@@ -12,6 +12,7 @@ import {
 } from '../../../hook/useAdjustment';
 import DefaultTable from './DefaultTable';
 import OrderData from './OrderData';
+import {adjustReverseStatusFomatted} from '../../../utils/statusFormatter';
 
 const MakersCalcDetail = () => {
   const location = useLocation();
@@ -36,7 +37,8 @@ const MakersCalcDetail = () => {
     }
   };
 
-  const status = list?.corporationResponse?.paycheckStatus;
+  const status = adjustReverseStatusFomatted(list?.makersPaycheckInfo?.status);
+
   const completeButton = async () => {
     // 0 : 정산 신청 완료
     const data = {
@@ -51,15 +53,13 @@ const MakersCalcDetail = () => {
       <MakersDetailTable data={list?.makersPaycheckInfo} />
       <ButtonWrap>
         <Button
-          content="정산완료"
+          content="정산 완료"
           size="small"
           color="blue"
           onClick={() => {
             completeButton();
           }}
-          disabled={
-            status === '거래명세서 확정' || status === '정산금 입금 완료'
-          }
+          disabled={status === 2}
         />
       </ButtonWrap>
       <Wrap>
@@ -167,6 +167,7 @@ const MakersCalcDetail = () => {
                 등록날짜
               </Table.HeaderCell>
               <Table.HeaderCell
+                width={4}
                 textAlign="center"
                 style={{
                   paddingTop: 6,

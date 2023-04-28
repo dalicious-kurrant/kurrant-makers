@@ -77,12 +77,12 @@ export const menuData = [
   //   icon: <Diagram />,
   //   activeIcon: <ActiveDiagram />,
   // },
-  {
-    name: '정산 관리',
-    path: '/calculate',
-    icon: <Money />,
-    activeIcon: <ActiveMoney />,
-  },
+  // {
+  //   name: '정산 관리',
+  //   path: '/calculate',
+  //   icon: <Money />,
+  //   activeIcon: <ActiveMoney />,
+  // },
   {
     name: '리뷰 관리',
     path: '/review',
