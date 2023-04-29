@@ -136,14 +136,14 @@ const InputBox = styled.input`
 `;
 
 const InputBlock = styled.div`
-  min-width: 200px;
+  min-width: 160px;
   font-size: 14px;
   margin-right: 24px;
 `;
 
 const Wrap = styled.div`
   display: flex;
-  //justify-content: space-between;
+  justify-content: space-between;
 `;
 
 const DateWrap = styled.div`
