@@ -26,7 +26,7 @@ instance.interceptors.response.use(
   },
   error => {
     const {response} = error;
-    if (response.status === 411) {
+    if (response.status === 411 || response.status === 403) {
       localStorage.clear();
       alert('로그인이 만료되어 로그아웃 됩니다.');
       window.location.replace('/');
