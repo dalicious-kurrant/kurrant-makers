@@ -149,7 +149,7 @@ const OrderItemName = styled.span`
 `;
 
 const ContentDiv = styled.div`
-  width: 260px;
+  /* width: 260px; */
 
   /* padding: 10px 6px; */
 `;
