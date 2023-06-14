@@ -3,13 +3,21 @@ import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Login from '../../component/Login/Login';
 import LoginHeader from '../../component/Login/LoginHeader';
+import { useAtom } from 'jotai';
+import { pageWidthAtom } from '../../utils/store/store';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [innerWidth, setInnerWidth] = useAtom(pageWidthAtom);
   const token = localStorage.getItem('token');
   useEffect(() => {
-    if (token) navigate('/product');
-  }, [navigate, token]);
+    if (token) {
+      if(innerWidth > 768)
+        navigate('/product')
+      if(innerWidth < 768)
+        navigate('/sales/schedule')
+    };
+  }, [innerWidth, navigate, token]);
   return (
     <Container>
       <Wrap>

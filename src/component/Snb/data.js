@@ -1,26 +1,17 @@
-import {ReactComponent as Dashboard} from '../../assets/snb/dashboard.svg';
-import {ReactComponent as Speaker} from '../../assets/snb/speaker.svg';
 import {ReactComponent as Product} from '../../assets/snb/product.svg';
 import {ReactComponent as MakersInfo} from '../../assets/snb/makersInfo.svg';
 import {ReactComponent as Calendar} from '../../assets/snb/calendar.svg';
-import {ReactComponent as Stock} from '../../assets/snb/stock.svg';
-import {ReactComponent as Diagram} from '../../assets/snb/diagram.svg';
 import {ReactComponent as Money} from '../../assets/snb/money.svg';
 import {ReactComponent as Schedule} from '../../assets/snb/schedule.svg';
 import {ReactComponent as DailyFood} from '../../assets/snb/dailyfood.svg';
 import {ReactComponent as Review} from '../../assets/snb/review.svg';
 import {ReactComponent as ActiveDailyFood} from '../../assets/snb//active/dailyfood.svg';
-import {ReactComponent as ActiveDash} from '../../assets/snb/active/dashboard.svg';
-import {ReactComponent as ActiveSpeaker} from '../../assets/snb/active/speaker.svg';
 import {ReactComponent as ActiveCalendar} from '../../assets/snb/active/calendar.svg';
-import {ReactComponent as ActiveStock} from '../../assets/snb/active/stock.svg';
 import {ReactComponent as ActiveProduct} from '../../assets/snb/active/product.svg';
 import {ReactComponent as ActiveSchedule} from '../../assets/snb/active/schedule.svg';
 import {ReactComponent as ActiveMakersInfo} from '../../assets/snb/active/makersInfo.svg';
-import {ReactComponent as ActiveDiagram} from '../../assets/snb/active/diagram.svg';
 import {ReactComponent as ActiveMoney} from '../../assets/snb/active/money.svg';
 import {ReactComponent as ActiveReview} from '../../assets/snb/active/review.svg';
-import DailyFoodPage from '../../pages/DailyFood/DailyFoodPage';
 export const menuData = [
   // {
   //   name: '대시보드',

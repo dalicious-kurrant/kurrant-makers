@@ -68,8 +68,7 @@ const ProductPage = () => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {makersProcuctList?.data?.data?.map((el, idx) => {
-              console.log(el);
+            {makersProcuctList?.data?.data?.map((el, idx) => {              
               return (
                 <TableRow
                   onClick={() => goToDetail(el.foodId)}
