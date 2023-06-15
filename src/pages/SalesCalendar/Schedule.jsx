@@ -12,7 +12,7 @@ import TestData from './test';
 import {useAtom} from 'jotai';
 import {pageWidthAtom} from '../../utils/store/store';
 import withCommas from '../../utils/withCommas';
-import { groupTypeFormatted } from '../../utils/statusFormatter';
+import {groupTypeFormatted} from '../../utils/statusFormatter';
 import DeliveryCard from './components/DeliveryCard';
 import DesktopMode from './components/DesktopMode';
 import MobileMode from './components/MobileMode';
@@ -704,8 +704,8 @@ const Schedule = () => {
   const day = new Date();
   const days = formattedWeekDate(day);
   const [innerWidth, setInnerWidth] = useAtom(pageWidthAtom);
-  const [startDate, setStartDate] = useState(days);
-  const [endDate, setEndDate] = useState(days);
+  const [startDate, setStartDate] = useState(day);
+  const [endDate, setEndDate] = useState(day);
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
 
   const types =
@@ -722,22 +722,26 @@ const Schedule = () => {
       }
       return el;
     });
-  const {refetch} = useGetSalesList(
-    startDate,
-    endDate,
-    types,
-  );
-
-
-  const totalFood = deliveryGroupsByDates?.totalFoods;
-
-
-
+  const {data: salesList, refetch} = useGetSalesList(formattedWeekDate(startDate), formattedWeekDate(endDate), types);
+    
+  useEffect(()=>{
+    refetch();
+  },[refetch, startDate])
 
   return (
     <Wrapper isMobile={innerWidth > 768}>
-      {innerWidth > 768 ? <DesktopMode salesList={deliveryGroupsByDates} refetch={refetch}/>:<MobileMode salesList={deliveryGroupsByDates} refetch={refetch}/>}
-     
+      {innerWidth > 768 ? (
+        <DesktopMode salesList={salesList?.data?.data} refetch={refetch} />
+      ) : (
+        <MobileMode
+          endDate={endDate}
+          setEndDate={setEndDate}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          salesList={salesList?.data?.data}
+          refetch={refetch}
+        />
+      )}
     </Wrapper>
   );
 };
@@ -746,26 +750,11 @@ export default Schedule;
 
 const Wrapper = styled.div`
   width: 100%;
-  ${({isMobile})=>{
-    if(!isMobile)css`
-      padding: 40px;
-      min-width: 1024px;
-    `
+  ${({isMobile}) => {
+    if (!isMobile)
+      css`
+        padding: 40px;
+        min-width: 1024px;
+      `;
   }}
-  
-  
 `;
-
-
-
-
-
-
-
-
-
-
-
-
-
-

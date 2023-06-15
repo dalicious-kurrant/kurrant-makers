@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'semantic-ui-css/semantic.min.css';
-
+import "react-datepicker/dist/react-datepicker.css";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

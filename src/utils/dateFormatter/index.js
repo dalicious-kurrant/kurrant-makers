@@ -34,3 +34,22 @@ export function formattedYearMonthDate(data, delimiter = '-') {
 
   return `${[year, month].join(delimiter)}`;
 }
+export function formattedMonthDate(data, delimiter = '-') {
+  const dateTime = transDateType(data);
+  const year = dateTime.getFullYear();
+  const day = leftPad(dateTime.getDate());
+  const month = leftPad(dateTime.getMonth()+1);
+
+  return `${month+'월 '+day+'일'}`;
+}
+export function formattedDateAndDay(data, delimiter = '. ') {
+  const dateTime = transDateType(data);
+  const year = dateTime.getFullYear().toString().slice(-2);
+  const month = leftPad(dateTime.getMonth() + 1);
+  const day = leftPad(dateTime.getDate());
+
+  const week = ['일', '월', '화', '수', '목', '금', '토'];
+  const dayOfWeek = week[dateTime.getDay()];
+
+  return `${[year, month, day].join(delimiter)} (${dayOfWeek})`;
+}

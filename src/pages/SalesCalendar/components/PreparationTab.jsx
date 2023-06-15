@@ -4,12 +4,16 @@ import {formattedWeekDate} from '../../../utils/dateFormatter';
 import {useState} from 'react';
 import DiningButton from './DiningButton';
 import DiningMobileButton from './DiningMobileButton';
+import MobileDeliveryTotalCard from './MobileDeliveryTotalCard';
 
-const PreparationTab = ({salesList,refetch}) => {
-  const day = new Date();
-  const days = formattedWeekDate(day);
-  const [startDate, setStartDate] = useState(days);
-  const [endDate, setEndDate] = useState(days);
+const PreparationTab = ({
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
+  salesList,
+  refetch,
+}) => {
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
 
   const totalFood = salesList?.totalFoods;
@@ -30,13 +34,13 @@ const PreparationTab = ({salesList,refetch}) => {
           <div>
             <DateInput
               type="date"
-              defaultValue={startDate}
+              defaultValue={formattedWeekDate(startDate)}
               onChange={e => getStartDate(e)}
             />
             <DateSpan>-</DateSpan>
             <DateInput
               type="date"
-              defaultValue={endDate}
+              defaultValue={formattedWeekDate(endDate)}
               onChange={e => getEndDate(e)}
             />
           </div>
@@ -50,19 +54,20 @@ const PreparationTab = ({salesList,refetch}) => {
       </FilterWrap>
       <ContentsWrap>
         <Titlebar>
-            <TitleText>상품명 및 상세정보</TitleText>
-            <TitleCount>합계(개)</TitleCount>
+          <TitleText>상품명 및 상세정보</TitleText>
+          <TitleCount>합계(개)</TitleCount>
         </Titlebar>
         {salesList?.totalFoods?.map((el, i) => {
-            
-              return <TableContent key={el.foodId}>
+          return (
+            <TableContent key={el.foodId}>
               <ContentBpx>
-                  <ContentText>{el.foodName}</ContentText>
-                  <ContentDetailText>{el.description}</ContentDetailText>
+                <ContentText>{el.foodName}</ContentText>
+                <ContentDetailText>{el.description}</ContentDetailText>
               </ContentBpx>
               <ContentCount>{el.totalFoodCount}</ContentCount>
-          </TableContent>
-            })}
+            </TableContent>
+          );
+        })}
         {/* <TableContent>
             <ContentBpx>
                 <ContentText>[WEIGHT LOSS] Sous vide Chicken Breast 110g AND Sweet pumpkin 120g</ContentText>
@@ -71,6 +76,16 @@ const PreparationTab = ({salesList,refetch}) => {
             <ContentCount>345</ContentCount>
         </TableContent> */}
       </ContentsWrap>
+      <ContentsDetailWrap>
+        {salesList?.foodByDateDiningTypes.map(food => {
+          return (
+            <MobileDeliveryTotalCard
+              key={food.foods.map(f => f.foodId).join('')}
+              food={food}
+            />
+          );
+        })}
+      </ContentsDetailWrap>
     </PreparationTabContainer>
   );
 };
@@ -89,6 +104,10 @@ const DateInput = styled.input`
   border-radius: 4px;
   border: 1px solid #bdbac1;
 `;
+const ContentsDetailWrap = styled.div`
+  width: ${window.innerWidth}px;
+  margin-bottom: 64px;
+`;
 const CalendarWrap = styled.div`
   display: flex;
   align-items: center;
@@ -103,73 +122,73 @@ const DiningWrap = styled.div`
   justify-content: flex-start;
   justify-self: flex-start;
   padding: 0px 24px;
-  padding-bottom: 24px;  
+  padding-bottom: 24px;
 `;
 const TitleText = styled.div`
-    font-size:13px;
+  font-size: 13px;
 `;
 const TitleCount = styled.div`
-    font-size:13px;
-`
-const ContentBpx= styled.div`
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid ${({theme})=> theme.colors.grey[8]};
-    flex:1;
-    align-items: flex-start;
-    padding-left: 24px;
-    padding-top: 16px;
-    padding-bottom: 16px;
-`
+  font-size: 13px;
+`;
+const ContentBpx = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid ${({theme}) => theme.colors.grey[8]};
+  flex: 1;
+  align-items: flex-start;
+  padding-left: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+`;
 const ContentText = styled.div`
-    font-size:14px;
-    width: 245px;
-    /* white-space: nowrap; */
-    font-weight: 600;
-    margin-right: 8px;
+  font-size: 14px;
+  width: 245px;
+  /* white-space: nowrap; */
+  font-weight: 600;
+  margin-right: 8px;
 `;
 const ContentDetailText = styled.div`
-    font-size:12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: ${({theme})=>theme.colors.grey[4]};
-    width: 245px;    
-    font-weight: 400;
-    margin-top: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: ${({theme}) => theme.colors.grey[4]};
+  width: 245px;
+  font-weight: 400;
+  margin-top: 4px;
 `;
 const ContentCount = styled.div`
-    font-size:14px;
-    font-weight: 600;
-    padding-top: 16px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding-right: 24px;
-    width: 90px;    
-`
+  font-size: 14px;
+  font-weight: 600;
+  padding-top: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-right: 24px;
+  width: 90px;
+`;
 const FilterWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: ${window.innerWidth}px;
 `;
-const ContentsWrap =styled.div`
-    width: ${window.innerWidth}px;
-`
+const ContentsWrap = styled.div`
+  width: ${window.innerWidth}px;
+  padding-bottom: 40px;
+`;
 const Titlebar = styled.div`
-    padding: 16px 24px;
-    background-color: ${({theme})=> theme.colors.grey[8]};
-    display: flex;
-    justify-content: space-between;
-   `
+  padding: 16px 24px;
+  background-color: ${({theme}) => theme.colors.grey[8]};
+  display: flex;
+  justify-content: space-between;
+`;
 const TableContent = styled.div`
-    
-    background-color: ${({theme})=> theme.colors.grey[0]};
-    display: flex;
-    justify-content: space-between;
-   border: 1px solid ${({theme})=> theme.colors.grey[8]};;
-   border-top: 0px;
-`
+  background-color: ${({theme}) => theme.colors.grey[0]};
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid ${({theme}) => theme.colors.grey[8]};
+  border-top: 0px;
+`;
 const DateSpan = styled.span`
   margin: 0px 4px;
 `;
