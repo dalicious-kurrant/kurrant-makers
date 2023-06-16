@@ -25,10 +25,13 @@ ${reset}; // Reset CSS
 body{
   font-family:${({theme}) => theme.fontFamily.default};
   font-size:14px;
-  width: ${window.innerWidth}px;
+  
+ 
 }
 `;
 
 const Wrap = styled.div`
   display: flex;
+  width: ${window.innerWidth}px;
+  overflow: hidden;
 `;
