@@ -44,6 +44,7 @@ const ButtonWrap = styled.div`
   padding: 6.5px 12px;
   font-size: 13px;
   font-weight: 600;
+  font-family: 'Pretendard-SemiBold';
   border-radius: 50px;
   margin-right: 10px;
   cursor: pointer;
@@ -51,5 +52,6 @@ const ButtonWrap = styled.div`
 
 const TypeText = styled.div`
   color: ${({theme, touch}) => (touch ? theme.colors.grey[0] : theme.colors.grey[5])};
+  font-family: 'Pretendard-SemiBold';
   font-weight: 600;
 `;

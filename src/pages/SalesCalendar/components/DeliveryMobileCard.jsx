@@ -101,7 +101,7 @@ const TotalFoodWrap = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   font-size: 13px;
-  font-family: 'Pretendard-Regular';
+  font-family: 'Pretendard-SemiBold';
   font-weight: 600;
   margin-top: 8px;
   padding-right: 8px;
@@ -146,6 +146,7 @@ const FoodDetailTitle = styled.div`
     margin-right: 8px;
     color: ${({theme, spot})=> spot===0 ? theme.colors.blue[500]:theme.colors.pink[500]};
     font-size: 13px;
+    font-family: 'Pretendard-SemiBold';
     font-weight: 600;
 `;
 const FoodDetailPickUpTime = styled.div`

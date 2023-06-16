@@ -100,6 +100,7 @@ const PreparationTabContainer = styled.div`
 const DateInput = styled.input`
   padding: 4px;
   font-size: 13px;
+  font-family: 'Pretendard-SemiBold';
   height: 36px;
   color:${({theme}) => theme.colors.grey[2]};
   border-radius: 4px;
@@ -151,6 +152,7 @@ const ContentText = styled.div`
   font-size: 14px;
   width: 245px;
   /* white-space: nowrap; */
+  font-family: 'Pretendard-SemiBold';
   font-weight: 600;
   margin-right: 8px;
 `;
@@ -166,6 +168,7 @@ const ContentDetailText = styled.div`
 `;
 const ContentCount = styled.div`
   font-size: 14px;
+  font-family: 'Pretendard-SemiBold';
   font-weight: 600;
   padding-top: 16px;
   display: flex;

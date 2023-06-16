@@ -121,6 +121,7 @@ const Wrapper = styled.div`
 // Label
 const LabelContainer = styled.p`
   font-weight: 600;
+  font-family: 'Pretendard-SemiBold';
   font-size: 15px;
   margin-bottom: 12px;
 `;

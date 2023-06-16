@@ -185,6 +185,7 @@ const Dining = styled.button`
     if (isActive) {
       return css`
         font-weight: 600;
+        font-family: 'Pretendard-SemiBold';
         border-bottom: 2px solid ${({theme}) => theme.colors.grey[2]};
       `;
     }
@@ -211,7 +212,7 @@ const Time = styled.button`
   margin-right: 8px;
   padding-bottom: 4px;
   white-space: nowrap;
-  font-family: 'Pretendard-Regular';
+  font-family: 'Pretendard-SemiBold';
   font-size: 15px;
   ${({isActive}) => {
     if (isActive) {

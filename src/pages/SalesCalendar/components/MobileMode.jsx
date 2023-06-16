@@ -86,6 +86,7 @@ const TabButton = styled.div`
     if (isActive) {
       return css`
         border-bottom: ${({theme}) => `2px solid ${theme.colors.grey[2]}`};
+        font-family: 'Pretendard-SemiBold';
         font-weight: 600;
       `;
     }
