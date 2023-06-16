@@ -53,7 +53,7 @@ export const Div = styled.div`
   /* background-color: grey; */
   ${({url}) => {
     if (!url) {
-      return `background-color: #b2b1b1`;
+      return `background-color: #E4E3E7`;
     }
   }}
 `;

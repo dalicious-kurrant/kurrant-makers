@@ -85,8 +85,9 @@ const ReviewListEach = ({data}) => {
           {data.isMakersComments && (
             <IsMakersCommentsTrueSpan>답변 완료</IsMakersCommentsTrueSpan>
           )}
+          {/* <IsMakersCommentsTrueSpan>답변 완료</IsMakersCommentsTrueSpan> */}
           {data.isReport && <ReportSpan>신고 리뷰</ReportSpan>}
-
+          {/* <ReportSpan>신고 리뷰</ReportSpan> */}
           <CreateDate>{data.createDate}</CreateDate>
         </Wrap4>
       </Wrap2>
@@ -108,10 +109,11 @@ const Container = styled.div`
 
   margin-bottom: 10px;
   border-radius: 8px;
-  padding: 12px;
+  padding: 24px;
   background-color: #fff;
 
-  min-height: 135px;
+  /* min-height: 135px; */
+  min-height: 167px;
 `;
 
 const Wrap1 = styled.div`
@@ -142,10 +144,9 @@ const Wrap5 = styled.div`
 `;
 
 const OrderItemName = styled.span`
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
-  margin-bottom: 2px;
-  margin-right: 8px;
+  margin-bottom: 8px;
 `;
 
 const ContentDiv = styled.div`
