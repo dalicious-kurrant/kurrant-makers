@@ -1,8 +1,8 @@
 import {useEffect, useRef, useState} from 'react';
-import {Button, Header, Label, Table} from 'semantic-ui-react';
+import {Button, Header, Label, Select, Table} from 'semantic-ui-react';
 import {Table as AntTable} from 'antd';
 
-import styled, {css} from 'styled-components';
+import styled, {css, useTheme} from 'styled-components';
 import {formattedWeekDate} from '../../utils/dateFormatter';
 import DiningButton from './components/DiningButton';
 import {PageWrapper, TableWrapper} from '../../layout/common.style';
@@ -11,31 +11,703 @@ import {maskingName} from '../../utils/maskingName';
 import TestData from './test';
 import {useAtom} from 'jotai';
 import {pageWidthAtom} from '../../utils/store/store';
+import withCommas from '../../utils/withCommas';
+import {groupTypeFormatted} from '../../utils/statusFormatter';
+import DeliveryCard from './components/DeliveryCard';
+import DesktopMode from './components/DesktopMode';
+import MobileMode from './components/MobileMode';
 
-const columns = [
-  {
-    title: '상품명 및 상세정보',
-    dataIndex: 'foodName',
-    key: 'foodName',
-    width: 150,
-  },
-  {
-    title: '합계(개)',
-    dataIndex: 'totalFoodCount',
-    key: 'totalFoodCount',
-    width: 100,
-  },
-];
+const deliveryGroupsByDates = {
+  deliveryGroupsByDates: [
+    {
+      serviceDate: '2023-05-23',
+      diningType: '점심',
+      spotCount: 8,
+      deliveryGroups: [
+        {
+          deliveryTime: '12:00',
+          spotCount: 8,
+          foods: [
+            {
+              foodId: 729,
+              foodCount: 2,
+              foodName: '[BULK UP] Big Burger SET',
+            },
+            {
+              foodId: 730,
+              foodCount: 11,
+              foodName: '[BULK UP] Beef Steak AND Baked Sweet Potatoes',
+            },
+            {
+              foodId: 734,
+              foodCount: 13,
+              foodName: '[WEIGHT LOSS] Tilapia 120g AND Low calories Rice120g',
+            },
+          ],
+          foodCount: 26,
+          foodBySpots: [
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 테헤란로 534 글라스타워 17층',
+              address2: '글라스타워 17층',
+              spotName: '글라스타워 7F',
+              groupName: '메드트로닉',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 730,
+                  foodCount: 1,
+                  foodName: '[BULK UP] Beef Steak AND Baked Sweet Potatoes',
+                },
+                {
+                  foodId: 734,
+                  foodCount: 4,
+                  foodName:
+                    '[WEIGHT LOSS] Tilapia 120g AND Low calories Rice120g',
+                },
+              ],
+              foodCount: 5,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울특별시 강남구 테헤란로51길 21 3F 달리셔스',
+              address2: '3F 달리셔스',
+              spotName: '달리셔스',
+              groupName: '달리셔스',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 730,
+                  foodCount: 3,
+                  foodName: '[BULK UP] Beef Steak AND Baked Sweet Potatoes',
+                },
+                {
+                  foodId: 734,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Tilapia 120g AND Low calories Rice120g',
+                },
+              ],
+              foodCount: 4,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 영동대로 302 3층 4층',
+              address2: '3층 4층',
+              spotName: '롯데상사 4F',
+              groupName: '롯데상사',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 734,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Tilapia 120g AND Low calories Rice120g',
+                },
+              ],
+              foodCount: 1,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울특별시 강남구 영동대로 302 3F 4F',
+              address2: '3F 4F',
+              spotName: '롯데상사 3F',
+              groupName: '롯데상사',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 734,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Tilapia 120g AND Low calories Rice120g',
+                },
+              ],
+              foodCount: 1,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울특별시 강남구 학동로 230 유빔빌딩 3F',
+              address2: '유빔빌딩 3F',
+              spotName: '유빔빌딩 3F',
+              groupName: '세이클',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 734,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Tilapia 120g AND Low calories Rice120g',
+                },
+              ],
+              foodCount: 1,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 테헤란로 416 연봉빌딩 14층',
+              address2: '연봉빌딩 14층',
+              spotName: '연봉빌딩 14F',
+              groupName: '쓰리빌리언',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 729,
+                  foodCount: 1,
+                  foodName: '[BULK UP] Big Burger SET',
+                },
+                {
+                  foodId: 730,
+                  foodCount: 6,
+                  foodName: '[BULK UP] Beef Steak AND Baked Sweet Potatoes',
+                },
+                {
+                  foodId: 734,
+                  foodCount: 3,
+                  foodName:
+                    '[WEIGHT LOSS] Tilapia 120g AND Low calories Rice120g',
+                },
+              ],
+              foodCount: 10,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 테헤란로 217 오렌지플레닛, 7층',
+              address2: '오렌지플레닛, 7층',
+              spotName: '오렌지플래닛 7F',
+              groupName: '루센트블록',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 729,
+                  foodCount: 1,
+                  foodName: '[BULK UP] Big Burger SET',
+                },
+                {
+                  foodId: 730,
+                  foodCount: 1,
+                  foodName: '[BULK UP] Beef Steak AND Baked Sweet Potatoes',
+                },
+                {
+                  foodId: 734,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Tilapia 120g AND Low calories Rice120g',
+                },
+              ],
+              foodCount: 3,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 테헤란로 416 연봉빌딩 13층',
+              address2: '연봉빌딩 13층',
+              spotName: '연봉빌딩 13F',
+              groupName: '쓰리빌리언',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 734,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Tilapia 120g AND Low calories Rice120g',
+                },
+              ],
+              foodCount: 1,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      serviceDate: '2023-05-24',
+      diningType: '점심',
+      spotCount: 14,
+      deliveryGroups: [
+        {
+          deliveryTime: '12:00',
+          spotCount: 12,
+          foods: [
+            {
+              foodId: 729,
+              foodCount: 6,
+              foodName: '[BULK UP] Big Burger SET',
+            },
+            {
+              foodId: 731,
+              foodCount: 17,
+              foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+            },
+            {
+              foodId: 735,
+              foodCount: 21,
+              foodName:
+                '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+            },
+          ],
+          foodCount: 44,
+          foodBySpots: [
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울특별시 강남구 영동대로 302 3F 4F',
+              address2: '3F 4F',
+              spotName: '롯데상사 3F',
+              groupName: '롯데상사',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 735,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+                },
+              ],
+              foodCount: 1,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 영동대로 302 3층 4층',
+              address2: '3층 4층',
+              spotName: '롯데상사 4F',
+              groupName: '롯데상사',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 735,
+                  foodCount: 2,
+                  foodName:
+                    '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+                },
+              ],
+              foodCount: 2,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 언주로 552 5층',
+              address2: '5층',
+              spotName: 'MJC 빌딩 5F',
+              groupName: '도미네이트',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 735,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+                },
+              ],
+              foodCount: 1,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 테헤란로 217 오렌지플레닛, 7층',
+              address2: '오렌지플레닛, 7층',
+              spotName: '오렌지플래닛 7F',
+              groupName: '루센트블록',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 735,
+                  foodCount: 2,
+                  foodName:
+                    '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+                },
+              ],
+              foodCount: 2,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 테헤란로 416 연봉빌딩 14층',
+              address2: '연봉빌딩 14층',
+              spotName: '연봉빌딩 14F',
+              groupName: '쓰리빌리언',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 729,
+                  foodCount: 2,
+                  foodName: '[BULK UP] Big Burger SET',
+                },
+                {
+                  foodId: 731,
+                  foodCount: 3,
+                  foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+                },
+                {
+                  foodId: 735,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+                },
+              ],
+              foodCount: 6,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 테헤란로 427 5층 데이터독',
+              address2: '5층 데이터독',
+              spotName: '위워크 선릉2호점 5F',
+              groupName: '데이터독',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 729,
+                  foodCount: 1,
+                  foodName: '[BULK UP] Big Burger SET',
+                },
+                {
+                  foodId: 731,
+                  foodCount: 5,
+                  foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+                },
+                {
+                  foodId: 735,
+                  foodCount: 5,
+                  foodName:
+                    '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+                },
+              ],
+              foodCount: 11,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 테헤란로 534 글라스타워 17층',
+              address2: '글라스타워 17층',
+              spotName: '글라스타워 7F',
+              groupName: '메드트로닉',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 729,
+                  foodCount: 2,
+                  foodName: '[BULK UP] Big Burger SET',
+                },
+                {
+                  foodId: 731,
+                  foodCount: 4,
+                  foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+                },
+                {
+                  foodId: 735,
+                  foodCount: 6,
+                  foodName:
+                    '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+                },
+              ],
+              foodCount: 12,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 테헤란로 518 섬유센터 13층 137호',
+              address2: '섬유센터 13층 137호',
+              spotName: '섬유센터 13F',
+              groupName: '벤처블릭 코리아',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 731,
+                  foodCount: 1,
+                  foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+                },
+                {
+                  foodId: 735,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+                },
+              ],
+              foodCount: 2,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 테헤란로 416 연봉빌딩 13층',
+              address2: '연봉빌딩 13층',
+              spotName: '연봉빌딩 13F',
+              groupName: '쓰리빌리언',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 731,
+                  foodCount: 1,
+                  foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+                },
+                {
+                  foodId: 735,
+                  foodCount: 2,
+                  foodName:
+                    '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+                },
+              ],
+              foodCount: 3,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울특별시 강남구 테헤란로51길 21 3F 달리셔스',
+              address2: '3F 달리셔스',
+              spotName: '달리셔스',
+              groupName: '달리셔스',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 731,
+                  foodCount: 2,
+                  foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+                },
+              ],
+              foodCount: 2,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 테헤란로51길 21 3층 달리셔스',
+              address2: '3층 달리셔스',
+              spotName: '대시모빌리티',
+              groupName: '대시모빌리티',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 729,
+                  foodCount: 1,
+                  foodName: '[BULK UP] Big Burger SET',
+                },
+              ],
+              foodCount: 1,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '11:20',
+              address1: '서울 강남구 언주로 552 5층',
+              address2: '5층',
+              spotName: 'MJC 빌딩 5F',
+              groupName: '브랜드리팩터링',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 731,
+                  foodCount: 1,
+                  foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+                },
+              ],
+              foodCount: 1,
+            },
+          ],
+        },
+        {
+          deliveryTime: '13:00',
+          spotCount: 2,
+          foods: [
+            {
+              foodId: 731,
+              foodCount: 1,
+              foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+            },
+            {
+              foodId: 735,
+              foodCount: 2,
+              foodName:
+                '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+            },
+          ],
+          foodCount: 3,
+          foodBySpots: [
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '12:20',
+              address1: '서울 강남구 봉은사로68길 31 지층 뷰티셀렉션',
+              address2: '지층 뷰티셀렉션',
+              spotName: '은혜빌딩 지하1층',
+              groupName: '뷰티셀렉션 (은혜빌딩)',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 731,
+                  foodCount: 1,
+                  foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+                },
+                {
+                  foodId: 735,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+                },
+              ],
+              foodCount: 2,
+            },
+            {
+              deliveryId: null,
+              spotType: 0,
+              pickUpTime: '12:20',
+              address1: '서울 강남구 봉은사로 465 아이타워 6층',
+              address2: '아이타워 6층',
+              spotName: '아이타워 6F',
+              groupName: '뷰티셀렉션 (아이타워)',
+              userName: null,
+              phone: null,
+              foods: [
+                {
+                  foodId: 735,
+                  foodCount: 1,
+                  foodName:
+                    '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+                },
+              ],
+              foodCount: 1,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  totalFoods: [
+    {
+      foodId: 729,
+      description:
+        '(ABT)Total Calories 920_ Protein 32(g) / Carb 26(g) / Fat 11(g)\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\n기름기가 적은 소고기와 돼지고기부위를 1:1 비율로 소금과 후추만 들어간 순수 미트패티 와 구운버터감자',
+      totalFoodCount: 8,
+      foodName: '[BULK UP] Big Burger SET',
+    },
+    {
+      foodId: 730,
+      description:
+        '(ABT)Total Calories 940_ Protein 36(g) / Carb 43(g) / Fat 9(g)\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\n그릴에 구운 스테이크와 구운 고구마와 샤워크림 ',
+      totalFoodCount: 11,
+      foodName: '[BULK UP] Beef Steak AND Baked Sweet Potatoes',
+    },
+    {
+      foodId: 731,
+      description:
+        '(ABT)Total Calories 860_ Protein 32(g) / Carb 32 (g) / Fat 11(g)\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\n스파이시한 닭가슴살 슬라이스와 타코샐러드 & 과콰몰리 & 또르띠아',
+      totalFoodCount: 18,
+      foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+    },
+    {
+      foodId: 734,
+      description:
+        'Total Calories 380_ Protein 32(g) / Carb 30(g) / Fat 6(g)\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\n\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\n그릴에 구운 틸라피아 생선과 백미와 자스민쌀 1:1 비율로 포만감이 좋고, 칼로리는 낮음',
+      totalFoodCount: 13,
+      foodName: '[WEIGHT LOSS] Tilapia 120g AND Low calories Rice120g',
+    },
+    {
+      foodId: 735,
+      description:
+        'Total Calories 430 _ Protein 36(g) / Carb 30(g) / Fat 9(g)\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\n\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\n수비드하게 익힌 부채살과 약간의 버터를 겻들인 매쉬드포테이토 + 삶은채소와 아몬드',
+      totalFoodCount: 23,
+      foodName: '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+    },
+  ],
+  foodByDateDiningTypes: [
+    {
+      serviceDate: '2023-05-23',
+      diningType: '점심',
+      totalCount: 26,
+      foods: [
+        {
+          foodId: 729,
+          foodCount: 2,
+          foodName: '[BULK UP] Big Burger SET',
+        },
+        {
+          foodId: 730,
+          foodCount: 11,
+          foodName: '[BULK UP] Beef Steak AND Baked Sweet Potatoes',
+        },
+        {
+          foodId: 734,
+          foodCount: 13,
+          foodName: '[WEIGHT LOSS] Tilapia 120g AND Low calories Rice120g',
+        },
+      ],
+    },
+    {
+      serviceDate: '2023-05-24',
+      diningType: '점심',
+      totalCount: 47,
+      foods: [
+        {
+          foodId: 729,
+          foodCount: 6,
+          foodName: '[BULK UP] Big Burger SET',
+        },
+        {
+          foodId: 731,
+          foodCount: 18,
+          foodName: '[BULK UP] Grilled Mexican Chicken Taco Salad',
+        },
+        {
+          foodId: 735,
+          foodCount: 23,
+          foodName:
+            '[WEIGHT LOSS] Sous vide Beef 120g AND mashed Potatoes 120g',
+        },
+      ],
+    },
+  ],
+};
 const Schedule = () => {
   const day = new Date();
   const days = formattedWeekDate(day);
-  const [startDate, setStartDate] = useState(days);
-  const [innerWidth] = useAtom(pageWidthAtom);
-  const [endDate, setEndDate] = useState(days);
-  const [yScroll, setYScroll] = useState(false);
-  const [xScroll, setXScroll] = useState('scroll');
+  const [innerWidth, setInnerWidth] = useAtom(pageWidthAtom);
+  const [startDate, setStartDate] = useState(day);
+  const [endDate, setEndDate] = useState(day);
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
-  console.log(window.innerWidth, '---');
+
   const types =
     diningSelect &&
     diningSelect.map(el => {
@@ -50,436 +722,39 @@ const Schedule = () => {
       }
       return el;
     });
-
-  const {data: salesList, refetch} = useGetSalesList(startDate, endDate, types);
-
-  const getStartDate = e => {
-    setStartDate(e.target.value);
-  };
-  const getEndDate = e => {
-    setEndDate(e.target.value);
-  };
-
-  // const loadButton = () => {
-  //   refetch();
-  // };
-  const totalFood = salesList?.data?.data?.totalFoods;
-
-  const scroll = {};
-  if (yScroll) {
-    scroll.y = 240;
-  }
-  if (xScroll) {
-    scroll.x = '100vw';
-  }
-  const totalCount = totalFood
-    ?.map(el => el.totalFoodCount)
-    .reduce((acc, cur) => {
-      return acc + cur;
-    }, 0);
-  useEffect(() => {
+  const {data: salesList, refetch} = useGetSalesList(formattedWeekDate(startDate), formattedWeekDate(endDate), types);
+    
+  useEffect(()=>{
     refetch();
-  }, [startDate, endDate, refetch]);
+  },[refetch, startDate])
 
   return (
-    <Wrap innerWidth={innerWidth}>
-      <Header as="h2">기간별 판매 내역</Header>
-      <CalendarWrap>
-        <div>
-          <DateInput
-            type="date"
-            defaultValue={startDate}
-            onChange={e => getStartDate(e)}
-          />
-          <DateSpan>-</DateSpan>
-          <DateInput
-            type="date"
-            defaultValue={endDate}
-            onChange={e => getEndDate(e)}
-          />
-        </div>
-        {/* <ButtonWrap>
-          <Button content="조회하기" basic size="tiny" onClick={loadButton} />
-        </ButtonWrap> */}
-      </CalendarWrap>
-      <DiningButton touch={diningSelect} setTouch={setDiningSelect} />
-
-      <TableWrapper>
-        <TopTable innerWidth={innerWidth}>
-          <TotalTable>
-            {innerWidth < 786 ? (
-              <AntTable
-                style={{whiteSpace: 'pre-wrap'}}
-                dataSource={salesList?.data?.data?.totalFoods.map(v => {
-                  return {
-                    foodName: v.foodName + `\n` + v.description,
-                    totalFoodCount: v.totalFoodCount,
-                  };
-                })}
-                columns={columns}
-                pagination={false}
-              />
-            ) : (
-              <Table singleLine styld={{overflow: 'hidden'}}>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell textAlign="center">
-                      상품명
-                    </Table.HeaderCell>
-                    <Table.HeaderCell textAlign="center">
-                      상품상세정보
-                    </Table.HeaderCell>
-                    <Table.HeaderCell textAlign="center">
-                      합계(개)
-                    </Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {salesList?.data?.data?.totalFoods?.map((el, i) => {
-                    return (
-                      <Table.Row key={el.foodName + i + el.foodId}>
-                        <Table.Cell>
-                          <FoodName>{el.foodName}</FoodName>
-                        </Table.Cell>
-                        <Table.Cell>
-                          <Description>{el.description}</Description>
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">
-                          <div style={{width: 50}}> {el.totalFoodCount}</div>
-                        </Table.Cell>
-                      </Table.Row>
-                    );
-                  })}
-
-                  <Table.Row>
-                    <Table.Cell style={{borderTop: 'double black'}}>
-                      <BoldText>Total</BoldText>
-                    </Table.Cell>
-                    <Table.Cell
-                      style={{borderTop: 'double black'}}></Table.Cell>
-                    <Table.Cell
-                      textAlign="center"
-                      style={{borderTop: 'double black'}}>
-                      <BoldText>{totalCount}</BoldText>
-                    </Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
-            )}
-          </TotalTable>
-          {innerWidth < 786 ? (
-            <DetailTableAnt>
-              {salesList?.data?.data?.foodByDateDiningTypes.map((el, i) => {
-                const test = totalFood.map(s => {
-                  return el.foods.filter(v => v.foodId === s.foodId)[0];
-                });
-                const removeUndefinedList = test.filter(
-                  data => data !== undefined,
-                );
-                const columnsHeader = [
-                  {
-                    title: '상품명',
-                    dataIndex: 'foodName',
-                    key: 'foodName',
-                    width: '150px',
-                  },
-                  {
-                    title: el.serviceDate,
-                    dataIndex: 'foodCount',
-                    key: 'foodCount',
-                    width: '150px',
-                  },
-                ];
-                return (
-                  <div key={el.serviceDate + i + el.diningType}>
-                    <AntTable
-                      dataSource={removeUndefinedList}
-                      columns={columnsHeader}
-                      pagination={false}
-                    />
-                  </div>
-                );
-              })}
-            </DetailTableAnt>
-          ) : (
-            <DetailTable>
-              {salesList?.data?.data?.foodByDateDiningTypes.map((el, i) => {
-                const test = totalFood.map(s => {
-                  return el.foods.filter(v => v.foodId === s.foodId)[0];
-                });
-                return (
-                  <div key={el.serviceDate + i + el.diningType}>
-                    <Table style={{height: 100}}>
-                      <Table.Header>
-                        <Table.Row>
-                          <Table.HeaderCell style={{whiteSpace: 'nowrap'}}>
-                            {el.serviceDate + `\u00A0` + el.diningType}
-                          </Table.HeaderCell>
-                        </Table.Row>
-                      </Table.Header>
-                      <Table.Body>
-                        {test.map((v, i) => {
-                          if (v) {
-                            return (
-                              <Table.Row key={v.foodId + i + v.foodName}>
-                                <Table.Cell textAlign="center">
-                                  {v.foodCount}
-                                </Table.Cell>
-                              </Table.Row>
-                            );
-                          }
-                          return (
-                            <Table.Row key={'foodId' + i}>
-                              <Table.Cell textAlign="center">{`\u00A0`}</Table.Cell>
-                            </Table.Row>
-                          );
-                        })}
-                        <Table.Row>
-                          <Table.Cell
-                            textAlign="center"
-                            style={{borderTop: 'double black'}}>
-                            <BoldText>{el.totalCount}</BoldText>
-                          </Table.Cell>
-                        </Table.Row>
-                      </Table.Body>
-                    </Table>
-                  </div>
-                );
-              })}
-            </DetailTable>
-          )}
-        </TopTable>
-      </TableWrapper>
-      <TableWrapper>
-        {salesList?.data?.data?.groupFoodByDateDiningTypes.map((el, idx) => {
-          const spotCount = el.foodByGroups.map(v => {
-            return v.spotByDateDiningTypes.length;
-          });
-          const spotTotal = spotCount.reduce((arr, cur) => {
-            return arr + cur;
-          });
-          console.log(spotTotal);
-          return (
-            <MakersTable
-              key={'groupFoodByDateDiningTypes' + idx + el.serviceDate}>
-              <BoldText>
-                {el.serviceDate + `\u00A0` + el.diningType} ( {spotTotal}개 상세
-                스팟)
-              </BoldText>
-              <DateLine />
-              <DiningTypeWrap>
-                <MealDetailWrap>
-                  {el.foodByGroups.map((v, l) => {
-                    return v.spotByDateDiningTypes.map((spot, i) => {
-                      let foodTotalCount = 0;
-                      const columnsHeader = [
-                        {
-                          title: '상품명',
-                          dataIndex: 'foodName',
-                          key: 'foodName',
-                          width: '150px',
-                        },
-                        {
-                          title: '수량',
-                          dataIndex: 'foodCount',
-                          key: 'foodCount',
-                          width: '150px',
-                        },
-                      ];
-                      return (
-                        <TableWrap
-                          key={
-                            v.groupId +
-                            v.groupName +
-                            spot.spotId +
-                            spot.spotName +
-                            l +
-                            idx
-                          }>
-                          <div
-                            style={{
-                              marginRight: 10,
-                              marginTop: 24,
-                            }}>
-                            <Label
-                              content={`상세 스팟 ID: ${spot.spotId}`}
-                              color="blue"
-                            />
-                            <Label content={spot.pickupTime} color="black" />
-                            {innerWidth < 786 ? (
-                              <AntTable
-                                dataSource={spot.foods}
-                                columns={columnsHeader}
-                                pagination={false}
-                              />
-                            ) : (
-                              <Table celled>
-                                <Table.Header>
-                                  <Table.Row>
-                                    <Table.HeaderCell textAlign="center">
-                                      <div style={{width: 150}}>상품명</div>
-                                    </Table.HeaderCell>
-                                    <Table.HeaderCell textAlign="center">
-                                      <div style={{width: 50}}>수량</div>
-                                    </Table.HeaderCell>
-                                  </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                  {spot.foods.map((food, index) => {
-                                    foodTotalCount =
-                                      foodTotalCount + food.foodCount;
-                                    return (
-                                      <Table.Row
-                                        key={
-                                          'BodyFood' +
-                                          spot.spotId +
-                                          spot.spotName +
-                                          food.foodName +
-                                          index +
-                                          i +
-                                          food.foodCount +
-                                          idx
-                                        }>
-                                        <Table.Cell>{food.foodName}</Table.Cell>
-                                        <Table.Cell textAlign="center">
-                                          {food.foodCount}
-                                        </Table.Cell>
-                                      </Table.Row>
-                                    );
-                                  })}
-                                  <Table.Row
-                                    style={{
-                                      backgroundColor: '#efefef',
-                                      fontWeight: 600,
-                                    }}>
-                                    <Table.Cell>합계</Table.Cell>
-                                    <Table.Cell textAlign="center">
-                                      {foodTotalCount}
-                                    </Table.Cell>
-                                  </Table.Row>
-                                </Table.Body>
-                              </Table>
-                            )}
-                          </div>
-                        </TableWrap>
-                      );
-                    });
-                  })}
-                </MealDetailWrap>
-              </DiningTypeWrap>
-            </MakersTable>
-          );
-        })}
-      </TableWrapper>
-    </Wrap>
+    <Wrapper isMobile={innerWidth > 768}>
+      {innerWidth > 768 ? (
+        <DesktopMode salesList={salesList?.data?.data} refetch={refetch} />
+      ) : (
+        <MobileMode
+          endDate={endDate}
+          setEndDate={setEndDate}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          salesList={salesList?.data?.data}
+          refetch={refetch}
+        />
+      )}
+    </Wrapper>
   );
 };
 
 export default Schedule;
 
-const Wrap = styled.div`
-  margin: 100px 0px 50px 0;
-  padding-right: 20px;
-  ${({innerWidth}) => {
-    return css`
-      max-width: ${innerWidth}px;
-      padding: 10px;
-      overflow-x: hidden;
-    `;
+const Wrapper = styled.div`
+  width: 100%;
+  ${({isMobile}) => {
+    if (!isMobile)
+      css`
+        padding: 40px;
+        min-width: 1024px;
+      `;
   }}
-  padding-left:24px;
-`;
-
-const DateInput = styled.input`
-  padding: 4px;
-  width: 200px;
-  height: 36px;
-  border-radius: 4px;
-  border: 1px solid #bdbac1;
-`;
-
-const CalendarWrap = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 24px 0;
-`;
-
-const TopTable = styled.div`
-  margin-top: 50px;
-  display: flex;
-  @media (max-width: 768px) {
-    flex-direction: column;
-    min-width: 100px;
-    max-width: ${({innerWidth}) => innerWidth}px;
-    padding: 15px;
-  }
-`;
-
-const MakersTable = styled.div`
-  margin-top: 50px;
-`;
-
-const TotalTable = styled.div`
-  margin-bottom: 30px;
-  //width: 30%;
-`;
-
-const DetailTableAnt = styled.div`
-  display: flex;
-  max-width: 800px;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-`;
-const DetailTable = styled.div`
-  display: flex;
-  overflow-x: auto;
-`;
-
-const MealDetailWrap = styled.div`
-  display: flex;
-  margin-right: 24px;
-  padding-bottom: 10px;
-  //overflow-x: auto;
-  flex-wrap: wrap;
-`;
-
-const DiningTypeWrap = styled.div`
-  display: flex;
-  margin-top: 24px;
-`;
-
-const DateSpan = styled.span`
-  margin: 0px 4px;
-`;
-
-const ButtonWrap = styled.div`
-  margin-left: 10px;
-`;
-
-const TableWrap = styled.div`
-  display: flex;
-  margin-right: 5px;
-`;
-const BoldText = styled.span`
-  font-weight: 700;
-`;
-
-const DateLine = styled.div`
-  padding-top: 10px;
-  border-bottom: 1px solid ${({theme}) => theme.colors.grey[5]};
-`;
-
-const Description = styled.div`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 280px;
-`;
-
-const FoodName = styled.div`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 180px;
 `;
