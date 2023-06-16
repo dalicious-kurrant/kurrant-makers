@@ -246,7 +246,6 @@ const ReviewList = () => {
             setLimit={setLimit}
             totalPage={totalPage}
             selectOptionArray={[50, 100, 200, 500]}
-            // selectOptionArray={[1, 2, 4, 5]}
           />
         ) : (
           <Div></Div>

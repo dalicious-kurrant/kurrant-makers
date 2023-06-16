@@ -7,6 +7,12 @@ import {
   makePaginationPagesArray,
 } from './reviewPaginationLogics';
 
+// import {OneArrowRight} from '../../../../assets/icon/Review/OneArrowRight.svg';
+import OneArrowLeft from '../../../../assets/icon/Review/OneArrowLeft.svg';
+import OneArrowRight from '../../../../assets/icon/Review/OneArrowRight.svg';
+import TwoArrowLeft from '../../../../assets/icon/Review/TwoArrowLeft.svg';
+import TwoArrowRight from '../../../../assets/icon/Review/TwoArrowRight.svg';
+
 const ReviewPagination = ({
   page,
   setPage,
@@ -59,14 +65,15 @@ const ReviewPagination = ({
           onClick={e => {
             handleButtonClick(e);
           }}>
-          {'<<'}
+          <InputImage src={TwoArrowLeft} />
         </Button>
         <Button
           id="move-back"
           onClick={e => {
             handleButtonClick(e);
           }}>
-          {'<'}
+          {/* {'<'} */}
+          <InputImage src={OneArrowLeft} />
         </Button>
 
         {Array.isArray(pageListArr) &&
@@ -90,7 +97,7 @@ const ReviewPagination = ({
           onClick={e => {
             handleButtonClick(e);
           }}>
-          {'>'}
+          <InputImage src={OneArrowRight} />
         </Button>
 
         <Button
@@ -98,7 +105,7 @@ const ReviewPagination = ({
           onClick={e => {
             handleButtonClick(e);
           }}>
-          {'>>'}
+          <InputImage src={TwoArrowRight} />
         </Button>
       </ButtonWrap>
       <Wrap>
@@ -116,13 +123,13 @@ const ReviewPagination = ({
 export default ReviewPagination;
 
 const Container = styled.div`
-  flex: 1;
+  /* flex: 1; */
   display: flex;
 
   justify-content: center;
   /* height: 100px; */
   align-items: center;
-  position: relative;
+  /* position: relative; */
 
   /* border: 1px solid black; */
   padding: 10px 0;
@@ -133,8 +140,11 @@ const ButtonWrap = styled.div`
   > button {
     background-color: transparent;
   }
-  /* margin-bottom: 10px; */
   /* border: 1px solid black; */
+  align-items: center;
+  /* justify-content: center; */
+
+  margin-right: 20px;
 `;
 const Button = styled.button`
   font-size: 18px;
@@ -151,12 +161,24 @@ const NumberButton = styled.button`
   cursor: pointer;
   border: 0;
 
-  font-size: 18px;
+  font-size: 14px;
+  margin: 0 12px;
+  /* border: 1px solid black; */
 `;
 
 const Wrap = styled.div`
-  position: absolute;
-  right: 5px;
-  /* top: 26px; */
-  /* border: 1px solid black; */
+  /* position: absolute; */
+  /* right: 5px; */
+`;
+
+// const StarIconImage = styled.img`
+//   width: 100%;
+//   height: 100%;
+// `;
+
+const InputImage = styled.img`
+  /* width: 40px; */
+  /* padding: 0px;
+  margin: 0px; */
+  cursor: pointer;
 `;
