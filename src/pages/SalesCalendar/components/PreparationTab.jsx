@@ -16,8 +16,6 @@ const PreparationTab = ({
 }) => {
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
 
-  const totalFood = salesList?.totalFoods;
-
   const getStartDate = e => {
     setStartDate(new Date(e.target.value));
   };
@@ -31,7 +29,7 @@ const PreparationTab = ({
     <PreparationTabContainer>
       <FilterWrap>
         <CalendarWrap>
-          <div>
+          <CalendarBox>
             <DateInput
               type="date"
               defaultValue={formattedWeekDate(startDate)}
@@ -43,9 +41,9 @@ const PreparationTab = ({
               defaultValue={formattedWeekDate(endDate)}
               onChange={e => getEndDate(e)}
             />
-          </div>
+          </CalendarBox>
           <ButtonWrap>
-            <Button content="조회" basic size="tiny" onClick={loadButton} />
+            <Button style={{flexWrap:'nowrap' ,whiteSpace:'nowrap'}} content="조회" basic size="tiny" onClick={loadButton} />
           </ButtonWrap>
         </CalendarWrap>
         <DiningWrap>
@@ -111,11 +109,17 @@ const ContentsDetailWrap = styled.div`
 const CalendarWrap = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
   margin: 24px 0;
   padding: 0px 24px;
   justify-content: space-between;
   width: ${window.innerWidth}px;
 `;
+const CalendarBox = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+`
 const DiningWrap = styled.div`
   display: flex;
   align-items: center;

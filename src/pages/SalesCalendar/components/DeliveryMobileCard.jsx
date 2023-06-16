@@ -3,7 +3,6 @@ import downArrow from '../../../assets/icon/downArrow.svg';
 import {useState} from 'react';
 const DeliveryMobileCard = ({delivery, group}) => {
   const [rotation, setRotation] = useState(true);
-  console.log(group);
   return (
     <Container>
       <Wrap>

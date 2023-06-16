@@ -16,15 +16,14 @@ const DeliveryTab = ({
   const [data, setData] = useState();
   const [time, setTime] = useState([]);
   const [deliveryTime, setDeliveryTime] = useState([]);
+
+  const [nowDate, setNowDate] = useState(new Date());
   const selcetDiningType = dining => {
     setDiningTpye(dining);
   };
   const handleTimeFilter = t => {
     if (time.includes(t)) {
-      console.log(
-        time.filter(ti => ti !== t),
-        'tsetsetes',
-      );
+      
       return setTime(time.filter(ti => ti !== t));
     }
     return setTime([...time, t]);
@@ -39,7 +38,7 @@ const DeliveryTab = ({
   };
   useEffect(() => {
     const salesData = salesList.deliveryGroupsByDates.filter(
-      v => v.serviceDate === formattedWeekDate(startDate),
+      v => v.serviceDate === formattedWeekDate(nowDate),
     );
     setData(salesData);
     setDeliveryTime(
@@ -54,14 +53,14 @@ const DeliveryTab = ({
           return v.deliveryGroups.map(group => group.deliveryTime);
       }),
     );
-  }, [diningType, salesList, startDate]);
+  }, [diningType, nowDate, salesList]);
   return (
     <DeliveryTabContainer>
       <CalendarBox>
         <DeliveryCalendar
-          startDate={startDate}
-          setStartDate={setStartDate}
-          setEndDate={setEndDate}
+          startDate={nowDate}
+          setStartDate={setNowDate}
+          setEndDate={setNowDate}
         />
       </CalendarBox>
       <DiningBox>
@@ -102,7 +101,6 @@ const DeliveryTab = ({
         {data?.length > 0 &&
           data.map(delivery => {
             return delivery?.deliveryGroups.map(group => {
-              console.log(delivery.diningType);
               if (
                 (delivery.diningType === diningFormatted(diningType) ||
                   diningType === 0) &&

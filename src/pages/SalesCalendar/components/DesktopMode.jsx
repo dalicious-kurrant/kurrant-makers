@@ -30,30 +30,9 @@ const DesktopMode = ({
   setStartDate,
   salesList,
   refetch,
+  diningSelect,
+  setDiningSelect,
 }) => {
-  const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
-  const themeApp = useTheme();
-  console.log(salesList)
-  const types =
-    diningSelect &&
-    diningSelect.map(el => {
-      if (el === 0) {
-        return 1;
-      }
-      if (el === 1) {
-        return 2;
-      }
-      if (el === 2) {
-        return 3;
-      }
-      return el;
-    });
-  //   const {data: salesList, refetch} = useGetSalesList(
-  //     startDate,
-  //     endDate,
-  //     types,
-  //   );
-
   const getStartDate = e => {
     setStartDate(new Date(e.target.value));
   };
@@ -191,7 +170,7 @@ const DesktopMode = ({
         </TopTable>
       </TableWrapper>
       <TableWrapper>
-        {salesList.deliveryGroupsByDates.map((el, idx) => {
+        {salesList?.deliveryGroupsByDates.map((el, idx) => {
           return (
             <MakersTable key={idx}>
               <BoldText>{el.serviceDate + `\u00A0` + el.diningType}</BoldText>

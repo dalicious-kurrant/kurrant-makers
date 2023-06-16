@@ -17,10 +17,12 @@ const MobileMode = ({
   endDate,
   setEndDate,
   salesList,
+  diningSelect,
+  setDiningSelect,
   refetch,
 }) => {
-  const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
   const [tab, setTab] = useState(0);
+  const [nowEndDate, setNowEndDate] = useState(new Date());
 
   const totalFood = salesList?.totalFoods;
 
@@ -45,15 +47,19 @@ const MobileMode = ({
             setEndDate={setEndDate}
             setStartDate={setStartDate}
             salesList={salesList}
+            diningSelect={diningSelect}
+            setDiningSelect={setDiningSelect}
             refetch={refetch}
           />
         ) : (
           <DeliveryTab
             salesList={salesList}
             startDate={startDate}
+            diningSelect={diningSelect}
+            setDiningSelect={setDiningSelect}
             setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
+            endDate={nowEndDate}
+            setEndDate={setNowEndDate}
           />
         )}
       </TabContent>

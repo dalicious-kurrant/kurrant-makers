@@ -47,7 +47,7 @@ const Schedule = () => {
 
   useEffect(() => {
     refetch();
-  }, [refetch, startDate]);
+  }, [refetch, startDate,diningSelect]);
 
   return (
     <Wrapper isMobile={innerWidth < 768}>
@@ -57,6 +57,8 @@ const Schedule = () => {
           setEndDate={setEndDate}
           startDate={startDate}
           setStartDate={setStartDate}
+          diningSelect={diningSelect}
+          setDiningSelect={setDiningSelect}          
           salesList={salesList?.data?.data}
           refetch={refetch}
         />
