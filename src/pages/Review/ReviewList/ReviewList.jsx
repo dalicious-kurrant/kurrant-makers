@@ -348,7 +348,8 @@ const Header = styled.div`
   padding-bottom: 20px;
 `;
 const ReviewListWrap = styled.div`
-  height: 82%;
+  /* height: 82%; */
+  height: 600px;
 `;
 const PaginationWrap = styled.div``;
 

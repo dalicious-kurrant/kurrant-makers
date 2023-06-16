@@ -77,7 +77,7 @@ const ReviewListEach = ({data}) => {
       <Wrap2>
         <RateStars
           ratingInput={data.satisfaction}
-          width={'80px'}
+          width={'100px'}
           margin={'1px'}
         />
 
@@ -85,9 +85,9 @@ const ReviewListEach = ({data}) => {
           {data.isMakersComments && (
             <IsMakersCommentsTrueSpan>답변 완료</IsMakersCommentsTrueSpan>
           )}
-          {/* <IsMakersCommentsTrueSpan>답변 완료</IsMakersCommentsTrueSpan> */}
+
           {data.isReport && <ReportSpan>신고 리뷰</ReportSpan>}
-          {/* <ReportSpan>신고 리뷰</ReportSpan> */}
+
           <CreateDate>{data.createDate}</CreateDate>
         </Wrap4>
       </Wrap2>
@@ -113,7 +113,7 @@ const Container = styled.div`
   background-color: #fff;
 
   /* min-height: 135px; */
-  min-height: 167px;
+  min-height: 190px;
 `;
 
 const Wrap1 = styled.div`
@@ -121,7 +121,7 @@ const Wrap1 = styled.div`
   flex-direction: row;
   justify-content: space-between;
   flex: 1;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
   /* border: 1px solid black; */
 `;
 const Wrap2 = styled.div`
@@ -136,7 +136,9 @@ const Wrap3 = styled.div`
   justify-content: space-between;
   /* border: 1px solid black; */
 `;
-const Wrap4 = styled.div``;
+const Wrap4 = styled.div`
+  /* border: 1px solid black; */
+`;
 const Wrap5 = styled.div`
   display: flex;
   flex-direction: column;
@@ -165,36 +167,42 @@ const Content = styled.p`
 `;
 const Writer = styled.span`
   /* margin-bottom: 4px; */
-  font-size: 12px;
+  font-size: 14px;
   /* padding-left: 2px; */
 `;
 
-const CreateDate = styled.span``;
+const CreateDate = styled.span`
+  font-size: 14px;
+`;
 
 const ReportSpan = styled.span`
   display: inline-block;
 
-  background-color: #cacaca;
+  /* background-color: #cacaca; */
+  background-color: #ca2f2f;
   border-radius: 4px;
 
   align-items: center;
   padding: 0 13px;
   text-align: center;
-  color: #ca2f2f;
+  /* color: #ca2f2f; */
+  color: white;
   font-size: smaller;
   margin-right: 10px;
 `;
 const IsMakersCommentsTrueSpan = styled.span`
   display: inline-block;
 
-  background-color: #cacaca;
+  /* background-color: #cacaca; */
+  background-color: #4472c4;
 
   border-radius: 4px;
 
   align-items: center;
   padding: 0 13px;
   text-align: center;
-  color: #4472c4;
+  /* color: #4472c4; */
+  color: white;
   font-size: smaller;
   margin-right: 8px;
 `;
