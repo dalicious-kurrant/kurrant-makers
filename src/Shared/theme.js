@@ -65,7 +65,7 @@ export const etc = {
 };
 
 const fontFamily = {
-  default: 'Pretendard-Regular',
+  default: 'Pretendard',
 };
 const colors = {
   grey,
