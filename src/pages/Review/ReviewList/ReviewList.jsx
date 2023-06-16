@@ -302,7 +302,6 @@ const SearchButton = styled.button`
 ////
 
 const ReviewListWrap = styled.div`
-  /* height: 82%; */
   height: 600px;
 `;
 const PaginationWrap = styled.div``;

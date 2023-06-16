@@ -107,6 +107,24 @@ const ReviewDetail = () => {
     setValue(e.target.value);
   };
 
+  const imageLocationModify = imageLocation => {
+    let yo = [];
+
+    for (let i = 0; i < 6; i++) {
+      if (imageLocation[i]) {
+        yo.push(imageLocation[i]);
+      } else {
+        yo.push(undefined);
+      }
+    }
+    return yo;
+  };
+
+  useEffect(() => {
+    console.log('로로로ㅗㄹ');
+    console.log(reviewDetail.imageLocation);
+  }, [reviewDetail.imageLocation]);
+
   return (
     <Container>
       {showImageModal && (
@@ -129,14 +147,18 @@ const ReviewDetail = () => {
           <ImageListWrap>
             {Array.isArray(reviewDetail.imageLocation) &&
             reviewDetail.imageLocation.length > 0 ? (
-              reviewDetail.imageLocation.map((v, i) => {
-                return (
-                  <ReviewImage
-                    key={i}
-                    url={v}
-                    setShowImageModal={setShowImageModal}
-                  />
-                );
+              imageLocationModify(reviewDetail.imageLocation).map((v, i) => {
+                if (v) {
+                  return (
+                    <ReviewImage
+                      key={i}
+                      url={v}
+                      setShowImageModal={setShowImageModal}
+                    />
+                  );
+                } else {
+                  return;
+                }
               })
             ) : (
               <NoPhotosWrap>
@@ -217,7 +239,7 @@ const Container = styled.section`
 
   display: flex;
   flex-direction: column;
-  background-color: #d9d9d9;
+  /* background-color: #d9d9d9; */
 `;
 
 const BigDiv = styled.div`

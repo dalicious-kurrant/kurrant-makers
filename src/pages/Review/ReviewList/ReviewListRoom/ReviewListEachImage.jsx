@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 
-const ReviewListEachImage = ({url}) => {
+const ReviewListEachImage = ({url, width = '105px', height = '105px'}) => {
   const [onHover, setOnHover] = useState(false);
   const divRef = useRef(null);
 
@@ -27,7 +27,9 @@ const ReviewListEachImage = ({url}) => {
         // divRef={divRef}
         url={!!url}
         onMouseEnter={() => setOnHover(true)}
-        onMouseLeave={() => setOnHover(false)}>
+        onMouseLeave={() => setOnHover(false)}
+        width={width}
+        height={height}>
         {!!url && <Img src={url} alt="" isHorizontal={isHorizontal} />}
 
         {/* <Img src={imageSample} alt="" isHorizontal={isHorizontal} /> */}
@@ -40,8 +42,8 @@ export default ReviewListEachImage;
 export const Div = styled.div`
   display: flex;
 
-  height: 105px;
-  width: 105px;
+  height: ${({height}) => height};
+  width: ${({width}) => width};
   position: relative;
   margin: 2px;
   align-items: center;
