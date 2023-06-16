@@ -19,10 +19,10 @@ const PreparationTab = ({
   const totalFood = salesList?.totalFoods;
 
   const getStartDate = e => {
-    setStartDate(e.target.value);
+    setStartDate(new Date(e.target.value));
   };
   const getEndDate = e => {
-    setEndDate(e.target.value);
+    setEndDate(new Date(e.target.value));
   };
   const loadButton = () => {
     refetch();

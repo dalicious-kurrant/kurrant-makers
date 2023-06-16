@@ -17,15 +17,16 @@ const DeliveryCalendar =({startDate,setStartDate,setEndDate})=>{
     };
     const nextDate =()=>{
         if(startDate < addDays(new Date(),27)){
-          
-            setStartDate(addDays(startDate,1));
-            setEndDate(addDays(startDate,1));
+            const setDate = addDays(startDate,1);
+            setStartDate(setDate);
+            setEndDate(setDate);
         }
     }
     const prevDate =()=>{
         if(startDate > new Date('2023-01-01')){
-            setStartDate(subDays(startDate,1));
-            setEndDate(subDays(startDate,1));
+            const subDay = subDays(startDate,1)
+            setStartDate(subDay);
+            setEndDate(subDay);
         }
     }
     return <Wrap>

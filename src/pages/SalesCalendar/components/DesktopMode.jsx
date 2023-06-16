@@ -6,7 +6,7 @@ import DiningButton from './DiningButton';
 import {TableWrapper} from '../../../layout/common.style';
 import withCommas from '../../../utils/withCommas';
 import DeliveryCard from './DeliveryCard';
-import { formattedWeekDate } from '../../../utils/dateFormatter';
+import {formattedWeekDate} from '../../../utils/dateFormatter';
 
 const columns = [
   {
@@ -23,15 +23,17 @@ const columns = [
   },
 ];
 
-const DesktopMode = ({salesList,refetch}) => {
-  const makersRef = useRef(null);
-  const day = new Date();
-  const days = formattedWeekDate(day);
-  const [startDate, setStartDate] = useState(days);
-  const [endDate, setEndDate] = useState(days);
+const DesktopMode = ({
+  endDate,
+  setEndDate,
+  startDate,
+  setStartDate,
+  salesList,
+  refetch,
+}) => {
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
   const themeApp = useTheme();
-
+  console.log(salesList)
   const types =
     diningSelect &&
     diningSelect.map(el => {
@@ -46,17 +48,17 @@ const DesktopMode = ({salesList,refetch}) => {
       }
       return el;
     });
-//   const {data: salesList, refetch} = useGetSalesList(
-//     startDate,
-//     endDate,
-//     types,
-//   );
+  //   const {data: salesList, refetch} = useGetSalesList(
+  //     startDate,
+  //     endDate,
+  //     types,
+  //   );
 
   const getStartDate = e => {
-    setStartDate(e.target.value);
+    setStartDate(new Date(e.target.value));
   };
   const getEndDate = e => {
-    setEndDate(e.target.value);
+    setEndDate(new Date(e.target.value));
   };
 
   const loadButton = () => {
@@ -70,23 +72,21 @@ const DesktopMode = ({salesList,refetch}) => {
       return acc + cur;
     }, 0);
 
-
-
   return (
     <>
       <Header as="h2">주문 정보</Header>
-      
+
       <CalendarWrap>
         <div>
           <DateInput
             type="date"
-            defaultValue={startDate}
+            defaultValue={formattedWeekDate(startDate)}
             onChange={e => getStartDate(e)}
           />
           <DateSpan>-</DateSpan>
           <DateInput
             type="date"
-            defaultValue={endDate}
+            defaultValue={formattedWeekDate(endDate)}
             onChange={e => getEndDate(e)}
           />
         </div>
@@ -105,7 +105,7 @@ const DesktopMode = ({salesList,refetch}) => {
                   <Table.HeaderCell textAlign="center">
                     상품상세정보
                   </Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center">
+                  <Table.HeaderCell textAlign="center" style={{whiteSpace:'nowrap'}}>
                     합계(개)
                   </Table.HeaderCell>
                 </Table.Row>
@@ -230,9 +230,7 @@ const DesktopMode = ({salesList,refetch}) => {
 
                         <MealDetailTimeWrap>
                           {v.foodBySpots.map((spot, i) => {
-                            return (
-                              <DeliveryCard key={i} spot={spot}/>
-                            );
+                            return <DeliveryCard key={i} spot={spot} />;
                           })}
                         </MealDetailTimeWrap>
                       </MealDetail>
