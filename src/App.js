@@ -25,6 +25,7 @@ ${reset}; // Reset CSS
 body{
   font-family:${({theme}) => theme.fontFamily.default};
   font-size:14px;
+  width: ${window.innerWidth}px;
 }
 `;
 
