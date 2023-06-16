@@ -81,7 +81,8 @@ const Schedule = () => {
 export default Schedule;
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: ${window.innerWidth}px;
+  padding-top: 40px;
   ${({isMobile}) => {
     if (!isMobile)
      return css`
