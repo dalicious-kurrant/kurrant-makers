@@ -34,31 +34,30 @@ const HeaderWrap = styled.div`
 const DateText = styled.div`
     font-size: 14px;
     font-weight: 400;
-    font-family: 'Pretendard';
+    font-family: 'Pretendard-Regular';
 `
 const TotalCount = styled.div`
     font-size: 14px;
     font-weight: 400;
-    font-family: 'Pretendard';
+    font-family: 'Pretendard-Regular';
 `
 const FoodWrap =styled.div`
     display: flex;
     justify-content: space-between;
-    font-family: 'Pretendard';
     align-items: flex-start;
     color :${({theme})=> theme.colors.grey[2]};
     padding: 16px 24px;
+    font-family: 'Pretendard-SemiBold';
 `
+
 const FoodName = styled.div`
     font-weight: 600;
     font-size: 18px;
     width: 260px;
-    font-family: 'Pretendard';
 
 `
 const FoodCount = styled.div`
     font-weight: 600;
     font-size: 18px;
-    font-family: 'Pretendard';
 
 `
