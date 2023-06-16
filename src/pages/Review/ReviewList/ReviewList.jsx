@@ -223,7 +223,7 @@ const ReviewList = () => {
         </SearchWrap>
       </Header> */}
 
-      {/* <ReviewListWrap>
+      <ReviewListWrap>
         {Array.isArray(reviewList) && reviewList.length > 0 ? (
           <ReviewListRoom reviewList={reviewList} />
         ) : (
@@ -251,7 +251,7 @@ const ReviewList = () => {
         ) : (
           <Div></Div>
         )}
-      </PaginationWrap> */}
+      </PaginationWrap>
       <KeyDetector sendKeyValue={handleKeyDetector} />
     </Container>
   );
@@ -282,6 +282,7 @@ const HeaderYo = styled.div`
   flex-direction: row;
   align-items: center;
   margin-right: 10px;
+  margin-bottom: 24px;
   /* justify-content: center; */
 `;
 
