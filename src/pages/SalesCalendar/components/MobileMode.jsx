@@ -55,8 +55,6 @@ const MobileMode = ({
           <DeliveryTab
             salesList={salesList}
             startDate={startDate}
-            diningSelect={diningSelect}
-            setDiningSelect={setDiningSelect}
             setStartDate={setStartDate}
             endDate={nowEndDate}
             setEndDate={setNowEndDate}

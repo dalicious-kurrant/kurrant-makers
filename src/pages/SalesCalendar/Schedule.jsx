@@ -67,6 +67,8 @@ const Schedule = () => {
           endDate={endDate}
           setEndDate={setEndDate}
           startDate={startDate}
+          diningSelect={diningSelect}
+          setDiningSelect={setDiningSelect}          
           setStartDate={setStartDate}
           salesList={salesList?.data?.data}
           refetch={refetch}

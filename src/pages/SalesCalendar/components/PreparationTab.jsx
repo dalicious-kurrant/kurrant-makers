@@ -13,8 +13,10 @@ const PreparationTab = ({
   setEndDate,
   salesList,
   refetch,
+  diningSelect, 
+  setDiningSelect
 }) => {
-  const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
+  
 
   const getStartDate = e => {
     setStartDate(new Date(e.target.value));

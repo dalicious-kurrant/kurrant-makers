@@ -4,6 +4,7 @@ const DiningMobileButton = ({touch, setTouch}) => {
   const type = ['아침', '점심', '저녁'];
 
   const onPressButton = idx => {
+    console.log(touch,idx)
     if (touch?.includes(idx)) {
       return setTouch(touch?.filter(v => v !== idx));
     }
