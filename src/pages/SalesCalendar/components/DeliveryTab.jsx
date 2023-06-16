@@ -152,6 +152,7 @@ const DiningBox = styled.div`
   align-items: center;
   margin-top: 16px;
   margin-left: 24px;
+  color :${({theme})=> theme.colors.grey[2]};
 `;
 const TimeBox = styled.div`
   display: flex;
@@ -178,6 +179,7 @@ const Dining = styled.button`
   margin-right: 16px;
   padding-bottom: 4px;
   font-family: 'Pretendard';
+  color :${({theme})=> theme.colors.grey[2]};
   font-size: 15px;
   ${({isActive}) => {
     if (isActive) {

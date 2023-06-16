@@ -36,6 +36,7 @@ const DeliveryMobileCard = ({delivery, group}) => {
       </Wrap>
       <FoodDetailWrap>
         {group.foodBySpots.map((spot,i) => {
+            console.log(spot)
           return (
             <FoodSpotWrap key={spot.deliveryId+spot.pickUpTime+i}>
               <FoodDetailTitleWrap>

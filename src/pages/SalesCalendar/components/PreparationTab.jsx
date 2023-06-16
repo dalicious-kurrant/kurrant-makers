@@ -101,6 +101,7 @@ const DateInput = styled.input`
   padding: 4px;
   font-size: 13px;
   height: 36px;
+  color:${({theme}) => theme.colors.grey[2]};
   border-radius: 4px;
   border: 1px solid #bdbac1;
 `;

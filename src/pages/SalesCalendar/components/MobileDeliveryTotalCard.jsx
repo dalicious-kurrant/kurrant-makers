@@ -44,6 +44,7 @@ const TotalCount = styled.div`
 const FoodWrap =styled.div`
     display: flex;
     justify-content: space-between;
+    font-family: 'Pretendard';
     align-items: flex-start;
     color :${({theme})=> theme.colors.grey[2]};
     padding: 16px 24px;
