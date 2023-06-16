@@ -71,7 +71,7 @@ const CalenderText = styled.button`
     font-size: 16px;
     font-weight: 600;
     color :${({theme})=> theme.colors.grey[2]};
-    font-family: 'Pretendard';
+    font-family: 'Pretendard-Regular';
     background: inherit ; 
     border:none; 
     box-shadow:none; 

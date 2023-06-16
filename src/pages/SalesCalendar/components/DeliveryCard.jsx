@@ -127,7 +127,7 @@ const TitleIdLabel = styled.div`
   display: flex;
   padding-top: 4px;
   padding-bottom: 4px;
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Regular';
   font-size: 20px;
   font-weight: 600;
 
@@ -139,7 +139,7 @@ const ContentsDetailLabel = styled.div`
   white-space: nowrap;
   padding-top: 4px;
   padding-bottom: 4px;
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Regular';
   font-size: 14px;
   font-weight: 600;
   color: #343337;
@@ -148,7 +148,7 @@ const ContentsDetailLabel2 = styled.div`
   display: flex;
   padding-top: 4px;
   padding-bottom: 4px;
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Regular';
   font-size: 14px;
   font-weight: 600;
   color: #343337;

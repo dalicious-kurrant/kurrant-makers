@@ -84,7 +84,7 @@ const TotalWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   font-size: 13px;
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Regular';
   font-weight: 400;
 `;
 const TotalSpot = styled.div`
@@ -101,7 +101,7 @@ const TotalFoodWrap = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   font-size: 13px;
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Regular';
   font-weight: 600;
   margin-top: 8px;
   padding-right: 8px;
@@ -112,7 +112,7 @@ const DetailFoodWrap = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   font-size: 14px;
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Regular';
   font-weight: 400;
   padding-top: 4px;
   padding-bottom: 4px;

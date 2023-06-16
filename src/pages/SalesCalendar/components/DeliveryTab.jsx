@@ -178,7 +178,7 @@ const Dining = styled.button`
   cursor: pointer;
   margin-right: 16px;
   padding-bottom: 4px;
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Regular';
   color :${({theme})=> theme.colors.grey[2]};
   font-size: 15px;
   ${({isActive}) => {
@@ -211,7 +211,7 @@ const Time = styled.button`
   margin-right: 8px;
   padding-bottom: 4px;
   white-space: nowrap;
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Regular';
   font-size: 15px;
   ${({isActive}) => {
     if (isActive) {
