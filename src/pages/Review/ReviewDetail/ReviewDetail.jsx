@@ -196,73 +196,6 @@ const ReviewDetail = () => {
               </BottomWrapD2>
             </MakersCommentWrap>
           </ContentWrapper>
-
-          {/* 1차 디자인 */}
-          <>
-            {' '}
-            {/* <NoticeWrap>
-            <IsCommentP>
-              {reviewDetail.makersComment &&
-              reviewDetail.makersComment.commentId
-                ? '사장님 댓글이 있는 리뷰입니다.'
-                : ' 댓글이 아직 없는 리뷰입니다.'}
-            </IsCommentP>
-
-            {reviewDetail.isReport && <ReportP>신고된 리뷰입니다</ReportP>}
-          </NoticeWrap>
-
-          <Wrap1>
-            <Title>리뷰 내용</Title>
-
-            <Input
-              disabled={true}
-              value={
-                reviewDetail.content ? reviewDetail.content : '(리뷰 글 없음)'
-              }
-            />
-          </Wrap1>
-
-          <ImageListWrap>
-            {Array.isArray(reviewDetail.imageLocation) &&
-            reviewDetail.imageLocation.length > 0 ? (
-              reviewDetail.imageLocation.map((v, i) => {
-                return (
-                  <ReviewImage
-                    key={i}
-                    url={v}
-                    setShowImageModal={setShowImageModal}
-                  />
-                );
-              })
-            ) : (
-              <NoPhotosWrap>
-                <NoPhotosSpan> 등록된 리뷰 사진이 없습니다</NoPhotosSpan>
-              </NoPhotosWrap>
-            )}
-          </ImageListWrap>
-
-          <Wrap1>
-            <Title>
-              {reviewDetail.makersComment &&
-              reviewDetail.makersComment.commentId
-                ? '댓글 수정'
-                : ' 댓글 작성'}
-            </Title>
-            <Input disabled={false} onChange={handleChange} value={value} />
-          </Wrap1>
-
-          <ButtonWrap>
-            <ReportBtn onClick={handleReport} bgColor={'#ca2f2f'}>
-              리뷰 신고하기
-            </ReportBtn>
-            <SubmitCommentBtn onClick={handleSubmit} bgColor={'#4472C4'}>
-              {reviewDetail.makersComment &&
-              reviewDetail.makersComment.commentId
-                ? '댓글 수정하기'
-                : ' 댓글 작성하기'}
-            </SubmitCommentBtn>
-          </ButtonWrap> */}
-          </>
         </BigDiv>
       ) : (
         <NoDetailDiv>
@@ -278,7 +211,7 @@ export default ReviewDetail;
 const Container = styled.section`
   /* border: 1px solid black; */
   height: 100%;
-  flex: 7;
+  flex: 820;
 
   padding: 20px 24px;
 

@@ -144,7 +144,45 @@ const ReviewList = () => {
 
   return (
     <Container>
-      <Header>
+      <Title>리뷰관리</Title>
+
+      <HeaderYo>
+        <TwoButtonWrapYo>
+          <TwoButtonYo
+            bgColor={'#3C5897'}
+            count={1}
+            onClick={() => {
+              unansweredQueryRefetch();
+              setUnansweredOrTotal(false);
+            }}>
+            전체보기({unansweredTotalCount})
+          </TwoButtonYo>
+          <TwoButtonYo
+            count={2}
+            bgColor={'#767676'}
+            onClick={() => {
+              allListQueryRefetch();
+              setUnansweredOrTotal(true);
+            }}>
+            미답변보기({allTotalCount})
+          </TwoButtonYo>
+        </TwoButtonWrapYo>
+        <SearchWrapYo>
+          <TextInputYo
+            // style={{flex: 1}}
+            placeholder="상품명, 상품번호 검색"
+            name="nameFilter"
+            //   value={nameFilter}
+            onChange={handleNameFilter}
+          />
+
+          <SearchButtonYo onClick={handleSearchButton} bgColor={'#4472C4'}>
+            상품검색
+          </SearchButtonYo>
+        </SearchWrapYo>
+      </HeaderYo>
+
+      {/* <Header>
         <Wrap1>
           <TwoButtonWrap>
             <TwoButton
@@ -180,13 +218,12 @@ const ReviewList = () => {
           />
 
           <SearchButton onClick={handleSearchButton} bgColor={'#4472C4'}>
-            {/* <SearchButton onClick={handleSearchButton} bgColor={'#c2c2c2'}> */}
             상품 검색
           </SearchButton>
         </SearchWrap>
-      </Header>
+      </Header> */}
 
-      <ReviewListWrap>
+      {/* <ReviewListWrap>
         {Array.isArray(reviewList) && reviewList.length > 0 ? (
           <ReviewListRoom reviewList={reviewList} />
         ) : (
@@ -214,7 +251,7 @@ const ReviewList = () => {
         ) : (
           <Div></Div>
         )}
-      </PaginationWrap>
+      </PaginationWrap> */}
       <KeyDetector sendKeyValue={handleKeyDetector} />
     </Container>
   );
@@ -224,10 +261,86 @@ export default ReviewList;
 
 const Container = styled.div`
   height: 100%;
-  flex: 4;
-  background-color: #eaeaea;
+  flex: 844;
+  /* background-color: #eaeaea; */
+  padding-top: 110px;
+  padding-left: 48px;
 `;
 
+// 새 디자인
+
+const Title = styled.h1`
+  font-size: 30px;
+`;
+
+const HeaderYo = styled.div`
+  width: 100%;
+  /* padding: 10px 10px; */
+  /* padding-bottom: 20px; */
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 10px;
+  /* justify-content: center; */
+`;
+
+const TwoButtonWrapYo = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const TwoButtonYo = styled.button`
+  outline: 0;
+  cursor: pointer;
+  border: 0;
+  padding: 10px 20px;
+
+  width: 128px;
+
+  background-color: ${({bgColor}) => bgColor};
+  color: white;
+  border-radius: 4px;
+  margin-right: 12px;
+`;
+const SearchWrapYo = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const TextInputYo = styled.input`
+  /* margin-left: 10px; */
+  border: 1px solid #c8c8d2;
+  border-radius: 8px;
+  /* padding: 9px 87px 10 16px; */
+  padding: 10px;
+  width: 223px;
+  height: 41px;
+
+  margin-right: 8px;
+
+  /* padding-left: 2px; */
+
+  font-size: 14px;
+
+  /* :focus {
+    border: none;
+    outline: none;
+  } */
+`;
+const SearchButtonYo = styled.button`
+  outline: 0;
+  cursor: pointer;
+  border: 0;
+  width: 103px;
+  height: 41px;
+  font-size: 18px;
+  border-radius: 4px;
+
+  background-color: ${({bgColor}) => bgColor};
+
+  color: #ffffff;
+`;
+
+////
 const Header = styled.div`
   width: 100%;
   padding: 10px 10px;
@@ -255,12 +368,6 @@ const TwoButton = styled.button`
   /* 
   height: 30px; */
   /* width: 180px; */
-  width: 49.8%;
-  /* width: 50%; */
-  height: 26px;
-  font-size: 14px;
-  border-radius: 10px 10px 0 0;
-  padding: 4px;
 
   background-color: #c2c2c2;
 
