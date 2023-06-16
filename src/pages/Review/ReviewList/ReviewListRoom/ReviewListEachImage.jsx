@@ -42,8 +42,8 @@ export default ReviewListEachImage;
 export const Div = styled.div`
   display: flex;
 
-  height: ${({height}) => height};
   width: ${({width}) => width};
+  height: ${({height}) => height};
   position: relative;
   margin: 2px;
   align-items: center;

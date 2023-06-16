@@ -8,6 +8,7 @@ import ReviewImageModal from './ReviewImageModal/ReviewImageModal';
 import useReviewDetailMutation from './useReviewDetailMutation';
 import {useRef} from 'react';
 import useWindowSizeChangeDetector from '../../../utils/useWindowSizeChangeDetector/useWindowSizeChangeDetector';
+import ReviewListEachImage from '../ReviewList/ReviewListRoom/ReviewListEachImage';
 
 const ReviewDetail = () => {
   const [showImageModal, setShowImageModal] = useState(false);
@@ -142,7 +143,9 @@ const ReviewDetail = () => {
         <BigDiv>
           {/* 2차 디자인 */}
 
-          <VacentSpaceDiv />
+          <VacentSpaceDiv>
+            <GraphDiv></GraphDiv>
+          </VacentSpaceDiv>
 
           <ImageListWrap>
             {Array.isArray(reviewDetail.imageLocation) &&
@@ -150,14 +153,17 @@ const ReviewDetail = () => {
               imageLocationModify(reviewDetail.imageLocation).map((v, i) => {
                 if (v) {
                   return (
-                    <ReviewImage
+                    // <ReviewImage
+                    <ReviewListEachImage
                       key={i}
                       url={v}
+                      width="120px"
+                      height="120px"
                       setShowImageModal={setShowImageModal}
                     />
                   );
                 } else {
-                  return;
+                  return <ReviewListEachImage width="120px" height="120px" />;
                 }
               })
             ) : (
@@ -180,7 +186,10 @@ const ReviewDetail = () => {
               />
 
               <BottomWrapD2>
-                <BtnD2 onClick={handleReport} color={'#ca2f2f'}>
+                <BtnD2
+                  onClick={handleReport}
+                  bgColor={'#ca2f2f'}
+                  color={'white'}>
                   리뷰 신고하기
                 </BtnD2>
 
@@ -209,7 +218,10 @@ const ReviewDetail = () => {
                     : ' 댓글이 아직 없는 리뷰입니다.'}
                 </IsCommentPD2>
 
-                <BtnD2 onClick={handleSubmit} color={'#4472C4'}>
+                <BtnD2
+                  onClick={handleSubmit}
+                  bgColor={'#4472C4'}
+                  color={'white'}>
                   {reviewDetail.makersComment &&
                   reviewDetail.makersComment.commentId
                     ? '댓글 수정하기'
@@ -236,6 +248,7 @@ const Container = styled.section`
   flex: 820;
 
   padding: 20px 24px;
+  padding-top: 110px;
 
   display: flex;
   flex-direction: column;
@@ -253,11 +266,20 @@ const BigDiv = styled.div`
 
 const VacentSpaceDiv = styled.div`
   flex: 9;
+  /* border: 1px solid black; */
+`;
+
+const GraphDiv = styled.div`
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  width: 100%;
+  height: 320px;
 `;
 
 const ContentWrapper = styled.div`
   flex: 10;
   display: flex;
+  /* border: 1px solid black; */
 `;
 
 const ReviewContentWrap = styled.div`
@@ -274,7 +296,7 @@ const MakersCommentWrap = styled.div`
 const TitleD2 = styled.h3`
   font-size: 20px;
   margin: 0;
-  /* margin-bottom: 20px; */
+  margin-bottom: 8px;
 `;
 const ContentInput = styled.textarea`
   width: 100%;
@@ -286,14 +308,15 @@ const ContentInput = styled.textarea`
 
   background-color: #fff;
   color: #000;
-  border: 1px solid #000;
+  border: 1px solid #e5e5e5;
   font-size: ${({relativeFontSize}) => `${relativeFontSize}px`};
 
   font-family: 'Pretendard-Regular';
   &:disabled {
     background-color: #fff;
     color: #6c6c6c;
-    border: 1px solid #888;
+    /* border: 1px solid #888; */
+    border: 1px solid #e5e5e5;
     /* border: 1px solid #000; */
   }
   &:focus {
@@ -313,15 +336,17 @@ const BtnD2 = styled.button`
   outline: 0;
   cursor: pointer;
   border: 0;
-  padding: 4px;
-  padding-left: 30px;
-  padding-right: 30px;
-  font-size: 15px;
+  padding: 8px 10px;
+  font-size: 12px;
   font-weight: 600;
-  border-radius: 6px;
+  border-radius: 4px;
   margin-right: 30px;
 
+  width: 86px;
+  height: 30px;
+
   background-color: #bfbfbf;
+  background-color: ${({bgColor}) => bgColor};
   color: ${({color}) => color};
 `;
 
@@ -330,6 +355,9 @@ const ImageListWrap = styled.div`
   flex: 1;
 
   min-height: 130px;
+  /* border: 1px solid black; */
+  margin-top: 32px;
+  margin-bottom: 18px;
 `;
 
 const NoPhotosWrap = styled.div`
@@ -348,7 +376,7 @@ const ReportPD2 = styled.span`
 `;
 
 const IsCommentPD2 = styled.span`
-  color: #315cac;
+  color: #787886;
   /* margin: 8px 0; */
   font-size: 14px;
   margin-right: 20px;
