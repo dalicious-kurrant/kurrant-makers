@@ -12,6 +12,10 @@ function Header() {
   const [innerWidth] = useAtom(pageWidthAtom);
   const [open, setOpen] = useState(false);
   const navigation = useNavigate();
+  const logoutButton = () => {
+    localStorage.clear();
+    window.location.replace('/');
+  };
   return (
     <Wrapper innerWidth={innerWidth}>
       <ImageWrap>
@@ -41,6 +45,14 @@ function Header() {
               </MenuItem>
             );
           })}
+          <MenuItem
+                onClick={() => {
+                  setOpen(!open);
+                  logoutButton();
+                }}>
+                  <MenuIcon style={{marginRight:24}}></MenuIcon>
+                <MenuText>로그아웃</MenuText>
+              </MenuItem>
         </MenuContainer>
       )}
       {/* <ul style={{paddingLeft: 8}}>

@@ -174,5 +174,6 @@ const BoxWrap = styled.div`
 const Title = styled.div`
   font-size: 16px;
   font-weight: 600;
+  font-family: 'Pretendard-SemiBold';
   margin: 24px 0px;
 `;

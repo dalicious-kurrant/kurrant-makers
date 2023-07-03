@@ -29,6 +29,10 @@ export const blue = {
   500: '#3478F6',
   600: '#109CF1',
 };
+export const pink = {
+  100: '#FFEEFD',
+  500: '#FF6DF0',
+};
 
 // Red
 export const red = {
@@ -66,6 +70,7 @@ const fontFamily = {
 const colors = {
   grey,
   blue,
+  pink,
 };
 const theme = {
   colors,
