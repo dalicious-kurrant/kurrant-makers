@@ -55,9 +55,9 @@ export function groupTypeFormatted(data) {
     case 0:
       return '프라이빗 스팟';
     case 1:
-      return '공유 스팟';
-    case 2:
       return '마이 스팟';
+    case 2:
+      return '공유 스팟';
     default:
       return '비인가';
   }
