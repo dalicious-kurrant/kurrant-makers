@@ -84,7 +84,9 @@ const DesktopMode = ({
                   <Table.HeaderCell textAlign="center">
                     상품상세정보
                   </Table.HeaderCell>
-                  <Table.HeaderCell textAlign="center" style={{whiteSpace:'nowrap'}}>
+                  <Table.HeaderCell
+                    textAlign="center"
+                    style={{whiteSpace: 'nowrap'}}>
                     합계(개)
                   </Table.HeaderCell>
                 </Table.Row>
@@ -188,7 +190,7 @@ const DesktopMode = ({
                               <TimeBoxTime>{v.deliveryTime}</TimeBoxTime>
                             </TimeBox>
                             <TimeBox>
-                              총 주문수량
+                              총 배송 건수
                               <TimeBoxTime>{deliveryCount}개</TimeBoxTime>
                             </TimeBox>
                           </TimeWrap>
