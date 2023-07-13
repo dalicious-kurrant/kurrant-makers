@@ -13,11 +13,9 @@ const PreparationTab = ({
   setEndDate,
   salesList,
   refetch,
-  diningSelect, 
-  setDiningSelect
+  diningSelect,
+  setDiningSelect,
 }) => {
-  
-
   const getStartDate = e => {
     setStartDate(new Date(e.target.value));
   };
@@ -45,7 +43,13 @@ const PreparationTab = ({
             />
           </CalendarBox>
           <ButtonWrap>
-            <Button style={{flexWrap:'nowrap' ,whiteSpace:'nowrap'}} content="조회" basic size="tiny" onClick={loadButton} />
+            <Button
+              style={{flexWrap: 'nowrap', whiteSpace: 'nowrap'}}
+              content="조회"
+              basic
+              size="tiny"
+              onClick={loadButton}
+            />
           </ButtonWrap>
         </CalendarWrap>
         <DiningWrap>
@@ -102,7 +106,7 @@ const DateInput = styled.input`
   font-size: 13px;
   font-family: 'Pretendard-SemiBold';
   height: 36px;
-  color:${({theme}) => theme.colors.grey[2]};
+  color: ${({theme}) => theme.colors.grey[2]};
   border-radius: 4px;
   border: 1px solid #bdbac1;
 `;
@@ -123,7 +127,7 @@ const CalendarBox = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
-`
+`;
 const DiningWrap = styled.div`
   display: flex;
   align-items: center;
@@ -170,11 +174,11 @@ const ContentCount = styled.div`
   font-size: 14px;
   font-family: 'Pretendard-SemiBold';
   font-weight: 600;
-  padding-top: 16px;
+  // padding-top: 16px;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-  padding-right: 24px;
+  align-items: center;
+  justify-content: center;
+  //padding-right: 24px;
   width: 90px;
 `;
 const FilterWrap = styled.div`

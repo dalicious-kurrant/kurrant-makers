@@ -24,6 +24,9 @@ const Schedule = () => {
   const [startDate, setStartDate] = useState(day);
   const [endDate, setEndDate] = useState(day);
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
+  const intervalTime =
+    days === formattedWeekDate(startDate) &&
+    days === formattedWeekDate(endDate);
 
   const types =
     diningSelect &&
@@ -47,7 +50,7 @@ const Schedule = () => {
 
   useEffect(() => {
     refetch();
-  }, [refetch, startDate,diningSelect]);
+  }, [refetch, startDate, endDate, diningSelect]);
 
   return (
     <Wrapper isMobile={innerWidth < 768}>
@@ -58,7 +61,7 @@ const Schedule = () => {
           startDate={startDate}
           setStartDate={setStartDate}
           diningSelect={diningSelect}
-          setDiningSelect={setDiningSelect}          
+          setDiningSelect={setDiningSelect}
           salesList={salesList?.data?.data}
           refetch={refetch}
         />
@@ -68,7 +71,7 @@ const Schedule = () => {
           setEndDate={setEndDate}
           startDate={startDate}
           diningSelect={diningSelect}
-          setDiningSelect={setDiningSelect}          
+          setDiningSelect={setDiningSelect}
           setStartDate={setStartDate}
           salesList={salesList?.data?.data}
           refetch={refetch}
@@ -85,10 +88,9 @@ const Wrapper = styled.div`
   padding-top: 40px;
   ${({isMobile}) => {
     if (!isMobile)
-     return css`
+      return css`
         padding: 40px;
         min-width: 1024px;
       `;
-   
   }}
 `;

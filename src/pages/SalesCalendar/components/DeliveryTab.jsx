@@ -5,55 +5,80 @@ import {useEffect} from 'react';
 import {formattedWeekDate} from '../../../utils/dateFormatter';
 import {diningFormatted} from '../../../utils/statusFormatter';
 import DeliveryMobileCard from './DeliveryMobileCard';
+import {useGetSalesList} from '../../../hook/useSalesList';
 
-const DeliveryTab = ({
-  startDate,
-  setStartDate,
-  setEndDate,
-  salesList,
-}) => {
+const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
   const [diningType, setDiningTpye] = useState(0);
   const [data, setData] = useState();
   const [time, setTime] = useState([]);
-  const [deliveryTime, setDeliveryTime] = useState([]);
+  const [pickupTime, setPickupTime] = useState([]);
 
   const [nowDate, setNowDate] = useState(new Date());
+  const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
+
+  const types =
+    diningSelect &&
+    diningSelect.map(el => {
+      if (el === 0) {
+        return 1;
+      }
+      if (el === 1) {
+        return 2;
+      }
+      if (el === 2) {
+        return 3;
+      }
+      return el;
+    });
+  const {data: list, refetch} = useGetSalesList(
+    formattedWeekDate(nowDate),
+    formattedWeekDate(nowDate),
+    types,
+  );
+
+  const salesList = list?.data?.data;
+
   const selcetDiningType = dining => {
     setDiningTpye(dining);
   };
   const handleTimeFilter = t => {
     if (time.includes(t)) {
-      
       return setTime(time.filter(ti => ti !== t));
     }
     return setTime([...time, t]);
   };
   const hadleAllTimeFilter = () => {
-    if (deliveryTime?.length === time?.length) {
+    if (pickupTime?.length === time?.length) {
       return setTime([]);
     }
-    if (deliveryTime?.length !== time?.length) {
-      return setTime(deliveryTime);
+    if (pickupTime?.length !== time?.length) {
+      return setTime(pickupTime);
     }
   };
+
   useEffect(() => {
     const salesData = salesList.deliveryGroupsByDates.filter(
       v => v.serviceDate === formattedWeekDate(nowDate),
     );
+
     setData(salesData);
-    setDeliveryTime(
+    setPickupTime(
       ...salesData.map(v => {
         if (v.diningType === diningFormatted(diningType) || diningType === 0)
-          return v.deliveryGroups.map(group => group.deliveryTime);
+          return v.deliveryGroups.map(group => group.pickUpTime);
       }),
     );
     setTime(
       ...salesData.map(v => {
         if (v.diningType === diningFormatted(diningType) || diningType === 0)
-          return v.deliveryGroups.map(group => group.deliveryTime);
+          return v.deliveryGroups.map(group => group.pickUpTime);
       }),
     );
   }, [diningType, nowDate, salesList]);
+
+  useEffect(() => {
+    refetch();
+  }, [nowDate, refetch]);
   return (
     <DeliveryTabContainer>
       <CalendarBox>
@@ -79,13 +104,13 @@ const DeliveryTab = ({
       </DiningBox>
       <TimeBox>
         <Time
-          isActive={deliveryTime?.length === time?.length}
+          isActive={pickupTime?.length === time?.length}
           onClick={() => {
             hadleAllTimeFilter();
           }}>
           전체
         </Time>
-        {deliveryTime?.map((t, i) => {
+        {pickupTime?.map((t, i) => {
           return (
             <Time
               isActive={time.includes(t)}
@@ -104,7 +129,7 @@ const DeliveryTab = ({
               if (
                 (delivery.diningType === diningFormatted(diningType) ||
                   diningType === 0) &&
-                time?.includes(group.deliveryTime)
+                time?.includes(group.pickUpTime)
               )
                 return (
                   <DeliveryMobileCard
@@ -112,7 +137,7 @@ const DeliveryTab = ({
                       delivery.serviceDate +
                       delivery.diningType +
                       delivery.spotCount +
-                      group.deliveryTime
+                      group.pickUpTime
                     }
                     group={group}
                     delivery={delivery}
@@ -152,7 +177,7 @@ const DiningBox = styled.div`
   align-items: center;
   margin-top: 16px;
   margin-left: 24px;
-  color :${({theme})=> theme.colors.grey[2]};
+  color: ${({theme}) => theme.colors.grey[2]};
 `;
 const TimeBox = styled.div`
   display: flex;
@@ -179,7 +204,7 @@ const Dining = styled.button`
   margin-right: 16px;
   padding-bottom: 4px;
   font-family: 'Pretendard-Regular';
-  color :${({theme})=> theme.colors.grey[2]};
+  color: ${({theme}) => theme.colors.grey[2]};
   font-size: 15px;
   ${({isActive}) => {
     if (isActive) {
