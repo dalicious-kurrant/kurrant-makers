@@ -14,7 +14,10 @@ const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
   const [pickupTime, setPickupTime] = useState([]);
 
   const [nowDate, setNowDate] = useState(new Date());
+  const days = formattedWeekDate(new Date());
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
+
+  const intervalTime = days === formattedWeekDate(nowDate);
 
   const types =
     diningSelect &&
@@ -35,7 +38,7 @@ const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
     formattedWeekDate(nowDate),
     types,
   );
-
+  console.log(list);
   const salesList = list?.data?.data;
 
   const selcetDiningType = dining => {
@@ -79,6 +82,19 @@ const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
   useEffect(() => {
     refetch();
   }, [nowDate, refetch]);
+
+  useEffect(() => {
+    if (intervalTime) {
+      const interval = setInterval(() => {
+        refetch();
+      }, 20000);
+      return () => {
+        clearInterval(interval);
+      };
+    } else {
+      refetch();
+    }
+  }, [intervalTime, refetch]);
   return (
     <DeliveryTabContainer>
       <CalendarBox>

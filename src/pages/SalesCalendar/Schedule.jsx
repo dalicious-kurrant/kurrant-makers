@@ -48,10 +48,22 @@ const Schedule = () => {
     types,
   );
 
-  useEffect(() => {
-    refetch();
-  }, [refetch, startDate, endDate, diningSelect]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [refetch, startDate, endDate, diningSelect]);
 
+  useEffect(() => {
+    if (intervalTime) {
+      const interval = setInterval(() => {
+        refetch();
+      }, 20000);
+      return () => {
+        clearInterval(interval);
+      };
+    } else {
+      refetch();
+    }
+  }, [intervalTime, refetch, startDate, endDate]);
   return (
     <Wrapper isMobile={innerWidth < 768}>
       {innerWidth > 768 ? (
