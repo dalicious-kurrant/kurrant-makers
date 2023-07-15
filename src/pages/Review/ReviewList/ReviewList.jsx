@@ -8,6 +8,7 @@ import ReviewPagination from './ReviewPagination/ReviewPagination';
 import {unansweredOrTotalAtom} from './store';
 import {useAtom} from 'jotai';
 import KeyDetector from '../../../utils/KeyDetector/KeyDetector';
+import {Button} from 'semantic-ui-react';
 
 const ReviewList = () => {
   const [page, setPage] = useState(1);
@@ -15,6 +16,8 @@ const ReviewList = () => {
   const [totalPage, setTotalPage] = useState(1);
 
   const [foodNameInput, setFoodNameInput] = useState('');
+
+  const [focus, setFocus] = useState(0);
 
   // 버튼 누른 상태 보이게 하기 false -> 미답변 리뷰 보기, true -> 전체 리스트 보기
   const [unansweredOrTotal, setUnansweredOrTotal] = useAtom(
@@ -38,12 +41,6 @@ const ReviewList = () => {
     [['getUnansweredReviewList'], unansweredUrl],
     [['getEveryReviewList'], allUrl],
   );
-
-  // useEffect(() => {
-  //   console.log('여여여여여');
-  //   console.log(unansweredTotalPage);
-  //   console.log(allListTotalPage);
-  // }, [unansweredTotalPage, allListTotalPage]);
 
   // pagination토탈페이지
   useEffect(() => {
@@ -81,20 +78,6 @@ const ReviewList = () => {
     setIsLimitPageEdited(false);
   }, [isLimitPageEdited]);
 
-  // 타이핑만 하면 자동으로 리펫치하기
-  // useEffect(() => {
-  //   // 미답변일떄 false일때만 리펫치 하게끔 하기
-  //   if (!unansweredOrTotal) {
-  //     unansweredQueryRefetch();
-  //   }
-  // }, [unansweredUrl]);
-
-  // useEffect(() => {
-  //   if (unansweredOrTotal) {
-  //     allListQueryRefetch();
-  //   }
-  // }, [allUrl]);
-
   const handleNameFilter = e => {
     setFoodNameInput(e.target.value);
   };
@@ -109,27 +92,6 @@ const ReviewList = () => {
     }
   };
 
-  // 값 확인하기
-  // useEffect(() => {
-  //   if (!unansweredOrTotal) {
-  //     console.log(unansweredUrl);
-  //   } else {
-  //     console.log(allUrl);
-  //   }
-
-  //   console.log('page ' + page);
-  //   console.log('limit ' + limit);
-  //   console.log('totalPage ' + totalPage);
-  // }, [allUrl, unansweredUrl, totalPage]);
-
-  // useEffect(() => {
-  //   console.log(foodNameInput);
-  // }, [foodNameInput]);
-
-  // useEffect(() => {
-  //   console.log(reviewList);
-  // }, [reviewList]);
-
   const handleKeyDetector = keyValue => {
     if (keyValue === 'Enter') {
       if (!unansweredOrTotal) {
@@ -140,35 +102,39 @@ const ReviewList = () => {
     }
   };
 
-  ////////
-
   return (
     <Container>
+      <div>
+        <h1>리뷰 관리</h1>
+      </div>
       <Header>
-        <Wrap1>
-          <TwoButtonWrap>
-            <TwoButton
-              count={1}
-              onClick={() => {
-                unansweredQueryRefetch();
-                setUnansweredOrTotal(false);
-              }}>
-              미답변 리뷰 보기 ({unansweredTotalCount})
-            </TwoButton>
-            <TwoButton
-              count={2}
-              onClick={() => {
-                allListQueryRefetch();
-                setUnansweredOrTotal(true);
-              }}>
-              전체 리스트 보기 ({allTotalCount})
-            </TwoButton>
-          </TwoButtonWrap>
-
-          <BottomBarDiv unansweredOrTotal={unansweredOrTotal}>
-            <BottomBar />
-          </BottomBarDiv>
-        </Wrap1>
+        <TwoButtonWrap>
+          <Button
+            style={{
+              backgroundColor: focus === 1 ? '#3C5897' : '#767676',
+              color: 'white',
+            }}
+            onClick={() => {
+              setFocus(1);
+              unansweredQueryRefetch();
+              setUnansweredOrTotal(false);
+            }}>
+            미답변보기 ({unansweredTotalCount})
+          </Button>
+          <Button
+            style={{
+              backgroundColor: focus === 0 ? '#3C5897' : '#767676',
+              color: 'white',
+              marginRight: 12,
+            }}
+            onClick={() => {
+              setFocus(0);
+              allListQueryRefetch();
+              setUnansweredOrTotal(true);
+            }}>
+            전체보기 ({allTotalCount})
+          </Button>
+        </TwoButtonWrap>
 
         <SearchWrap>
           <TextInput
@@ -178,11 +144,15 @@ const ReviewList = () => {
             //   value={nameFilter}
             onChange={handleNameFilter}
           />
-
-          <SearchButton onClick={handleSearchButton} bgColor={'#4472C4'}>
-            {/* <SearchButton onClick={handleSearchButton} bgColor={'#c2c2c2'}> */}
-            상품 검색
-          </SearchButton>
+          <Button
+            onClick={handleSearchButton}
+            content="상품검색"
+            style={{
+              backgroundColor: '#4484CA',
+              color: 'white',
+              fontWeight: 400,
+            }}
+          />
         </SearchWrap>
       </Header>
 
@@ -223,114 +193,49 @@ const ReviewList = () => {
 export default ReviewList;
 
 const Container = styled.div`
-  height: 100%;
-  flex: 4;
-  background-color: #eaeaea;
+  flex: 6;
+  margin-top: 80px;
+  margin-left: 40px;
 `;
 
 const Header = styled.div`
-  width: 100%;
-  padding: 10px 10px;
-  padding-bottom: 20px;
+  margin-top: 24px;
+  display: flex;
 `;
 const ReviewListWrap = styled.div`
   height: 82%;
 `;
 const PaginationWrap = styled.div``;
 
-const Wrap1 = styled.div`
-  margin-bottom: 18px;
-`;
 const TwoButtonWrap = styled.div`
-  width: 100%;
   display: flex;
-  justify-content: space-between;
-  /* margin-bottom: 20px; */
 `;
 
-const TwoButton = styled.button`
-  outline: 0;
-  cursor: pointer;
-  border: 0;
-  /* 
-  height: 30px; */
-  /* width: 180px; */
-  width: 49.8%;
-  /* width: 50%; */
-  height: 26px;
-  font-size: 14px;
-  border-radius: 10px 10px 0 0;
-  padding: 4px;
-
-  background-color: #c2c2c2;
-
-  ${({count}) => {
-    if (count === 1) {
-      return css`
-        /* border-right: 1px solid #232323; */
-        /* border: 1px solid #232323; */
-      `;
-    } else {
-      return css`
-        /* border-left: 1px solid #8d8d8d; */
-      `;
-    }
-  }}
-
-  color: #2f2f2f;
-`;
-
-const BottomBarDiv = styled.div`
-  width: 100%;
-  height: 6px;
-
-  display: flex;
-  transition: all 0.5s;
-  flex-direction: ${({unansweredOrTotal}) =>
-    !unansweredOrTotal ? 'row' : 'row-reverse'};
-`;
-
-const BottomBar = styled.div`
-  width: 49.8%;
-
-  height: 100%;
-  background-color: #020046;
-`;
 const SearchWrap = styled.div`
   display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  background-color: white;
-  border-radius: 10px;
+  margin-left: 32px;
 `;
 
 const TextInput = styled.input`
-  margin-left: 10px;
-  border: none;
-  border-radius: 3px;
-  height: 22px;
-  padding-left: 2px;
+  border: 0.5px solid #c8c8d2;
+  border-radius: 8px;
+  width: 232px;
+  height: 41px;
   font-size: 12px;
+  margin-right: 8px;
+  padding-left: 16px;
 
   :focus {
-    border: none;
+    border: 0.5px solid #c8c8d2;
     outline: none;
+  }
+
+  ::placeholder {
+    color: #c8c8d2;
+    //padding-left: 8px;
   }
 `;
 
-const SearchButton = styled.button`
-  outline: 0;
-  cursor: pointer;
-  border: 0;
-  width: 100px;
-  height: 22px;
-  font-size: 12px;
-  border-radius: 10px;
-
-  background-color: ${({bgColor}) => bgColor};
-
-  color: #ffffff;
-`;
 const Div = styled.div``;
 
 const PDiv = styled.div`
