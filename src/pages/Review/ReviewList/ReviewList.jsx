@@ -17,7 +17,7 @@ const ReviewList = () => {
 
   const [foodNameInput, setFoodNameInput] = useState('');
 
-  const [focus, setFocus] = useState(0);
+  const [focus, setFocus] = useState(1);
 
   // 버튼 누른 상태 보이게 하기 false -> 미답변 리뷰 보기, true -> 전체 리스트 보기
   const [unansweredOrTotal, setUnansweredOrTotal] = useAtom(
