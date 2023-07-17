@@ -7,7 +7,9 @@ const DeliveryMobileCard = ({delivery, group}) => {
     <Container>
       <Wrap>
         <TotalWrap>
-          <TotalSpot>총 {group.spotCount}개 배송스팟</TotalSpot>
+          <TotalSpot style={{color: '#3478F6'}}>
+            총 {group.spotCount}개 배송스팟
+          </TotalSpot>
           <DiningTime>
             <TotalSpot>
               {delivery.diningType} {group.deliveryTime}
