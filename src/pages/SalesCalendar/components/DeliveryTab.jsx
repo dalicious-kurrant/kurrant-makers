@@ -18,7 +18,7 @@ const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
 
   const intervalTime = days === formattedWeekDate(nowDate);
-
+  //
   const types =
     diningSelect &&
     diningSelect.map(el => {
