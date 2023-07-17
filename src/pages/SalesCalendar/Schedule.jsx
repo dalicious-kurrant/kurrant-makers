@@ -10,7 +10,7 @@ import {useGetSalesList} from '../../hook/useSalesList';
 import {maskingName} from '../../utils/maskingName';
 import TestData from './test';
 import {useAtom} from 'jotai';
-import {pageWidthAtom} from '../../utils/store/store';
+import {pageWidthAtom, tabAtom} from '../../utils/store/store';
 import withCommas from '../../utils/withCommas';
 import {groupTypeFormatted} from '../../utils/statusFormatter';
 import DeliveryCard from './components/DeliveryCard';
@@ -21,12 +21,12 @@ const Schedule = () => {
   const day = new Date();
   const days = formattedWeekDate(day);
   const [innerWidth, setInnerWidth] = useAtom(pageWidthAtom);
+  const [tab, setTab] = useAtom(tabAtom);
   const [startDate, setStartDate] = useState(day);
   const [endDate, setEndDate] = useState(day);
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
   const intervalTime =
-    days === formattedWeekDate(startDate) &&
-    days === formattedWeekDate(endDate);
+    formattedWeekDate(startDate) === formattedWeekDate(endDate);
 
   const types =
     diningSelect &&
@@ -53,7 +53,7 @@ const Schedule = () => {
   // }, [refetch, startDate, endDate, diningSelect]);
 
   useEffect(() => {
-    if (intervalTime) {
+    if (intervalTime && tab === 0) {
       const interval = setInterval(() => {
         refetch();
       }, 20000);
@@ -63,7 +63,7 @@ const Schedule = () => {
     } else {
       refetch();
     }
-  }, [intervalTime, refetch, startDate, endDate]);
+  }, [intervalTime, refetch, startDate, endDate, tab]);
   return (
     <Wrapper isMobile={innerWidth < 768}>
       {innerWidth > 768 ? (

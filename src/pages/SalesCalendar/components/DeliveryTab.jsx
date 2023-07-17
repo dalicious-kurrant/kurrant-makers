@@ -38,7 +38,7 @@ const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
     formattedWeekDate(nowDate),
     types,
   );
-  console.log(list);
+  // console.log(list);
   const salesList = list?.data?.data;
 
   const selcetDiningType = dining => {
