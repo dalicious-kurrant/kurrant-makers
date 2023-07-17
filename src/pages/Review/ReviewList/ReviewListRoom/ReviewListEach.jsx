@@ -98,7 +98,7 @@ export default ReviewListEach;
 
 const Container = styled.div`
   border: ${({isGlow}) =>
-    isGlow ? '2px solid rgb(97, 166, 195)' : '1px solid #a5a5a5;'};
+    isGlow ? '1px solid rgb(97, 166, 195)' : '1px solid #E5E5E5;'};
   display: flex;
 
   flex-direction: column;
@@ -159,13 +159,14 @@ const Content = styled.p`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-
+  color: #000000cc;
   line-height: 16px;
 `;
 const Writer = styled.span`
   /* margin-bottom: 4px; */
   font-size: 12px;
   /* padding-left: 2px; */
+  color: #343337;
 `;
 
 const CreateDate = styled.span``;
@@ -173,27 +174,26 @@ const CreateDate = styled.span``;
 const ReportSpan = styled.span`
   display: inline-block;
 
-  background-color: #cacaca;
+  background-color: #d4201f;
   border-radius: 4px;
 
   align-items: center;
-  padding: 0 13px;
+  padding: 2px 10px;
   text-align: center;
-  color: #ca2f2f;
-  font-size: smaller;
+  color: white;
+  font-size: 12px;
   margin-right: 10px;
 `;
 const IsMakersCommentsTrueSpan = styled.span`
   display: inline-block;
 
-  background-color: #cacaca;
-
+  background-color: #406bd0;
   border-radius: 4px;
 
   align-items: center;
-  padding: 0 13px;
+  padding: 2px 10px;
   text-align: center;
-  color: #4472c4;
-  font-size: smaller;
-  margin-right: 8px;
+  color: white;
+  font-size: 12px;
+  margin-right: 10px;
 `;

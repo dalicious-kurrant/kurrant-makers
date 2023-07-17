@@ -1,57 +1,49 @@
-import styled, { css } from "styled-components";
-import { groupTypeFormatted } from "../../../utils/statusFormatter";
-import withCommas from "../../../utils/withCommas";
+import styled, {css} from 'styled-components';
+import {groupTypeFormatted} from '../../../utils/statusFormatter';
+import withCommas from '../../../utils/withCommas';
 
-const DeliveryCard =({spot})=>{
-    const spotContentsText = (text1, text2) => {
-        return (
-          <ContentsDetailLabelWrap>
-            <ContentsDetailLabel>{text1} :</ContentsDetailLabel>
-            <ContentsDetailLabel2>{text2}</ContentsDetailLabel2>
-          </ContentsDetailLabelWrap>
-        );
-      };
-    return <TableWrap >
-    <TableBox>
-      <LabelWrap>
-        <SpotLabel spot={spot.spotType}>
-          {groupTypeFormatted(spot.spotType)}
-        </SpotLabel>
-        <TitleIdLabel
-          spot={
-            spot.spotType
-          }>{`배송 번호: ${spot.deliveryId} `}</TitleIdLabel>
-        {spot.pickUpTime &&
-          spotContentsText(
-            '예상 픽업',
-            spot.pickUpTime,
-          )}
-      </LabelWrap>
-      <Line />
-      {spot.foods.map((food) => {
-        return (
-          <TotalFoodItems2 key={food.foodId}>
-            <FoodItemName2>
-              {food.foodName}
-            </FoodItemName2>
-            <FoodCount2>
-              {food.foodCount} 개
-            </FoodCount2>
-          </TotalFoodItems2>
-        );
-      })}
-      <TotalSpotFoodItem>
-        <FoodItemName2>총 수량</FoodItemName2>
-        <FoodCount2>
-          {withCommas(spot.foodCount)} 개
-        </FoodCount2>
-      </TotalSpotFoodItem>
-    </TableBox>
-  </TableWrap>
-}
+const DeliveryCard = ({spot}) => {
+  const spotContentsText = (text1, text2) => {
+    return (
+      <ContentsDetailLabelWrap>
+        <ContentsDetailLabel>{text1} :</ContentsDetailLabel>
+        <ContentsDetailLabel2>{text2}</ContentsDetailLabel2>
+      </ContentsDetailLabelWrap>
+    );
+  };
+  return (
+    <TableWrap>
+      <TableBox>
+        <LabelWrap>
+          <SpotLabel spot={spot.spotType}>
+            {groupTypeFormatted(spot.spotType)}
+          </SpotLabel>
+          <TitleIdLabel
+            spot={
+              spot.spotType
+            }>{`배송 번호: ${spot.deliveryId} `}</TitleIdLabel>
+          {spot.deliveryTime &&
+            spotContentsText('도착 시간', spot.deliveryTime)}
+        </LabelWrap>
+        <Line />
+        {spot.foods.map(food => {
+          return (
+            <TotalFoodItems2 key={food.foodId}>
+              <FoodItemName2>{food.foodName}</FoodItemName2>
+              <FoodCount2>{food.foodCount} 개</FoodCount2>
+            </TotalFoodItems2>
+          );
+        })}
+        <TotalSpotFoodItem>
+          <FoodItemName2>총 수량</FoodItemName2>
+          <FoodCount2>{withCommas(spot.foodCount)} 개</FoodCount2>
+        </TotalSpotFoodItem>
+      </TableBox>
+    </TableWrap>
+  );
+};
 
 export default DeliveryCard;
-
 
 const TotalFoodItems2 = styled.div`
   display: flex;
@@ -85,14 +77,6 @@ const Line = styled.div`
   width: 100%;
 `;
 
-
-
-
-
-
-
-
-
 const TableWrap = styled.div`
   display: flex;
   max-width: 306px;
@@ -100,7 +84,6 @@ const TableWrap = styled.div`
   border: 1px solid #f5f5f5;
   border-radius: 8px;
 `;
-
 
 const LabelWrap = styled.div`
   min-width: 250px;

@@ -10,7 +10,7 @@ import {useGetSalesList} from '../../hook/useSalesList';
 import {maskingName} from '../../utils/maskingName';
 import TestData from './test';
 import {useAtom} from 'jotai';
-import {pageWidthAtom} from '../../utils/store/store';
+import {pageWidthAtom, tabAtom} from '../../utils/store/store';
 import withCommas from '../../utils/withCommas';
 import {groupTypeFormatted} from '../../utils/statusFormatter';
 import DeliveryCard from './components/DeliveryCard';
@@ -21,9 +21,12 @@ const Schedule = () => {
   const day = new Date();
   const days = formattedWeekDate(day);
   const [innerWidth, setInnerWidth] = useAtom(pageWidthAtom);
+  const [tab, setTab] = useAtom(tabAtom);
   const [startDate, setStartDate] = useState(day);
   const [endDate, setEndDate] = useState(day);
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
+  const intervalTime =
+    formattedWeekDate(startDate) === formattedWeekDate(endDate);
 
   const types =
     diningSelect &&
@@ -45,10 +48,22 @@ const Schedule = () => {
     types,
   );
 
-  useEffect(() => {
-    refetch();
-  }, [refetch, startDate,diningSelect]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [refetch, startDate, endDate, diningSelect]);
 
+  useEffect(() => {
+    if (intervalTime && tab === 0) {
+      const interval = setInterval(() => {
+        refetch();
+      }, 20000);
+      return () => {
+        clearInterval(interval);
+      };
+    } else {
+      refetch();
+    }
+  }, [intervalTime, refetch, startDate, endDate, tab]);
   return (
     <Wrapper isMobile={innerWidth < 768}>
       {innerWidth > 768 ? (
@@ -58,7 +73,7 @@ const Schedule = () => {
           startDate={startDate}
           setStartDate={setStartDate}
           diningSelect={diningSelect}
-          setDiningSelect={setDiningSelect}          
+          setDiningSelect={setDiningSelect}
           salesList={salesList?.data?.data}
           refetch={refetch}
         />
@@ -68,7 +83,7 @@ const Schedule = () => {
           setEndDate={setEndDate}
           startDate={startDate}
           diningSelect={diningSelect}
-          setDiningSelect={setDiningSelect}          
+          setDiningSelect={setDiningSelect}
           setStartDate={setStartDate}
           salesList={salesList?.data?.data}
           refetch={refetch}
@@ -85,10 +100,9 @@ const Wrapper = styled.div`
   padding-top: 40px;
   ${({isMobile}) => {
     if (!isMobile)
-     return css`
+      return css`
         padding: 40px;
         min-width: 1024px;
       `;
-   
   }}
 `;

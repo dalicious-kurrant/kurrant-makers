@@ -35,13 +35,17 @@ const DeliveryMobileCard = ({delivery, group}) => {
         )}
       </Wrap>
       <FoodDetailWrap>
-        {group.foodBySpots.map((spot,i) => {
-            console.log(spot)
+        {group.foodBySpots.map((spot, i) => {
+          // console.log(spot);
           return (
-            <FoodSpotWrap key={spot.deliveryId+spot.pickUpTime+i}>
+            <FoodSpotWrap key={spot.deliveryId + spot.pickUpTime + i}>
               <FoodDetailTitleWrap>
-                <FoodDetailTitle spot={spot.spotType}>배송번호 : {spot.deliveryId}</FoodDetailTitle>
-                <FoodDetailPickUpTime>예상 픽업 {spot.pickUpTime}</FoodDetailPickUpTime>
+                <FoodDetailTitle spot={spot.spotType}>
+                  배송번호 : {spot.deliveryId}
+                </FoodDetailTitle>
+                <FoodDetailPickUpTime>
+                  배송 시간 {spot.deliveryTime}
+                </FoodDetailPickUpTime>
               </FoodDetailTitleWrap>
               {spot.foods.map(food => {
                 return (
@@ -139,23 +143,24 @@ const IconBox = styled.button`
 `;
 const FoodDetailWrap = styled.div``;
 const FoodDetailTitleWrap = styled.div`
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 `;
 const FoodDetailTitle = styled.div`
-    margin-right: 8px;
-    color: ${({theme, spot})=> spot===0 ? theme.colors.blue[500]:theme.colors.pink[500]};
-    font-size: 13px;
-    font-family: 'Pretendard-SemiBold';
-    font-weight: 600;
+  margin-right: 8px;
+  color: ${({theme, spot}) =>
+    spot === 0 ? theme.colors.blue[500] : theme.colors.pink[500]};
+  font-size: 13px;
+  font-family: 'Pretendard-SemiBold';
+  font-weight: 600;
 `;
 const FoodDetailPickUpTime = styled.div`
-    color: ${({theme})=>theme.colors.grey[4]};
-    font-size: 12px;
-    letter-spacing: -0.5px;
+  color: ${({theme}) => theme.colors.grey[4]};
+  font-size: 12px;
+  letter-spacing: -0.5px;
 `;
 const FoodSpotWrap = styled.article`
-    padding-top: 16px;
-    padding-bottom: 16px;
-    border-top: 1px solid ${({theme})=>theme.colors.grey[8]};
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-top: 1px solid ${({theme}) => theme.colors.grey[8]};
 `;

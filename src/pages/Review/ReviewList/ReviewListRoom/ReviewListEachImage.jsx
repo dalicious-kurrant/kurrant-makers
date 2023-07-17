@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
+import NoImage from '../../../../assets/img/noImage.png';
 
 const ReviewListEachImage = ({url}) => {
   const [onHover, setOnHover] = useState(false);
@@ -28,7 +29,11 @@ const ReviewListEachImage = ({url}) => {
         url={!!url}
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}>
-        {!!url && <Img src={url} alt="" isHorizontal={isHorizontal} />}
+        {!!url ? (
+          <Img src={url} alt="" isHorizontal={isHorizontal} />
+        ) : (
+          <Img style={{width: 80, height: 80}} src={NoImage} alt="" />
+        )}
 
         {/* <Img src={imageSample} alt="" isHorizontal={isHorizontal} /> */}
       </Div>
