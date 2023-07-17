@@ -165,7 +165,7 @@ const Title = styled.div`
 `;
 
 const Wrap = styled.div`
-  margin-top: 100px;
+  margin-top: 80px;
   margin-bottom: 50px;
   padding-right: 24px;
   padding-left: 24px;

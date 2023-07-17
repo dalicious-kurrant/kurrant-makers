@@ -7,6 +7,7 @@ import ReviewImage from './components/ReviewImage';
 import ReviewImageModal from './ReviewImageModal/ReviewImageModal';
 import useReviewDetailMutation from './useReviewDetailMutation';
 import {useRef} from 'react';
+import {Button} from 'semantic-ui-react';
 import useWindowSizeChangeDetector from '../../../utils/useWindowSizeChangeDetector/useWindowSizeChangeDetector';
 
 const ReviewDetail = () => {
@@ -124,8 +125,6 @@ const ReviewDetail = () => {
         <BigDiv>
           {/* 2차 디자인 */}
 
-          <VacentSpaceDiv />
-
           <ImageListWrap>
             {Array.isArray(reviewDetail.imageLocation) &&
             reviewDetail.imageLocation.length > 0 ? (
@@ -158,12 +157,19 @@ const ReviewDetail = () => {
               />
 
               <BottomWrapD2>
-                <BtnD2 onClick={handleReport} color={'#ca2f2f'}>
-                  리뷰 신고하기
-                </BtnD2>
+                <Button
+                  content="리뷰 신고하기"
+                  size="small"
+                  onClick={handleReport}
+                  style={{
+                    backgroundColor: '#D4201F',
+                    color: 'white',
+                    fontWeight: 400,
+                  }}
+                />
 
                 {reviewDetail.isReport && (
-                  <ReportPD2>신고된 리뷰입니다</ReportPD2>
+                  <ReportPD2>신고된 리뷰입니다.</ReportPD2>
                 )}
               </BottomWrapD2>
             </ReviewContentWrap>
@@ -187,86 +193,27 @@ const ReviewDetail = () => {
                     : ' 댓글이 아직 없는 리뷰입니다.'}
                 </IsCommentPD2>
 
-                <BtnD2 onClick={handleSubmit} color={'#4472C4'}>
+                <Button
+                  onClick={handleSubmit}
+                  style={{
+                    backgroundColor: '#4484CA',
+                    color: 'white',
+                    fontWeight: 400,
+                    whiteSpace: 'nowrap',
+                  }}>
                   {reviewDetail.makersComment &&
                   reviewDetail.makersComment.commentId
                     ? '댓글 수정하기'
                     : ' 댓글 작성하기'}
-                </BtnD2>
+                </Button>
               </BottomWrapD2>
             </MakersCommentWrap>
           </ContentWrapper>
-
-          {/* 1차 디자인 */}
-          <>
-            {' '}
-            {/* <NoticeWrap>
-            <IsCommentP>
-              {reviewDetail.makersComment &&
-              reviewDetail.makersComment.commentId
-                ? '사장님 댓글이 있는 리뷰입니다.'
-                : ' 댓글이 아직 없는 리뷰입니다.'}
-            </IsCommentP>
-
-            {reviewDetail.isReport && <ReportP>신고된 리뷰입니다</ReportP>}
-          </NoticeWrap>
-
-          <Wrap1>
-            <Title>리뷰 내용</Title>
-
-            <Input
-              disabled={true}
-              value={
-                reviewDetail.content ? reviewDetail.content : '(리뷰 글 없음)'
-              }
-            />
-          </Wrap1>
-
-          <ImageListWrap>
-            {Array.isArray(reviewDetail.imageLocation) &&
-            reviewDetail.imageLocation.length > 0 ? (
-              reviewDetail.imageLocation.map((v, i) => {
-                return (
-                  <ReviewImage
-                    key={i}
-                    url={v}
-                    setShowImageModal={setShowImageModal}
-                  />
-                );
-              })
-            ) : (
-              <NoPhotosWrap>
-                <NoPhotosSpan> 등록된 리뷰 사진이 없습니다</NoPhotosSpan>
-              </NoPhotosWrap>
-            )}
-          </ImageListWrap>
-
-          <Wrap1>
-            <Title>
-              {reviewDetail.makersComment &&
-              reviewDetail.makersComment.commentId
-                ? '댓글 수정'
-                : ' 댓글 작성'}
-            </Title>
-            <Input disabled={false} onChange={handleChange} value={value} />
-          </Wrap1>
-
-          <ButtonWrap>
-            <ReportBtn onClick={handleReport} bgColor={'#ca2f2f'}>
-              리뷰 신고하기
-            </ReportBtn>
-            <SubmitCommentBtn onClick={handleSubmit} bgColor={'#4472C4'}>
-              {reviewDetail.makersComment &&
-              reviewDetail.makersComment.commentId
-                ? '댓글 수정하기'
-                : ' 댓글 작성하기'}
-            </SubmitCommentBtn>
-          </ButtonWrap> */}
-          </>
+          {/* <VacentSpaceDiv /> */}
         </BigDiv>
       ) : (
         <NoDetailDiv>
-          <NoDetailP>관리할 리뷰를 왼쪽에서 골라 클릭해주세요</NoDetailP>
+          <NoDetailP>관리할 리뷰를 선택해 주세요</NoDetailP>
         </NoDetailDiv>
       )}
     </Container>
@@ -277,14 +224,14 @@ export default ReviewDetail;
 
 const Container = styled.section`
   /* border: 1px solid black; */
-  height: 100%;
+  //height: 100%;
   flex: 7;
 
-  padding: 20px 24px;
-
+  margin-top: 208px;
+  padding: 0px 24px;
+  padding-left: 36px;
   display: flex;
   flex-direction: column;
-  background-color: #d9d9d9;
 `;
 
 const BigDiv = styled.div`
@@ -297,7 +244,8 @@ const BigDiv = styled.div`
 // 2차 디자인
 
 const VacentSpaceDiv = styled.div`
-  flex: 9;
+  flex: 6;
+  background-color: olive;
 `;
 
 const ContentWrapper = styled.div`
@@ -316,30 +264,27 @@ const MakersCommentWrap = styled.div`
   padding-left: 10px;
 `;
 
-const TitleD2 = styled.h3`
-  font-size: 20px;
-  margin: 0;
-  /* margin-bottom: 20px; */
+const TitleD2 = styled.h4`
+  font-size: 18px;
+  margin-bottom: 8px;
 `;
 const ContentInput = styled.textarea`
   width: 100%;
-
-  height: 80%;
+  height: 326px;
   border-radius: 10px;
 
-  padding: 14px 6px;
+  padding: 14px 12px;
 
   background-color: #fff;
-  color: #000;
-  border: 1px solid #000;
-  font-size: ${({relativeFontSize}) => `${relativeFontSize}px`};
+  color: #1e1e1e;
+  outline: none;
+  border: 1px solid #e5e5e5;
+  font-size: 16px;
 
   font-family: 'Pretendard-Regular';
   &:disabled {
     background-color: #fff;
     color: #6c6c6c;
-    border: 1px solid #888;
-    /* border: 1px solid #000; */
   }
   &:focus {
   }
@@ -351,7 +296,8 @@ const BottomWrapD2 = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0 6px;
+  //padding: 0 6px;
+  margin-top: 8px;
 `;
 
 const BtnD2 = styled.button`
@@ -373,42 +319,46 @@ const BtnD2 = styled.button`
 const ImageListWrap = styled.div`
   display: flex;
   flex: 1;
-
   min-height: 130px;
 `;
 
 const NoPhotosWrap = styled.div`
   height: 110px;
-  padding: 24px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const NoPhotosSpan = styled.span`
-  font-size: 26px;
+  font-size: 16px;
+  color: #000000cc;
 `;
 
 const ReportPD2 = styled.span`
-  color: #ca2f2f;
+  color: #d4201fcc;
   font-size: 14px;
+  font-weight: 400;
   /* margin: 8px 0; */
 `;
 
 const IsCommentPD2 = styled.span`
-  color: #315cac;
+  color: #787886cc;
   /* margin: 8px 0; */
   font-size: 14px;
   margin-right: 20px;
+  font-weight: 400;
 `;
 
 const NoDetailDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   height: 100%;
   width: 100%;
 `;
 const NoDetailP = styled.p`
-  font-size: 20px;
+  font-size: 16px;
 `;
 
 /////////////////////

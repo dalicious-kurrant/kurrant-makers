@@ -51,7 +51,7 @@ const MakersInfoPage = () => {
 
 export default MakersInfoPage;
 const Wrapper = styled.div`
-  margin-top: 100px;
+  margin-top: 80px;
   margin-bottom: 50px;
   margin-left: 20px;
 `;

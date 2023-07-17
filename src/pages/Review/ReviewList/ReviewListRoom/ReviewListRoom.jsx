@@ -41,10 +41,15 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-
+  margin-top: 24px;
   overflow-y: scroll;
-
-  padding: 8px 4px;
-
+  padding-right: 4px;
   position: relative;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+  }
 `;
