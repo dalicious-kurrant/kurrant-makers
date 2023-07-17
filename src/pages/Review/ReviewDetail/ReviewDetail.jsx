@@ -199,6 +199,7 @@ const ReviewDetail = () => {
                     backgroundColor: '#4484CA',
                     color: 'white',
                     fontWeight: 400,
+                    whiteSpace: 'nowrap',
                   }}>
                   {reviewDetail.makersComment &&
                   reviewDetail.makersComment.commentId

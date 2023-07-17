@@ -113,6 +113,7 @@ const ReviewList = () => {
             style={{
               backgroundColor: focus === 1 ? '#3C5897' : '#767676',
               color: 'white',
+              whiteSpace: 'nowrap',
             }}
             onClick={() => {
               setFocus(1);
@@ -126,6 +127,7 @@ const ReviewList = () => {
               backgroundColor: focus === 0 ? '#3C5897' : '#767676',
               color: 'white',
               marginRight: 12,
+              whiteSpace: 'nowrap',
             }}
             onClick={() => {
               setFocus(0);
@@ -193,7 +195,7 @@ const ReviewList = () => {
 export default ReviewList;
 
 const Container = styled.div`
-  flex: 6;
+  flex: 5;
   margin-top: 80px;
   margin-left: 40px;
 `;
