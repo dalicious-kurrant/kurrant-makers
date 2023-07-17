@@ -186,8 +186,8 @@ const DesktopMode = ({
                         <TimeWrapContainer>
                           <TimeWrap>
                             <TimeBox>
-                              도착 완료 시간
-                              <TimeBoxTime>{v.deliveryTime}</TimeBoxTime>
+                              픽업 시간
+                              <TimeBoxTime>{v.pickUpTime}</TimeBoxTime>
                             </TimeBox>
                             <TimeBox>
                               총 배송 건수

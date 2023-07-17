@@ -9,6 +9,8 @@ import DeliveryCard from './DeliveryCard';
 import {formattedWeekDate} from '../../../utils/dateFormatter';
 import DeliveryTab from './DeliveryTab';
 import PreparationTab from './PreparationTab';
+import {useAtom} from 'jotai';
+import {tabAtom} from '../../../utils/store/store';
 
 const screenWidth = window.innerWidth;
 const MobileMode = ({
@@ -21,7 +23,7 @@ const MobileMode = ({
   setDiningSelect,
   refetch,
 }) => {
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useAtom(tabAtom);
   const [nowEndDate, setNowEndDate] = useState(new Date());
 
   const totalFood = salesList?.totalFoods;

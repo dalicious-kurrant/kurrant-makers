@@ -8,8 +8,7 @@ export function useGetSalesList(startDate, endDate, diningSelect) {
       return salesApis.loadSalesList(startDate, endDate, diningSelect);
     },
     {
-      retry:false,
-      refetchInterval: 20000,
+      retry: false,
       staleTime: 5 * 1000,
     },
   );

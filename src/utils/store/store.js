@@ -12,3 +12,5 @@ export const endMonthAtom = atomWithReset(formattedYearMonthDate(day));
 export const selectClientAtom = atomWithReset([]);
 export const selectStatusAtom = atomWithReset();
 export const selectModifyAtom = atomWithReset();
+
+export const tabAtom = atomWithReset(0);
