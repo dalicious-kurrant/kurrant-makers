@@ -104,6 +104,7 @@ const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
           setEndDate={setNowDate}
         />
       </CalendarBox>
+
       <DiningBox>
         <Dining onClick={() => selcetDiningType(0)} isActive={diningType === 0}>
           전체
@@ -118,6 +119,7 @@ const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
           저녁
         </Dining>
       </DiningBox>
+      <PickupBar>픽업 시간</PickupBar>
       <TimeBox>
         <Time
           isActive={pickupTime?.length === time?.length}
@@ -269,4 +271,12 @@ const Time = styled.button`
       color: ${({theme}) => theme.colors.grey[5]};
     `;
   }}
+`;
+
+const PickupBar = styled.div`
+  padding: 4px 24px;
+  background-color: ${({theme}) => theme.colors.grey[8]};
+  font-weight: 600;
+  font-family: 'Pretendard-SemiBold';
+  margin-top: 12px;
 `;
