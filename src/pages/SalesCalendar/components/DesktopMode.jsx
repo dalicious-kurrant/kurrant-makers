@@ -1,27 +1,12 @@
-import {useRef, useState} from 'react';
 import {Button, Header, Table} from 'semantic-ui-react';
 
-import styled, {css, useTheme} from 'styled-components';
+import styled, {} from 'styled-components';
 import DiningButton from './DiningButton';
 import {TableWrapper} from '../../../layout/common.style';
 import withCommas from '../../../utils/withCommas';
 import DeliveryCard from './DeliveryCard';
 import {formattedWeekDate} from '../../../utils/dateFormatter';
 
-const columns = [
-  {
-    title: '상품명 및 상세정보',
-    dataIndex: 'foodName',
-    key: 'foodName',
-    width: 150,
-  },
-  {
-    title: '합계(개)',
-    dataIndex: 'totalFoodCount',
-    key: 'totalFoodCount',
-    width: 100,
-  },
-];
 
 const DesktopMode = ({
   endDate,
@@ -52,8 +37,8 @@ const DesktopMode = ({
     }, 0);
 
   return (
-    <>
-      <Header as="h2">주문 정보</Header>
+    <Wrapper innerWidth={window.innerWidth}>
+      <Header as="h2">주문 정보{window.innerWidth}</Header>
 
       <CalendarWrap>
         <div>
@@ -223,16 +208,15 @@ const DesktopMode = ({
           );
         })}
       </TableWrapper>
-    </>
+    </Wrapper>
   );
 };
 
 export default DesktopMode;
 
 const Wrapper = styled.div`
-  width: 100%;
-  background-color: red;
-  padding: 40px;
+  width: ${({innerWidth})=> `${innerWidth-300}px`};
+  flex-wrap:wrap;
 `;
 
 const DateInput = styled.input`
@@ -255,37 +239,6 @@ const FoodItemName = styled.div`
 const FoodCount = styled.div`
   flex-wrap: nowrap;
   white-space: nowrap;
-`;
-const TotalFoodItems2 = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  font-weight: 400;
-  font-size: 14px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-`;
-const TotalSpotFoodItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
-  font-size: 14px;
-  padding-top: 12px;
-`;
-const FoodItemName2 = styled.div`
-  max-width: 215px;
-`;
-const FoodCount2 = styled.div`
-  flex-wrap: nowrap;
-  white-space: nowrap;
-`;
-const Line = styled.div`
-  height: 1px;
-  background-color: #f5f5f5;
-  margin-top: 16px;
-  margin-bottom: 12px;
-  width: 100%;
 `;
 const TotalFoodCount = styled.div`
   font-weight: 400;
@@ -343,13 +296,6 @@ const ButtonWrap = styled.div`
   margin-left: 10px;
 `;
 
-const TableWrap = styled.div`
-  display: flex;
-  max-width: 306px;
-  padding: 24px;
-  border: 1px solid #f5f5f5;
-  border-radius: 8px;
-`;
 const TimeWrapContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -398,61 +344,6 @@ const DateLine = styled.div`
   border-bottom: 1px solid ${({theme}) => theme.colors.grey[5]};
 `;
 
-const LabelWrap = styled.div`
-  min-width: 250px;
-`;
-const SpotLabel = styled.label`
-  font-size: 12px;
-  font-weight: 400;
-  padding: 2px 4px;
-  letter-spacing: -0.5px;
-  border-radius: 4px;
-  ${({spot, theme}) => {
-    if (spot === 0)
-      return css`
-        color: ${theme.colors.blue[500]};
-        background-color: ${theme.colors.blue[100]};
-      `;
-    return css`
-      color: ${theme.colors.pink[500]};
-      background-color: ${theme.colors.pink[100]};
-    `;
-  }}
-`;
-const TitleIdLabel = styled.div`
-  display: flex;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  font-family: 'Pretendard-Regular';
-  font-size: 20px;
-  font-weight: 600;
-
-  color: ${({spot, theme}) =>
-    spot === 0 ? theme.colors.blue[500] : theme.colors.pink[500]};
-`;
-const ContentsDetailLabel = styled.div`
-  display: flex;
-  white-space: nowrap;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  font-family: 'Pretendard-Regular';
-  font-size: 14px;
-  font-weight: 600;
-  color: #343337;
-`;
-const ContentsDetailLabel2 = styled.div`
-  display: flex;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  font-family: 'Pretendard-Regular';
-  font-size: 14px;
-  font-weight: 600;
-  color: #343337;
-`;
-const ContentsDetailLabelWrap = styled.div`
-  display: flex;
-  gap: 5px;
-`;
 const FoodName = styled.div`
   white-space: nowrap;
   overflow: hidden;
@@ -466,7 +357,4 @@ const Description = styled.div`
   width: 300px;
 `;
 
-const TableBox = styled.div`
-  margin-right: 10px;
-  margin-top: 12px;
-`;
+
