@@ -16,7 +16,6 @@ import {groupTypeFormatted} from '../../utils/statusFormatter';
 import DeliveryCard from './components/DeliveryCard';
 import DesktopMode from './components/DesktopMode';
 import MobileMode from './components/MobileMode';
-
 const Schedule = () => {
   const day = new Date();
   const days = formattedWeekDate(day);
@@ -96,13 +95,12 @@ const Schedule = () => {
 export default Schedule;
 
 const Wrapper = styled.div`
-  width: ${window.innerWidth}px;
+  width: ${window.innerWidth-300}px;
   padding-top: 40px;
   ${({isMobile}) => {
     if (!isMobile)
       return css`
-        padding: 40px;
-        min-width: 1024px;
+        
       `;
   }}
 `;

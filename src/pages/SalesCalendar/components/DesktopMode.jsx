@@ -231,8 +231,8 @@ export default DesktopMode;
 
 const Wrapper = styled.div`
   width: 100%;
+  background-color: red;
   padding: 40px;
-  min-width: 1024px;
 `;
 
 const DateInput = styled.input`
