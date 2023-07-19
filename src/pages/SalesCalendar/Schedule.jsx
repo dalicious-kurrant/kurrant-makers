@@ -16,11 +16,11 @@ import {groupTypeFormatted} from '../../utils/statusFormatter';
 import DeliveryCard from './components/DeliveryCard';
 import DesktopMode from './components/DesktopMode';
 import MobileMode from './components/MobileMode';
-
 const Schedule = () => {
   const day = new Date();
   const days = formattedWeekDate(day);
   const [innerWidth, setInnerWidth] = useAtom(pageWidthAtom);
+  const [innerWidths, setInnerWidths] = useState(window.innerWidth);
   const [tab, setTab] = useAtom(tabAtom);
   const [startDate, setStartDate] = useState(day);
   const [endDate, setEndDate] = useState(day);
@@ -51,7 +51,17 @@ const Schedule = () => {
   // useEffect(() => {
   //   refetch();
   // }, [refetch, startDate, endDate, diningSelect]);
-
+  const handleResize = () => {
+    setInnerWidth(window.innerWidth);
+  };
+  
+  useEffect(() => {
+      window.addEventListener("resize", handleResize);
+      return () => {
+          // cleanup
+          window.removeEventListener("resize", handleResize);
+      };
+  }, [handleResize]);
   useEffect(() => {
     if (intervalTime && tab === 0) {
       const interval = setInterval(() => {
@@ -65,8 +75,8 @@ const Schedule = () => {
     }
   }, [intervalTime, refetch, startDate, endDate, tab]);
   return (
-    <Wrapper isMobile={innerWidth < 768}>
-      {innerWidth > 768 ? (
+    <Wrapper innerWidths={window.innerWidth} isMobile={innerWidths < 768}>
+      {innerWidths > 768 ? (
         <DesktopMode
           endDate={endDate}
           setEndDate={setEndDate}
@@ -96,13 +106,11 @@ const Schedule = () => {
 export default Schedule;
 
 const Wrapper = styled.div`
-  width: ${window.innerWidth}px;
   padding-top: 40px;
   ${({isMobile}) => {
     if (!isMobile)
       return css`
-        padding: 40px;
-        min-width: 1024px;
+        width: ${({innerWidths})=> `${innerWidths-300}px`};
       `;
   }}
 `;
