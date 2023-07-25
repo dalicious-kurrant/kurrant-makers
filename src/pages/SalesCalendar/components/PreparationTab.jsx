@@ -1,8 +1,6 @@
 import {Button} from 'semantic-ui-react';
 import styled from 'styled-components';
 import {formattedWeekDate} from '../../../utils/dateFormatter';
-import {useState} from 'react';
-import DiningButton from './DiningButton';
 import DiningMobileButton from './DiningMobileButton';
 import MobileDeliveryTotalCard from './MobileDeliveryTotalCard';
 
@@ -81,10 +79,10 @@ const PreparationTab = ({
         </TableContent> */}
       </ContentsWrap>
       <ContentsDetailWrap>
-        {salesList?.foodByDateDiningTypes.map(food => {
+        {salesList?.foodByDateDiningTypes.map((food,i) => {
           return (
             <MobileDeliveryTotalCard
-              key={food.foods.map(f => f.foodId).join('')}
+              key={food.foods.map(f => f.foodId).join('')+i}
               food={food}
             />
           );

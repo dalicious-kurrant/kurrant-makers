@@ -5,7 +5,7 @@ import DiningButton from './DiningButton';
 import {TableWrapper} from '../../../layout/common.style';
 import withCommas from '../../../utils/withCommas';
 import DeliveryCard from './DeliveryCard';
-import {formattedWeekDate} from '../../../utils/dateFormatter';
+import {formattedWeekDate, formattedWeekDateTime} from '../../../utils/dateFormatter';
 
 
 const DesktopMode = ({
@@ -38,7 +38,7 @@ const DesktopMode = ({
 
   return (
     <Wrapper innerWidth={window.innerWidth}>
-      <Header as="h2">주문 정보{window.innerWidth}</Header>
+      <Header as="h2">주문 정보</Header>
 
       <CalendarWrap>
         <div>
@@ -160,7 +160,11 @@ const DesktopMode = ({
         {salesList?.deliveryGroupsByDates.map((el, idx) => {
           return (
             <MakersTable key={idx}>
-              <BoldText>{el.serviceDate + `\u00A0` + el.diningType}</BoldText>
+              <ServiceDateContainer>
+                <BoldText>{el.serviceDate + `\u00A0` + el.diningType}</BoldText>
+                <DeadLineBox status={true}>주문마감</DeadLineBox>
+                <DeadLineText>주문 마감 {formattedWeekDateTime(new Date())}</DeadLineText>
+              </ServiceDateContainer>
               <DateLine />
               <DiningTypeWrap>
                 <MealDetailWrap>
@@ -261,7 +265,26 @@ const MakersTable = styled.div`
 `;
 
 const TotalTable = styled.div``;
-
+const ServiceDateContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+const DeadLineBox = styled.div`
+  background-color: #eee;
+  color:${({theme,status})=> status ? theme.colors.red[500] : theme.colors.blue[500] };
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 10px;
+  margin-left: 10px;
+`
+const DeadLineText = styled.div`
+  font-size: 13px;
+  font-weight: 600;
+margin-left: 10px;
+`
 const DetailTable = styled.div`
   overflow-x: auto;
   display: flex;

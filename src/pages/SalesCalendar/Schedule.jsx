@@ -1,19 +1,10 @@
-import {useEffect, useRef, useState} from 'react';
-import {Button, Header, Label, Select, Table} from 'semantic-ui-react';
-import {Table as AntTable} from 'antd';
+import {useEffect, useState} from 'react';
 
-import styled, {css, useTheme} from 'styled-components';
+import styled, {css} from 'styled-components';
 import {formattedWeekDate} from '../../utils/dateFormatter';
-import DiningButton from './components/DiningButton';
-import {PageWrapper, TableWrapper} from '../../layout/common.style';
 import {useGetSalesList} from '../../hook/useSalesList';
-import {maskingName} from '../../utils/maskingName';
-import TestData from './test';
 import {useAtom} from 'jotai';
 import {pageWidthAtom, tabAtom} from '../../utils/store/store';
-import withCommas from '../../utils/withCommas';
-import {groupTypeFormatted} from '../../utils/statusFormatter';
-import DeliveryCard from './components/DeliveryCard';
 import DesktopMode from './components/DesktopMode';
 import MobileMode from './components/MobileMode';
 const Schedule = () => {
@@ -62,18 +53,19 @@ const Schedule = () => {
           window.removeEventListener("resize", handleResize);
       };
   }, [handleResize]);
-  useEffect(() => {
-    if (intervalTime && tab === 0) {
-      const interval = setInterval(() => {
-        refetch();
-      }, 20000);
-      return () => {
-        clearInterval(interval);
-      };
-    } else {
-      refetch();
-    }
-  }, [intervalTime, refetch, startDate, endDate, tab]);
+  // useEffect(() => {
+  //   if ( tab === 0) {
+  //     const interval = setInterval(() => {
+  //       console.log("testrefetch")
+  //       refetch();
+  //     }, 3000);
+  //     return () => {
+  //       clearInterval(interval);
+  //     };
+  //   } else {
+  //     refetch();
+  //   }
+  // }, [ refetch, startDate, endDate, tab]);
   return (
     <Wrapper innerWidths={window.innerWidth} isMobile={innerWidths < 768}>
       {innerWidths > 768 ? (
