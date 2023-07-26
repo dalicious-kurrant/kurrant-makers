@@ -29,7 +29,6 @@ const DesktopMode = ({
     refetch();
   };
   const totalFood = salesList?.totalFoods;
-
   const totalCount = totalFood
     ?.map(el => el.totalFoodCount)
     .reduce((acc, cur) => {
@@ -162,8 +161,8 @@ const DesktopMode = ({
             <MakersTable key={idx}>
               <ServiceDateContainer>
                 <BoldText>{el.serviceDate + `\u00A0` + el.diningType}</BoldText>
-                <DeadLineBox status={true}>주문마감</DeadLineBox>
-                <DeadLineText>주문 마감 {formattedWeekDateTime(new Date())}</DeadLineText>
+                <DeadLineBox status={new Date(el.lastOrderTime).getTime() <new Date().getTime()}>{new Date(el.lastOrderTime).getTime() <new Date().getTime() ? "주문마감":"주문진행중" }</DeadLineBox>
+                <DeadLineText>주문 마감 {formattedWeekDateTime(new Date(el.lastOrderTime))}</DeadLineText>
               </ServiceDateContainer>
               <DateLine />
               <DiningTypeWrap>

@@ -7,7 +7,7 @@ import {diningFormatted} from '../../../utils/statusFormatter';
 import DeliveryMobileCard from './DeliveryMobileCard';
 import {useGetSalesList} from '../../../hook/useSalesList';
 
-const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
+const DeliveryTab = ({tab}) => {
   const [diningType, setDiningTpye] = useState(0);
   const [data, setData] = useState();
   const [time, setTime] = useState([]);
@@ -37,6 +37,7 @@ const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
     formattedWeekDate(nowDate),
     formattedWeekDate(nowDate),
     types,
+    tab
   );
   // console.log(list);
   const salesList = list?.data?.data;

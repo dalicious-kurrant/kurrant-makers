@@ -50,11 +50,7 @@ const MobileMode = ({
           />
         ) : (
           <DeliveryTab
-            salesList={salesList}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={nowEndDate}
-            setEndDate={setNowEndDate}
+          tab={tab}
           />
         )}
       </TabContent>

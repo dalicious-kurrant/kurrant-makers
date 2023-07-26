@@ -37,6 +37,7 @@ const Schedule = () => {
     formattedWeekDate(startDate),
     formattedWeekDate(endDate),
     types,
+    tab
   );
 
   // useEffect(() => {
