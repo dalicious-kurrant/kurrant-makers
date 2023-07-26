@@ -1,12 +1,7 @@
-import {useRef, useState} from 'react';
-import {Button, Header, Table} from 'semantic-ui-react';
+import {useState} from 'react';
+import {Header} from 'semantic-ui-react';
 
-import styled, {css, useTheme} from 'styled-components';
-import DiningButton from './DiningButton';
-import {TableWrapper} from '../../../layout/common.style';
-import withCommas from '../../../utils/withCommas';
-import DeliveryCard from './DeliveryCard';
-import {formattedWeekDate} from '../../../utils/dateFormatter';
+import styled, {css} from 'styled-components';
 import DeliveryTab from './DeliveryTab';
 import PreparationTab from './PreparationTab';
 import {useAtom} from 'jotai';
@@ -55,11 +50,7 @@ const MobileMode = ({
           />
         ) : (
           <DeliveryTab
-            salesList={salesList}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={nowEndDate}
-            setEndDate={setNowEndDate}
+          tab={tab}
           />
         )}
       </TabContent>

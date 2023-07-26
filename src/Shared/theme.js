@@ -70,6 +70,7 @@ const fontFamily = {
 const colors = {
   grey,
   blue,
+  red,
   pink,
 };
 const theme = {
