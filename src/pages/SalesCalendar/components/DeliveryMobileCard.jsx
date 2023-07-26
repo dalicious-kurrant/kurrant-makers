@@ -1,15 +1,33 @@
 import styled, {css} from 'styled-components';
 import downArrow from '../../../assets/icon/downArrow.svg';
 import {useState} from 'react';
+import {
+  formattedWeekDateTime,
+} from '../../../utils/dateFormatter';
 const DeliveryMobileCard = ({delivery, group}) => {
   const [rotation, setRotation] = useState(true);
   return (
     <Container>
       <Wrap>
         <TotalWrap>
-          <TotalSpot style={{color: '#3478F6'}}>
-            총 {group.spotCount}개 배송스팟
-          </TotalSpot>
+          <ServiceDateContainer>
+            <TotalSpot style={{color: '#3478F6'}}>
+              총 {group.spotCount}개 배송스팟
+            </TotalSpot>
+            <DeadLineBox
+              status={
+                new Date(delivery.lastOrderTime).getTime() <
+                new Date().getTime()
+              }>
+              {new Date(delivery.lastOrderTime).getTime() < new Date().getTime()
+                ? '주문마감'
+                : '주문진행중'}
+            </DeadLineBox>
+            <DeadLineText>
+              주문 마감{' '}
+              {formattedWeekDateTime(new Date(delivery.lastOrderTime))}
+            </DeadLineText>
+          </ServiceDateContainer>
           <DiningTime>
             <TotalSpot>
               {delivery.diningType} {group.deliveryTime}
@@ -83,7 +101,27 @@ const Wrap = styled.div`
   background-color: ${({theme}) => theme.colors.grey[8]};
   border-radius: 8px;
 `;
-
+const ServiceDateContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const DeadLineBox = styled.div`
+  background-color: #eee;
+  color: ${({theme, status}) =>
+    status ? theme.colors.red[500] : theme.colors.blue[500]};
+  font-size: 8px;
+  font-weight: 600;
+  padding: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 10px;
+  margin-left: 10px;
+`;
+const DeadLineText = styled.div`
+  font-size: 8px;
+  font-weight: 600;
+  margin-left: 10px;
+`;
 const TotalWrap = styled.div`
   color: ${({theme}) => theme.colors.grey[3]};
   display: flex;

@@ -44,6 +44,7 @@ const Schedule = () => {
   //   refetch();
   // }, [refetch, startDate, endDate, diningSelect]);
   const handleResize = () => {
+    setInnerWidths(window.innerWidth);
     setInnerWidth(window.innerWidth);
   };
   
