@@ -5,6 +5,7 @@ import {ReactComponent as Money} from '../../assets/snb/money.svg';
 import {ReactComponent as Schedule} from '../../assets/snb/schedule.svg';
 import {ReactComponent as DailyFood} from '../../assets/snb/dailyfood.svg';
 import {ReactComponent as Review} from '../../assets/snb/review.svg';
+import {ReactComponent as Speaker} from '../../assets/snb/speaker.svg';
 import {ReactComponent as ActiveDailyFood} from '../../assets/snb//active/dailyfood.svg';
 import {ReactComponent as ActiveCalendar} from '../../assets/snb/active/calendar.svg';
 import {ReactComponent as ActiveProduct} from '../../assets/snb/active/product.svg';
@@ -12,6 +13,7 @@ import {ReactComponent as ActiveSchedule} from '../../assets/snb/active/schedule
 import {ReactComponent as ActiveMakersInfo} from '../../assets/snb/active/makersInfo.svg';
 import {ReactComponent as ActiveMoney} from '../../assets/snb/active/money.svg';
 import {ReactComponent as ActiveReview} from '../../assets/snb/active/review.svg';
+import {ReactComponent as ActiveSpeaker} from '../../assets/snb/active/speaker.svg';
 export const menuData = [
   // {
   //   name: '대시보드',
@@ -19,12 +21,12 @@ export const menuData = [
   //   icon: <Dashboard />,
   //   activeIcon: <ActiveDash />,
   // },
-  // {
-  //   name: '공지사항',
-  //   path: '/notice',
-  //   icon: <Speaker />,
-  //   activeIcon: <ActiveSpeaker />,
-  // },
+  {
+    name: '공지사항',
+    path: '/notice',
+    icon: <Speaker />,
+    activeIcon: <ActiveSpeaker />,
+  },
   {
     name: '상품관리',
     path: '/product',

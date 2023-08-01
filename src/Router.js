@@ -24,6 +24,7 @@ import ReviewPage from './pages/Review/ReviewPage';
 import {isUrlReviewAtom} from './pages/Review/store';
 import MakersCalcDetail from './pages/Calculate/components/MakersCalcDetail';
 import {useState} from 'react';
+import NoticeDetail from './pages/Notice/components/NoticeDetail';
 
 function Router() {
   const token = localStorage.getItem('token');
@@ -60,6 +61,7 @@ function Router() {
             <Route path="/main" element={<Dashboard />} />
             <Route path="/sales/schedule" element={<Schedule />} />
             <Route path="/review" element={<ReviewPage />} />
+            <Route path="/notice/detail" element={<NoticeDetail />} />
           </Route>
         </Routes>
       </Container>
