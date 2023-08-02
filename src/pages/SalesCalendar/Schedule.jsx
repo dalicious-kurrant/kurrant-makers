@@ -7,17 +7,18 @@ import {useAtom} from 'jotai';
 import {pageWidthAtom, tabAtom} from '../../utils/store/store';
 import DesktopMode from './components/DesktopMode';
 import MobileMode from './components/MobileMode';
+import subscribeToSSE from '../../utils/sse/subscribeToSSE';
 const Schedule = () => {
   const day = new Date();
-  const days = formattedWeekDate(day);
   const [innerWidth, setInnerWidth] = useAtom(pageWidthAtom);
   const [innerWidths, setInnerWidths] = useState(window.innerWidth);
+  const [notification, setNotification] = useState(null);
+
+  const [eventSource, setEventSource] = useState(null);
   const [tab, setTab] = useAtom(tabAtom);
   const [startDate, setStartDate] = useState(day);
   const [endDate, setEndDate] = useState(day);
   const [diningSelect, setDiningSelect] = useState([0, 1, 2]);
-  const intervalTime =
-    formattedWeekDate(startDate) === formattedWeekDate(endDate);
 
   const types =
     diningSelect &&
@@ -40,14 +41,28 @@ const Schedule = () => {
     tab
   );
 
-  // useEffect(() => {
-  //   refetch();
-  // }, [refetch, startDate, endDate, diningSelect]);
   const handleResize = () => {
     setInnerWidths(window.innerWidth);
     setInnerWidth(window.innerWidth);
   };
-  
+  useEffect(() => {
+    if (!eventSource) {
+      subscribeToSSE((data) => {
+        console.log(data)
+        setNotification(data);
+        // 여기서 필요한 알림을 처리하거나 상태를 업데이트할 수 있습니다.
+      },eventSource,
+      setEventSource);
+    }
+
+    return () => {
+      if (eventSource) {
+        eventSource.close(); // Clean up the EventSource when component unmounts
+        setEventSource(null);
+      }
+    };
+  }, [eventSource]);
+
   useEffect(() => {
       window.addEventListener("resize", handleResize);
       return () => {
@@ -55,19 +70,7 @@ const Schedule = () => {
           window.removeEventListener("resize", handleResize);
       };
   }, [handleResize]);
-  // useEffect(() => {
-  //   if ( tab === 0) {
-  //     const interval = setInterval(() => {
-  //       console.log("testrefetch")
-  //       refetch();
-  //     }, 3000);
-  //     return () => {
-  //       clearInterval(interval);
-  //     };
-  //   } else {
-  //     refetch();
-  //   }
-  // }, [ refetch, startDate, endDate, tab]);
+ 
   return (
     <Wrapper innerWidths={window.innerWidth} isMobile={innerWidths < 768}>
       {innerWidths > 768 ? (

@@ -8,7 +8,7 @@ export function useGetSalesList(startDate, endDate, diningSelect,tab) {
       return salesApis.loadSalesList(startDate, endDate, diningSelect);
     },
     {
-      refetchInterval:tab!==1 && 3000,
+      refetchInterval:tab!==1 && 30000,
       retry: false,
       onSuccess:()=>{
         console.log("판매내역 조회")
@@ -23,7 +23,7 @@ export function useGetDeliveryList(startDate, endDate, diningSelect,tab) {
       return salesApis.loadSalesList(startDate, endDate, diningSelect);
     },
     {
-      refetchInterval:tab===1 && 3000,
+      refetchInterval:tab===1 && 30000,
       retry: false,
       onSuccess:()=>{
         console.log("판매내역 조회2")
