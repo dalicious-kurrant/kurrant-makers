@@ -47,10 +47,10 @@ const Schedule = () => {
   };
   useEffect(() => {
     if (!eventSource) {
-      subscribeToSSE((data) => {
-        console.log(data)
-        setNotification(data);
+      subscribeToSSE((data) => {        
         // 여기서 필요한 알림을 처리하거나 상태를 업데이트할 수 있습니다.
+        console.log("sse통신",data)
+        refetch();
       },eventSource,
       setEventSource);
     }
@@ -61,7 +61,7 @@ const Schedule = () => {
         setEventSource(null);
       }
     };
-  }, [eventSource]);
+  }, [eventSource, refetch]);
 
   useEffect(() => {
       window.addEventListener("resize", handleResize);

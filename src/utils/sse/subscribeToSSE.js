@@ -20,19 +20,17 @@ const subscribeToSSE = (onMessageCallback,eventSource, setEventSource) => {
         headers: {
             Authorization: `Bearer ${token}`,
         },
+        heartbeatTimeout:60000
     });
     newEventSource.onopen =(event)=>{
         console.log('Connection established.');
     }
     newEventSource.onmessage = (event) => {
-        console.log(event)
         if (refreshTimer) {
             clearTimeout(refreshTimer);
         }
         refreshTimer = setTimeout(() => {
-            const data = JSON.parse(event.data);
-            
-            onMessageCallback(data);// Refresh the page
+            onMessageCallback(event.data);// Refresh the page
         }, REFRESH_DELAY);
     
     };

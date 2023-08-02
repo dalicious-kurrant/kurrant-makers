@@ -8,7 +8,7 @@ export function useGetSalesList(startDate, endDate, diningSelect,tab) {
       return salesApis.loadSalesList(startDate, endDate, diningSelect);
     },
     {
-      refetchInterval:tab!==1 && 30000,
+      enabled:false,
       retry: false,
       onSuccess:()=>{
         console.log("판매내역 조회")
