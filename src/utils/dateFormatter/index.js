@@ -19,6 +19,15 @@ export function formattedWeekDate(data, delimiter = '-') {
   const day = leftPad(dateTime.getDate());
   return `${[year, month, day].join(delimiter)}`;
 }
+export function formattedWeekDateTime(data, delimiter = '-') {
+  const dateTime = transDateType(data);
+  const year = dateTime.getFullYear();
+  const month = leftPad(dateTime.getMonth() + 1);
+  const day = leftPad(dateTime.getDate());
+  const hour = leftPad(dateTime.getHours());
+  const minute = leftPad(dateTime.getMinutes());
+  return `${day}일 ${[hour,minute].join(':')}`;
+}
 export function formattedWeekDateZ(data, delimiter = '-') {
   const dateTime = transDateType(data + 'Z');
   const year = dateTime.getFullYear();

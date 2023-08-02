@@ -5,9 +5,9 @@ import {useEffect} from 'react';
 import {formattedWeekDate} from '../../../utils/dateFormatter';
 import {diningFormatted} from '../../../utils/statusFormatter';
 import DeliveryMobileCard from './DeliveryMobileCard';
-import {useGetSalesList} from '../../../hook/useSalesList';
+import {useGetDeliveryList} from '../../../hook/useSalesList';
 
-const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
+const DeliveryTab = ({tab}) => {
   const [diningType, setDiningTpye] = useState(0);
   const [data, setData] = useState();
   const [time, setTime] = useState([]);
@@ -33,13 +33,13 @@ const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
       }
       return el;
     });
-  const {data: list, refetch} = useGetSalesList(
+  const {data: list, refetch} = useGetDeliveryList(
     formattedWeekDate(nowDate),
     formattedWeekDate(nowDate),
     types,
+    tab
   );
   // console.log(list);
-  const salesList = list?.data?.data;
 
   const selcetDiningType = dining => {
     setDiningTpye(dining);
@@ -60,24 +60,25 @@ const DeliveryTab = ({startDate, setStartDate, setEndDate}) => {
   };
 
   useEffect(() => {
-    const salesData = salesList.deliveryGroupsByDates.filter(
+    const salesData = list?.data?.data.deliveryGroupsByDates.filter(
       v => v.serviceDate === formattedWeekDate(nowDate),
     );
-
-    setData(salesData);
-    setPickupTime(
-      ...salesData.map(v => {
-        if (v.diningType === diningFormatted(diningType) || diningType === 0)
-          return v.deliveryGroups.map(group => group.pickUpTime);
-      }),
-    );
-    setTime(
-      ...salesData.map(v => {
-        if (v.diningType === diningFormatted(diningType) || diningType === 0)
-          return v.deliveryGroups.map(group => group.pickUpTime);
-      }),
-    );
-  }, [diningType, nowDate, salesList]);
+  if(salesData){
+      setData(salesData);
+      setPickupTime(
+        ...salesData.map(v => {
+          if (v.diningType === diningFormatted(diningType) || diningType === 0)
+            return v.deliveryGroups.map(group => group.pickUpTime);
+        }),
+      );
+      setTime(
+        ...salesData.map(v => {
+          if (v.diningType === diningFormatted(diningType) || diningType === 0)
+            return v.deliveryGroups.map(group => group.pickUpTime);
+        }),
+      );
+    }
+  }, [diningType, nowDate, list?.data?.data]);
 
   useEffect(() => {
     refetch();
