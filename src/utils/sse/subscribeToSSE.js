@@ -3,6 +3,7 @@
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 import { getToken } from "../../Shared/localStorage";
 import { useState } from "react";
+import { formattedTime } from "../dateFormatter";
 
 const REFRESH_DELAY = 500; // 1 second
 let refreshTimer = null;
@@ -20,7 +21,7 @@ const subscribeToSSE = (onMessageCallback,eventSource, setEventSource) => {
         headers: {
             Authorization: `Bearer ${token}`,
         },
-        heartbeatTimeout:60000
+        heartbeatTimeout:1000*60*10
     });
     newEventSource.onopen =(event)=>{
         console.log('Connection established.');
@@ -36,7 +37,7 @@ const subscribeToSSE = (onMessageCallback,eventSource, setEventSource) => {
     };
   
     newEventSource.onerror = (error) => {
-      console.error('SSE 에러:', error);
+      console.error('SSE 에러 '+formattedTime(new Date()), error);
       newEventSource.close();
       setEventSource(null);
     };
