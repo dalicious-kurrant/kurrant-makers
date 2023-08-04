@@ -1,10 +1,17 @@
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import {Border} from '../Notice';
+import {boardTypeFormatted} from '../../../utils/boardTypeFormatter';
 
 const NoticeDetail = () => {
+  const location = useLocation();
   const navigate = useNavigate();
 
+  const data = location.state;
+
+  const handleRightClick = e => {
+    e.preventDefault();
+  };
   const goBack = () => {
     navigate(-1);
   };
@@ -13,11 +20,15 @@ const NoticeDetail = () => {
       <h1>공지사항</h1>
       <Border />
       <TitleWrap>
-        <TypeBox>공지</TypeBox>
-        <Title>공지 제목</Title>
+        <TypeBox>{boardTypeFormatted(data.boardType)}</TypeBox>
+        <Title>{data.title}</Title>
       </TitleWrap>
-      <UpdateText>2023.08.01</UpdateText>
-      <ContentsView>dd</ContentsView>
+      <UpdateText>{data.updated}</UpdateText>
+      <ContentsView
+        onContextMenu={handleRightClick}
+        dangerouslySetInnerHTML={{
+          __html: data.content,
+        }}></ContentsView>
       <ButtonWrap>
         <Button onClick={goBack}>목록</Button>
       </ButtonWrap>
@@ -36,7 +47,7 @@ const TypeBox = styled.div`
   border-radius: 4px;
   font-weight: 500;
   font-family: 'Pretendard-Regular';
-  padding: 2px 8px;
+  padding: 4px 8px;
   display: flex;
   align-items: center;
 `;

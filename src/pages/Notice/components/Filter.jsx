@@ -2,14 +2,15 @@ import styled from 'styled-components';
 
 const Filter = ({touch, setTouch}) => {
   const title = [
-    {id: 1, type: '전체'},
-    {id: 2, type: '공지'},
-    {id: 3, type: '정산'},
-    {id: 4, type: '이벤트'},
+    {id: 99, type: '전체'},
+    {id: 0, type: '공지'},
+    {id: 1, type: '변경 승인'},
+    {id: 2, type: '정산'},
+    {id: 3, type: '이벤트'},
   ];
 
   const onPressButton = id => {
-    setTouch([id]);
+    setTouch(id);
   };
   return (
     <Wrap>
@@ -18,7 +19,7 @@ const Filter = ({touch, setTouch}) => {
           <Box
             key={el.id}
             onClick={() => onPressButton(el.id)}
-            touch={touch?.includes(el.id)}>
+            touch={touch === el.id}>
             {el.type}
           </Box>
         );
