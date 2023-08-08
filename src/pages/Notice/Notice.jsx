@@ -23,7 +23,7 @@ const Notice = () => {
   };
 
   useEffect(() => {
-    if (noticeList?.data) {
+    if (noticeList?.data?.data) {
       setTotalPage(noticeList?.data?.data?.total);
     }
   }, [noticeList?.data?.data]);
