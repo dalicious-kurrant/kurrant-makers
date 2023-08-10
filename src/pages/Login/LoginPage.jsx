@@ -3,8 +3,8 @@ import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import Login from '../../component/Login/Login';
 import LoginHeader from '../../component/Login/LoginHeader';
-import { useAtom } from 'jotai';
-import { pageWidthAtom } from '../../utils/store/store';
+import {useAtom} from 'jotai';
+import {pageWidthAtom} from '../../utils/store/store';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -12,11 +12,9 @@ const LoginPage = () => {
   const token = localStorage.getItem('token');
   useEffect(() => {
     if (token) {
-      if(innerWidth > 768)
-        navigate('/product')
-      if(innerWidth < 768)
-        navigate('/sales/schedule')
-    };
+      if (innerWidth > 768) navigate('/notice');
+      if (innerWidth < 768) navigate('/sales/schedule');
+    }
   }, [innerWidth, navigate, token]);
   return (
     <Container>

@@ -14,3 +14,6 @@ export const selectStatusAtom = atomWithReset();
 export const selectModifyAtom = atomWithReset();
 
 export const tabAtom = atomWithReset(0);
+
+// 공지사항
+export const noticePageAtom = atomWithReset(1);
