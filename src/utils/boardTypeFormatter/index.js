@@ -2,6 +2,8 @@ export function boardTypeFormatted(data) {
   switch (data) {
     case 0:
       return '전체 공지';
+    case 3:
+      return '이벤트';
     case 4:
       return '메이커스 공지';
     case 6:
