@@ -80,6 +80,10 @@ const ContentsView = styled.div`
   min-height: 320px;
   margin-top: 15px;
   padding: 24px;
+
+  img {
+    max-width: 100%;
+  }
 `;
 
 const ButtonWrap = styled.div`
