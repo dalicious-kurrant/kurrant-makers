@@ -51,7 +51,8 @@ const ReviewDetail = () => {
     } else {
       setValue('');
     }
-  }, [reviewDetail.makersComment]);
+    // }, [reviewDetail.makersComment]);
+  }, [reviewDetail]);
 
   const {reportReviewMutate, submitCommentMutate, editCommentMutate} =
     useReviewDetailMutation();
