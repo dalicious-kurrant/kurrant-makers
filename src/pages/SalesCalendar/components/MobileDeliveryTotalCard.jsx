@@ -5,7 +5,6 @@ import {
 } from '../../../utils/dateFormatter';
 
 const MobileDeliveryTotalCard = ({food}) => {
-  console.log(food);
   return (
     <Wrap>
       <HeaderWrap>

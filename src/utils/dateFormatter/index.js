@@ -28,6 +28,12 @@ export function formattedWeekDateTime(data, delimiter = '-') {
   const minute = leftPad(dateTime.getMinutes());
   return `${day}일 ${[hour,minute].join(':')}`;
 }
+export function formattedTime(data, delimiter = '-') {
+  const dateTime = transDateType(data);
+  const hour = leftPad(dateTime.getHours());
+  const minute = leftPad(dateTime.getMinutes());
+  return `${[hour,minute].join(':')}`;
+}
 export function formattedWeekDateZ(data, delimiter = '-') {
   const dateTime = transDateType(data + 'Z');
   const year = dateTime.getFullYear();
