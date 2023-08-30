@@ -21,10 +21,11 @@ const subscribeToSSE = (onMessageCallback,eventSource, setEventSource) => {
         headers: {
             Authorization: `Bearer ${token}`,
         },
-        heartbeatTimeout:1000*60*10
+        heartbeatTimeout:1000*45*1
     });
     newEventSource.onopen =(event)=>{
         console.log('Connection established.');
+        onMessageCallback(event.data);
     }
     newEventSource.onmessage = (event) => {
         if (refreshTimer) {
@@ -38,8 +39,10 @@ const subscribeToSSE = (onMessageCallback,eventSource, setEventSource) => {
   
     newEventSource.onerror = (error) => {
       console.error('SSE 에러 '+formattedTime(new Date()), error);
-      newEventSource.close();
-      setEventSource(null);
+      setTimeout(()=>{
+        newEventSource.close();
+        setEventSource(null);
+      },[3000])
     };
     setEventSource(newEventSource);
 
