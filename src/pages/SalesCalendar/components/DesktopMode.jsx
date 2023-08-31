@@ -36,7 +36,7 @@ const DesktopMode = ({
     }, 0);
 
   return (
-    <Wrapper innerWidth={window.innerWidth}>
+    <Wrapper >
       <Header as="h2">주문 정보</Header>
 
       <CalendarWrap>
@@ -218,7 +218,7 @@ const DesktopMode = ({
 export default DesktopMode;
 
 const Wrapper = styled.div`
-  width: ${({innerWidth})=> `${innerWidth-300}px`};
+  width: 100%;
   flex-wrap:wrap;
 `;
 

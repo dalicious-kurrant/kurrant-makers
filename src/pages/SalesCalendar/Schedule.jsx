@@ -69,10 +69,10 @@ const Schedule = () => {
           // cleanup
           window.removeEventListener("resize", handleResize);
       };
-  }, [handleResize]);
+  }, []);
  
   return (
-    <Wrapper innerWidths={window.innerWidth} isMobile={innerWidths < 768}>
+    <Wrapper innerWidths={innerWidths} isMobile={innerWidths < 768}>
       {innerWidths > 768 ? (
         <DesktopMode
           endDate={endDate}
