@@ -7,9 +7,9 @@ export function useGetAllProductsList() {
   });
 }
 
-export function useGetMakerProductsList() {
+export function useGetMakerProductsList(status) {
   return useQuery('makerList', () => {
-    return productApis.makersProductList();
+    return productApis.makersProductList(status);
   });
 }
 

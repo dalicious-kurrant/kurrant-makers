@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Table} from 'semantic-ui-react';
-import styled from 'styled-components';
+import {Button, Table} from 'semantic-ui-react';
+import styled, { css } from 'styled-components';
 import {useGetMakerProductsList} from '../../hook/useProductsList';
 import {PageWrapper, TableWrapper} from '../../layout/common.style';
 import withCommas from '../../utils/withCommas';
 
 const ProductPage = () => {
-  const {data: makersProcuctList, isLoading} = useGetMakerProductsList();
+  const [status,setStatus] = useState('');
+  const {data: makersProcuctList, isLoading, refetch:refetchMakersProcuctList} = useGetMakerProductsList(status);
   const navigate = useNavigate();
   const [checkItems, setCheckItems] = useState([]);
 
@@ -19,7 +20,12 @@ const ProductPage = () => {
       },
     });
   };
-
+  const changeStatus = (status)=>{
+    setStatus(status)
+  }
+  useEffect(()=>{
+    refetchMakersProcuctList();
+  },[status])
   if (isLoading) {
     return (
       <PageWrapper>
@@ -30,8 +36,12 @@ const ProductPage = () => {
 
   return (
     <Wrap>
-      <h1>상품 리스트</h1>
-
+        <h1 style={{paddingRight:30}}>상품 리스트</h1>
+      <FilterContainer>
+        <Button color='grey' onClick={()=>changeStatus('')}>전체</Button>
+        <Button color='green' onClick={()=>changeStatus(1)}>판매중</Button>
+        <Button color='red' onClick={()=>changeStatus(2)}>판매중지</Button>
+      </FilterContainer>
       <TableWrapper>
         <Table celled>
           <Table.Header>
@@ -68,7 +78,8 @@ const ProductPage = () => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {makersProcuctList?.data?.data?.map((el, idx) => {              
+            {makersProcuctList?.data?.data?.map((el, idx) => {  
+              if(el.foodStatus === "판매중"){
               return (
                 <TableRow
                   onClick={() => goToDetail(el.foodId)}
@@ -100,8 +111,54 @@ const ProductPage = () => {
                   <Table.Cell>
                     {el.foodTags + (idx !== 0 ? `\u00A0` : '')}
                   </Table.Cell>
+                  {/* {el.foodStatus !== "판매중" &&  <DimmedCover>
+                      {el.foodStatus}
+                    </DimmedCover>} */}
                 </TableRow>
               );
+            }
+            return(
+              <DimmedRow
+                onClick={() => goToDetail(el.foodId)}
+                key={el.foodId + idx}>
+                <Table.Cell textAlign="center">{el.foodId}</Table.Cell>
+                <Table.Cell>
+                  
+                  <DimmedContainer>
+                  <Image src={el.foodImage} alt="" />
+                    <DimmedOverlay>
+                    {el.foodStatus}
+                  </DimmedOverlay>  
+                  </DimmedContainer>
+                </Table.Cell>
+                <Table.Cell>{el.foodName}</Table.Cell>
+                <Table.Cell textAlign="center">
+                  {withCommas(el.supplyPrice)}원
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  {withCommas(el.defaultPrice)}원
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  {el.membershipDiscount === 0 ? '0' : el.membershipDiscount}%
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  {el.makersDiscount === 0 ? '0' : el.makersDiscount}%
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  {el.eventDiscount === 0 ? '0' : el.eventDiscount}%
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  {withCommas(el.resultPrice)}원
+                </Table.Cell>
+                <Table.Cell>{el.description}</Table.Cell>
+                <Table.Cell>
+                  {el.foodTags + (idx !== 0 ? `\u00A0` : '')}
+                </Table.Cell>
+                {/* {el.foodStatus !== "판매중" &&  <DimmedCover>
+                    {el.foodStatus}
+                  </DimmedCover>} */}
+              </DimmedRow>
+            )
             })}
           </Table.Body>
         </Table>
@@ -126,9 +183,50 @@ const Image = styled.img`
   text-align: center;
 `;
 
+const FilterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+`
 const TableRow = styled(Table.Row)`
   :hover {
     cursor: pointer;
     background-color: whitesmoke;
   }
+  position: relative;
+`;
+
+const DimmedRow = styled(Table.Row)`
+  position: relative;
+  &::after {
+    content: '';    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+`;
+
+const DimmedContainer = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const DimmedOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:white;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1;
 `;
